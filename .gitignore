@@ -5,6 +5,7 @@
 *.swp
 *.dSYM/
 *.out
+*.cor
 out/*
 test*
 /asm

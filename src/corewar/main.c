@@ -4,8 +4,9 @@ int	main(int argc, char **argv)
 {
 	t_arena		arena;
 
-	load_players(argc, argv, &arena);
-	arena_ini(&arena);
+	arena_ini(--argc, &arena);
+	load_players(argc, ++argv, &arena);
 	fight(&arena);
+//	print_map(arena.map);
 	return (0);
 }
