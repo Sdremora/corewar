@@ -4,5 +4,6 @@
 
 #include "general/op.h"
 #include "libft.h"
+#include "corewar/cw.h"
 
 #endif
