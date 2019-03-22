@@ -49,6 +49,7 @@ typedef struct	s_arena
 	int				cycle_to_die;
 	int				cur_cycle;
 	int				flags[FLAGS_COUNT];
+	t_list			*carg;
 }				t_arena;
 
 //	main.c
