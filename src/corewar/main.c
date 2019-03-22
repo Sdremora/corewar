@@ -14,6 +14,6 @@ int	main(int argc, char **argv)
 		print_usage();
 	load_arena(argc, argv, &arena);
 	fight(&arena);
-//	print_map(arena.map);
+	print_map(arena.map);
 	return (0);
 }
