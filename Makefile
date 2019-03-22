@@ -25,16 +25,15 @@ all: $(NAME)
 
 asm: $(LIB) $(OBJ_ASM)
 	@gcc $(OBJ_ASM) $(LIB) $(addprefix -I,$(INCLUDES)) -o $@
-	@printf "\r$@ $(GREEN)✔$(NC)                                        \n"
+	@printf "$@ $(GREEN)✔$(NC)                                        \n"
 
 corewar: $(LIB) $(OBJ_COREWAR)
 	@gcc $(OBJ_COREWAR) $(LIB) $(addprefix -I,$(INCLUDES)) -o $@
-	@printf "\r$@ $(GREEN)✔$(NC)                                        \n"
+	@printf "$@ $(GREEN)✔$(NC)                                        \n"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(@D)
-	@printf "\rCompiling $<                          "
-	@gcc $(FLAGS) -c $(addprefix -I,$(INCLUDES)) $< -o $@
+	gcc $(FLAGS) -c $(addprefix -I,$(INCLUDES)) $< -o $@
 
 $(LIB):
 	@$(MAKE) -C $(LIB_DIR) all

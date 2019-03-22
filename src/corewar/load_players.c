@@ -1,44 +1,37 @@
 #include "corewar.h"
 
-int     check_magic(int fd)
+void	check_magic(int fd, t_arena *arena)
 {
     unsigned int magic;
 
     magic = 0;
-    if (read(fd, &magic, 4) == 4)
-        return (magic == 4085508608);
-    return (0);
+    if (read(fd, &magic, 4) != 4 || magic != 4085508608)
+		error_handle(E_INV_CHAMP, arena, "bad magic");
 }
 
-int     read_name(int fd, char *name)
+void	read_name(int fd, t_player *player, t_arena *arena)
 {
-    char buf[2000];
-
-    if (read(fd, buf, PROG_NAME_LENGTH) != PROG_NAME_LENGTH)
-        return (0);
-    buf[PROG_NAME_LENGTH] = 0;
-    ft_strcpy(name,buf);///?????????????????????????
-    return (1);
+    if (read(fd, player->name, PROG_NAME_LENGTH) != PROG_NAME_LENGTH)
+        error_handle(E_INV_CHAMP, arena, "the program code of the player is too short");
 }
 
-int     read_nulls(int fd)
+void	check_null(int fd, t_arena *arena)
 {
     unsigned int nulls;
 
     nulls = 0;
     if (read (fd, &nulls, 4) != 4 || nulls != 0)
-        return(0);
-    return (1);
+        error_handle(E_INV_CHAMP, arena, "zero section is not empty");
 }
 
-int     read_code_size(int fd, int *p)
+void     read_code_size(int fd, t_player *player, t_arena *arena)
 {
-    return (1);
 }
 
-int     read_comment(int fd, char *str)
+void	read_comment(int fd, t_player *player, t_arena *arena)
 {
-    return (1);
+    if (read(fd, player->comment, COMMENT_LENGTH) != COMMENT_LENGTH)
+        error_handle(E_INV_CHAMP, arena, "the program code of the player is too short");
 }
 
 int     read_code(int fd, int size, char *code)
@@ -46,28 +39,30 @@ int     read_code(int fd, int size, char *code)
     return (1);
 }
 
-void	load_players(int argc, char **argv, t_arena *arena)
+void	load_player(char *path, t_arena *arena)
 {
-    int i;
-    int fd;
+	t_player	player;
+    int			fd;
 
-    i = 0;
-    while (i < argc)
-    {
-        fd = open(argv[i], O_RDONLY);
-        check_magic(fd);
-        read_name(fd, arena->players[i].name);
-        printf("%s\n", arena->players[i].name);
-        read_nulls(fd);
-        /*
-        read_code_size(fd, &(arena->players[i]->code_size));
-        read_comment(fd, arena->players[i]->comment);
-        read_nulls(fd);
-        read_code(fd, arena->players[i]->code_size, arena->players[i]->code);
-        */
-        close(fd);
-        i++;
-        
-    }
+    fd = open(path, O_RDONLY);
+	if (fd < 0)
+		error_handle(E_INV_PATH, arena, path);
+	player = arena->players[arena->players_count];
+	player_ini(&player);
+    check_magic(fd, arena);
+	read_name(fd, &player, arena);
+	check_null(fd, arena);
+
+	read_comment(fd, &player, arena);
+	arena->players_count++;
+	ft_printf("name = %s\n", player.name);
+	ft_printf("comment = %s\n", player.comment);
+    /*
+    read_code_size(fd, &(arena->players[i]->code_size));
+    read_comment(fd, arena->players[i]->comment);
+    read_nulls(fd);
+    read_code(fd, arena->players[i]->code_size, arena->players[i]->code);
+    */
+    close(fd);
 
 }

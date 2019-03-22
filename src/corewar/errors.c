@@ -1,0 +1,44 @@
+#include "corewar.h"
+
+static char	*errorid_to_str(int error_id)
+{
+	char *msg;
+
+	if (error_id == E_NO_MEMORY)
+		msg = ft_strdup("no memory\n");
+	else if (error_id == E_OVER_PLAYERS)
+		msg = ft_strdup("too many champions\n");
+	else if (error_id == E_INV_PATH)
+		msg = ft_strdup("сan't read source file ");
+	else if (error_id == E_INV_CHAMP)
+		msg = ft_strdup("mistake in the champion's code ");
+	else
+		msg = ft_strdup("unknown error");
+	return (msg);
+}
+
+//	addition -> дополнение к сообщению по коду ошибки.
+//	если оно не нужно, то addition = NULL
+void		error_handle(int error_id, t_arena *arena, char *addition)
+{
+	char	*error_msg;
+	char	*add;
+
+	add = NULL;
+	if (addition)
+		add = ft_strdup(addition);
+	arena_free(arena);
+	error_msg = errorid_to_str(error_id);
+	if (error_msg == NULL)
+		ft_putstr("Error: no memory!\n");
+	else
+	{
+		if (add)
+			ft_printf("{red}Error: {def}%s: %s\n", error_msg, add);
+		else
+			ft_printf("{red}Error: {def}%s\n", error_msg);
+	}
+	free(error_msg);
+	free(add);
+	exit(error_id);
+}
