@@ -28,6 +28,7 @@ typedef struct	s_carriage
 	int		pause_count;
 	int		mem_pos;
 	int		owner;
+	int		carry;
 }				t_carriage;
 
 typedef enum	e_flag

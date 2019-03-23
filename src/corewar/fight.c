@@ -42,8 +42,15 @@ void    print_arena(t_arena *arena)
     }
 }
 
-void    move_carg(t_carriage *carg, t_list *all_carges, int *carge_count)
+void    move_carg(t_carriage *carg, t_arena *arena, int *carge_count)
 {
+    if(arena->map[carg->mem_pos] == 0 || arena->map[carg->mem_pos] > 16)
+        carg->mem_pos++;
+    else
+    {
+        //t_op[arena->map[carg->mem_pos]].op_handler(...);
+    }
+    
     *carge_count -= 1;
 }
 
@@ -60,7 +67,7 @@ void	fight(t_arena *arena)
         carg = arena->carg;
         while (carg)
         {
-            move_carg((t_carriage*)carg->content, arena->carg, &carg_count);
+            move_carg((t_carriage*)carg->content, arena, &carg_count);
             carg = carg->next;
         }
     }
