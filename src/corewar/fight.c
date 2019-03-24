@@ -1,75 +1,58 @@
 #include "corewar.h"
 
-t_carriage *carg_new(int pos, int owner)
-{
-    t_carriage *res;
 
-    res = (t_carriage*)malloc(sizeof(t_carriage));
-    res->owner = owner;
-    res->mem_pos = pos;
-    res->pause_count = 0;
-    ft_bzero(res->reg, (REG_NUMBER) * sizeof(int));
-    return (res);    
+int			check_code_args(t_oper oper_id, t_arg_type arg_type)
+{
+
+	return (1);
 }
 
-void    locate_players(t_arena *arena)
+void		move_carriage(t_carriage *carg, t_arena *arena)
 {
-    int i;
-    int pos;
-    t_list  *cargs;
 
-    i = 0;
-    cargs = 0;
-    while (i < arena->players_count)
-    {
-        ft_memcpy(arena->map + i * MEM_SIZE / arena->players_count, arena->players[i].code, arena->players[i].code_size);
-        ft_lstadd(&cargs, ft_lstput(carg_new(i * MEM_SIZE / arena->players_count, i + 1), sizeof(t_carriage)));
-        i++;
-    }
-    arena->carg = cargs;
-    return ;
 }
 
-void    print_arena(t_arena *arena)
+static void	operations_sort(t_carriage *carg, t_arena *arena)
 {
-    t_list *lst;
+	unsigned char	instruct;
 
-    lst = arena->carg;
-    while (lst)
+	instruct = arena->map[carg->mem_pos];
+	if (instruct >= LIVE && instruct <= AFF)
+	{
+		if (check_code_args(LIVE, arena->map[(carg->mem_pos + 1) % MEM_SIZE]))
+			g_op_tab[instruct - 1].op_handler(carg, arena);
+		move_carriage(carg, arena);
+	}
+	else
+		op_invalid(carg, arena);
+}
+
+static void	play_round(t_arena *arena)
+{
+	t_list		*carg_node;
+	t_carriage	*carg;
+
+    carg_node = arena->carg_lst;
+    while (carg_node)
     {
-        ft_printf("pos %d owner %d\n", ((t_carriage*)lst->content)->mem_pos, ((t_carriage*)lst->content)->owner);
-        lst = lst->next;
+		carg = (t_carriage *)carg_node->content;
+        if (carg->pause_count > 0)
+			carg->pause_count--;
+		else
+			operations_sort(carg, arena);
+    	carg_node = carg_node->next;
     }
 }
 
-void    move_carg(t_carriage *carg, t_arena *arena, int *carge_count)
+void		fight(t_arena *arena)
 {
-    if(arena->map[carg->mem_pos] == 0 || arena->map[carg->mem_pos] > 16)
-        carg->mem_pos++;
-    else
-    {
-        //t_op[arena->map[carg->mem_pos]].op_handler(...);
-    }
-    
-    *carge_count -= 1;
-}
+    int			carg_count;
 
-void	fight(t_arena *arena)
-{
-    int     carg_count;
-    t_list  *carg;
-
-    locate_players(arena);
-    carg_count = ft_lstlen(arena->carg);
-    while (carg_count)
+    while (arena->carg_lst)
     {
-        arena->cur_cycle++;
-        carg = arena->carg;
-        while (carg)
-        {
-            move_carg((t_carriage*)carg->content, arena, &carg_count);
-            carg = carg->next;
-        }
+		arena->cur_cycle++;
+		play_round(arena);
+		break;
     }
-    print_arena(arena);
+    arena_print(arena);
 }

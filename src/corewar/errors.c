@@ -19,7 +19,7 @@ static char	*errorid_to_str(int error_id)
 
 //	addition -> дополнение к сообщению по коду ошибки.
 //	если оно не нужно, то addition = NULL
-void		error_handle(int error_id, t_arena *arena, char *addition)
+void		error_handle(int error_id, char *addition)
 {
 	char	*error_msg;
 	char	*add;
@@ -27,7 +27,7 @@ void		error_handle(int error_id, t_arena *arena, char *addition)
 	add = NULL;
 	if (addition)
 		add = ft_strdup(addition);
-	arena_free(arena);
+	arena_clear();
 	error_msg = errorid_to_str(error_id);
 	if (error_msg == NULL)
 		ft_putstr("Error: no memory!\n");

@@ -1,6 +1,6 @@
 #include "corewar.h"
 
-int		handle_flag(char *str, int *argc)
+int			handle_flag(char *str, int *argc)
 {
 // Написать обработку флагов и заполнение их значений в массив arena->flags
 // Изначально там все значения = -1.
@@ -12,7 +12,31 @@ int		handle_flag(char *str, int *argc)
 	return (0);
 }
 
-void	load_arena(int argc, char **argv, t_arena *arena)
+static void	locate_players(t_arena *arena)
+{
+    int 		i;
+    int 		pos;
+	t_carriage	*carriage;
+	t_list		*node;
+
+    i = 0;
+    while (i < arena->players_count)
+    {
+		pos = i * MEM_SIZE / arena->players_count;
+        ft_memcpy(arena->map + pos, arena->players[i].code, arena->players[i].code_size);
+		carriage = carg_new(pos, i + 1);
+		if (carriage == NULL)
+			error_handle(E_NO_MEM, arena, NULL);
+		node = ft_lstput(carriage, sizeof(t_carriage));
+		if (node == NULL)
+			error_handle(E_NO_MEM, arena, NULL);
+		ft_lstadd(&arena->carg_lst, node);
+        i++;
+    }
+    return ;
+}
+
+void		load_arena(int argc, char **argv, t_arena *arena)
 {
 	int i;
 
@@ -31,7 +55,8 @@ void	load_arena(int argc, char **argv, t_arena *arena)
 	}
 	if (arena->players_count == 0)
 	{
-		arena_free(arena);
+		arena_clear(arena);
 		print_usage();
 	}
+	locate_players(arena);
 }

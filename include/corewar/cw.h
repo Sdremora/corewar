@@ -50,7 +50,7 @@ typedef struct	s_arena
 	int				cycle_to_die;
 	int				cur_cycle;
 	int				flags[FLAGS_COUNT];
-	t_list			*carg;
+	t_list			*carg_lst;
 }				t_arena;
 
 //	main.c
@@ -70,11 +70,21 @@ void		load_arena(int argc, char **argv, t_arena *arena);
 
 //	arena_utils.c
 void		arena_ini(t_arena *arena);
-void		arena_free(t_arena *arena);
+void		arena_clear(t_arena *arena);
+void		arena_print(t_arena *arena);
 
 //	errors.c
 void		error_handle(int error_id, t_arena *arena, char *addition);
 
 //	player_utils.c
-void	player_ini(t_player *player);
+void		player_ini(t_player *player);
+
+//	carg_utils.c
+t_carriage	*carg_new(int pos, int owner);
+
+//	instructs_p1.c
+void		op_live(t_carriage *carg, t_arena *arena);
+void		op_load(t_carriage *carg, t_arena *arena);
+void		op_invalid(t_carriage *carg, t_arena *arena);
+
 #endif
