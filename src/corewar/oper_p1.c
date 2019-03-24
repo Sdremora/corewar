@@ -7,7 +7,7 @@ void	op_live(t_carriage *carg, t_arena *arena)
 
 void	op_load(t_carriage *carg, t_arena *arena)
 {
-
+	
 }
 
 void	op_invalid(t_carriage *carg, t_arena *arena)

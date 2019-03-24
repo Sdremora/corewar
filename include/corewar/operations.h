@@ -5,7 +5,7 @@
 
 typedef enum	e_oper
 {
-	LIVE = 1,
+	LIVE,
 	LD,
 	ST,
 	ADD,
@@ -31,10 +31,10 @@ typedef struct	s_op
 	int			args[3];
 	int			cost;
 	int			kod_tipov_argumenta;
-	int			t_dir_size_eq_4;
+	int			t_dir_size_eq_2;
 	void		(*op_handler)(t_carriage *carg, t_arena *arena);
 }				t_op;
 
-extern t_op		g_op_tab[15];
+extern t_op		g_op_tab[16];
 
 #endif

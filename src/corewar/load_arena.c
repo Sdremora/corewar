@@ -24,7 +24,7 @@ static void	locate_players(t_arena *arena)
     {
 		pos = i * MEM_SIZE / arena->players_count;
         ft_memcpy(arena->map + pos, arena->players[i].code, arena->players[i].code_size);
-		carriage = carg_new(pos, i + 1);
+		carriage = carg_new(pos, i + 1, 1);
 		if (carriage == NULL)
 			error_handle(E_NO_MEM, arena, NULL);
 		node = ft_lstput(carriage, sizeof(t_carriage));

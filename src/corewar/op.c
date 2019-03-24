@@ -12,7 +12,7 @@
 
 #include "corewar.h"
 
-t_op	g_op_tab[15] =
+t_op	g_op_tab[16] =
 {
 	{"live", 1, {T_DIR}, 10, 0, 0, op_live},
 	{"ld", 2, {T_DIR | T_IND, T_REG}, 5, 1, 0, op_load},

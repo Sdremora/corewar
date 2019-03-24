@@ -24,11 +24,13 @@ typedef struct	s_player
 
 typedef struct	s_carriage
 {
-	int		reg[REG_NUMBER];
-	int		pause_count;
-	int		mem_pos;
-	int		owner;
-	int		carry;
+	int				reg[REG_NUMBER];
+	int				pause_count;
+	int				mem_pos;
+	int				owner;
+	int				carry;
+	char			op_id;
+	int				last_live;
 }				t_carriage;
 
 typedef enum	e_flag
@@ -80,7 +82,7 @@ void		error_handle(int error_id, t_arena *arena, char *addition);
 void		player_ini(t_player *player);
 
 //	carg_utils.c
-t_carriage	*carg_new(int pos, int owner);
+t_carriage	*carg_new(int pos, int owner, int cycle);
 
 //	instructs_p1.c
 void		op_live(t_carriage *carg, t_arena *arena);
