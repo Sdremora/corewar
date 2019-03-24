@@ -5,9 +5,9 @@ static char	*errorid_to_str(int error_id)
 	char *msg;
 
 	if (error_id == E_NO_MEMORY)
-		msg = ft_strdup("no memory\n");
+		msg = ft_strdup("no memory");
 	else if (error_id == E_OVER_PLAYERS)
-		msg = ft_strdup("too many champions\n");
+		msg = ft_strdup("too many champions");
 	else if (error_id == E_INV_PATH)
 		msg = ft_strdup("сan't read source file ");
 	else if (error_id == E_INV_CHAMP)
