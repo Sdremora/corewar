@@ -27,7 +27,7 @@ void	put_value(t_arena *arena, int pos, int value)
 	while (i < REG_SIZE)
 	{
 		arena->map[(pos + REG_SIZE - 1 - i) % MEM_SIZE] = converter.str[i];
-		i--;
+		i++;
 	}
 }
 

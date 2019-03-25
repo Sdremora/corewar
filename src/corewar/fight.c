@@ -62,7 +62,7 @@ int			check_code_args(int args[4], unsigned char op_id)
 
 	res = 1;
 	i = 0;
-	while (i < 5)
+	while (i < 4)
 	{
 		if (g_op_tab[op_id].args[i] && args[i])
 			res *= ((args[i] & g_op_tab[op_id].args[i]) > 0);
