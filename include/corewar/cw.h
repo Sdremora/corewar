@@ -31,6 +31,7 @@ typedef struct	s_carriage
 	int				carry;
 	char			op_id;
 	int				last_live;
+	int				args[4];				
 }				t_carriage;
 
 typedef enum	e_flag
