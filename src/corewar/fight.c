@@ -43,12 +43,16 @@ void		load_args(t_carriage *carg, t_arena *arena)
 	unsigned char	arg;
 	unsigned char	temp;
 
-	arg = arena->map[(carg->mem_pos + 1) % MEM_SIZE];
-	carg->args[0] = convert_args(arg >> 6);
-	carg->args[1] = convert_args(arg >> 4 & 3);
-	carg->args[2] = convert_args(arg >> 2 & 3);
-	carg->args[3] = convert_args(arg & 3);
-	
+	if (g_op_tab[carg->op_id].kod_tipov_argumenta)
+	{
+		arg = arena->map[(carg->mem_pos + 1) % MEM_SIZE];
+		carg->args[0] = convert_args(arg >> 6);
+		carg->args[1] = convert_args(arg >> 4 & 3);
+		carg->args[2] = convert_args(arg >> 2 & 3);
+		carg->args[3] = convert_args(arg & 3);
+	}
+	else
+		carg->args[0] = T_DIR;
 }
 
 int			check_code_args(int args[4], unsigned char op_id)
@@ -74,10 +78,15 @@ void		move_carriage(t_carriage *carg, int dir_size)
 	int move;
 	int args[4];
 
-	move = 2;
+	move = 1 + g_op_tab[carg->op_id].kod_tipov_argumenta;
 	move += step_bites(carg->args[0], dir_size) + step_bites(carg->args[1], dir_size)
 			+ step_bites(carg->args[2], dir_size) + step_bites(carg->args[3], dir_size);
 	carg->mem_pos = (carg->mem_pos + move) % MEM_SIZE;
+}
+void		clean_carg_op(t_carriage *carg)
+{
+	carg->op_id = -1;
+	ft_bzero(carg->args, sizeof(int) * 4);
 }
 
 static void	play_round(t_arena *arena)
@@ -94,10 +103,11 @@ static void	play_round(t_arena *arena)
 		else if (carg->op_id > -1)
 		{
 			load_args(carg, arena);
-			if (check_code_args(carg->args, arena->map[carg->mem_pos] - 1))
+			if (!g_op_tab[carg->op_id].kod_tipov_argumenta
+			|| check_code_args(carg->args, arena->map[carg->mem_pos] - 1))
 				g_op_tab[carg->op_id].op_handler(carg, arena);
 			move_carriage(carg, g_op_tab[arena->map[carg->mem_pos] - 1].dir_size);
-			carg->op_id = -1;
+			clean_carg_op(carg);
 		}
 		else
 			operations_sort(carg, arena);
