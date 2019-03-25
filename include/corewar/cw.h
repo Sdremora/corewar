@@ -55,6 +55,12 @@ typedef struct	s_arena
 	t_list			*carg_lst;
 }				t_arena;
 
+typedef union	u_converter
+{
+	int		n;
+	char	str[sizeof(int)];
+}				t_converter;
+
 //	main.c
 void		print_usage(void);
 
@@ -89,4 +95,8 @@ void		op_live(t_carriage *carg, t_arena *arena);
 void		op_load(t_carriage *carg, t_arena *arena);
 void		op_invalid(t_carriage *carg, t_arena *arena);
 
+//	oper_utils.c
+int			get_dir_value(t_arena *arena, int pos, int dir_size);
+int			get_ind_value(t_arena *arena, int pos);
+int			get_reg_num(t_arena *arena, int pos);
 #endif

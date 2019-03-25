@@ -68,20 +68,19 @@ void		move_carriage(t_carriage *carg, t_arena *arena)
 
 static void	operations_sort(t_carriage *carg, t_arena *arena)
 {
-	unsigned char	instruct;
+	unsigned char	oper;
 
-	instruct = arena->map[carg->mem_pos] - 1;// сдвинул instruct и live чтобы все время не писать -1
-	if (instruct >= LIVE && instruct <= AFF)
+	oper = arena->map[carg->mem_pos] - 1;
+	if (oper >= LIVE && oper <= AFF)
 	{
-		if (check_code_args(instruct, arena->map[(carg->mem_pos + 1) % MEM_SIZE]))
+		if (check_code_args(oper, arena->map[(carg->mem_pos + 1) % MEM_SIZE]))
 		{
-			carg->pause_count = g_op_tab[instruct].cost;
-			carg->op_id = instruct;
-//			g_op_tab[instruct].op_handler(carg, arena);  перенес в play_round
+			carg->pause_count = g_op_tab[oper].cost;
+			carg->op_id = oper;
 		}
 		else
 		{
-			carg->mem_pos = (carg->mem_pos + 2 + step_args(g_op_tab[instruct].t_dir_size_eq_2, arena->map[(carg->mem_pos + 1) % MEM_SIZE])) % MEM_SIZE;
+			carg->mem_pos = (carg->mem_pos + 2 + step_args(g_op_tab[oper].dir_size, arena->map[(carg->mem_pos + 1) % MEM_SIZE])) % MEM_SIZE;
 		}
 //		move_carriage(carg, arena);
 	}
@@ -103,7 +102,7 @@ static void	play_round(t_arena *arena)
 		else if (carg->op_id > -1)
 			g_op_tab[carg->op_id].op_handler(carg, arena);
 		else
-		{	
+		{
 			operations_sort(carg, arena);
 			carg->op_id = -1;
 		}
@@ -114,11 +113,15 @@ static void	play_round(t_arena *arena)
 void		fight(t_arena *arena)
 {
     int			carg_count;
+	int			i;
 
+	i = 0;
     while (arena->carg_lst)
     {
-			arena->cur_cycle++;
-			play_round(arena);
+		arena->cur_cycle++;
+		play_round(arena);
+		i++;
+		if (i > 50)
 			break;
     }
     arena_print(arena);

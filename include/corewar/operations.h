@@ -26,13 +26,13 @@ typedef enum	e_oper
 
 typedef struct	s_op
 {
-	char		name[10];
-	int			var_count;
-	int			args[3];
-	int			cost;
-	int			kod_tipov_argumenta;
-	int			t_dir_size_eq_2;
-	void		(*op_handler)(t_carriage *carg, t_arena *arena);
+	char			name[10];
+	int				var_count;
+	unsigned char	args[3];
+	int				cost;
+	int				kod_tipov_argumenta;
+	int				dir_size;
+	void			(*op_handler)(t_carriage *carg, t_arena *arena);
 }				t_op;
 
 extern t_op		g_op_tab[16];
