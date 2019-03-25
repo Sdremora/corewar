@@ -11,5 +11,6 @@ t_carriage *carg_new(int pos, int owner, int cycle)
     ft_bzero(res->reg, (REG_NUMBER) * sizeof(int));
     res->op_id = -1;
     res->last_live = cycle;
+    res->live = 1;
     return (res);
 }
