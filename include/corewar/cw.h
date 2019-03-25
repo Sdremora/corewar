@@ -12,6 +12,7 @@
 #define E_OVER_PLAYERS -3
 #define E_INV_PATH -4
 #define E_INV_CHAMP -5
+#define E_INV_ALGO -99
 
 typedef struct	s_player
 {
@@ -31,6 +32,7 @@ typedef struct	s_carriage
 	int				carry;
 	char			op_id;
 	int				last_live;
+	int				args[4];
 }				t_carriage;
 
 typedef enum	e_flag
@@ -53,6 +55,8 @@ typedef struct	s_arena
 	int				cur_cycle;
 	int				flags[FLAGS_COUNT];
 	t_list			*carg_lst;
+	int				last_live_player;
+	int				live_call_count;
 }				t_arena;
 
 typedef union	u_converter
@@ -93,10 +97,11 @@ t_carriage	*carg_new(int pos, int owner, int cycle);
 //	instructs_p1.c
 void		op_live(t_carriage *carg, t_arena *arena);
 void		op_load(t_carriage *carg, t_arena *arena);
+void		op_store(t_carriage *carg, t_arena *arena);
 void		op_invalid(t_carriage *carg, t_arena *arena);
 
 //	oper_utils.c
-int			get_dir_value(t_arena *arena, int pos, int dir_size);
-int			get_ind_value(t_arena *arena, int pos);
+int			get_value(t_arena *arena, int pos, unsigned char len);
+void		put_value(t_arena *arena, int pos, int value);
 int			get_reg_num(t_arena *arena, int pos);
 #endif

@@ -104,7 +104,7 @@ static void	play_round(t_arena *arena)
 		else
 		{
 			operations_sort(carg, arena);
-			carg->op_id = -1;
+//			carg->op_id = -1;
 		}
     	carg_node = carg_node->next;
     }

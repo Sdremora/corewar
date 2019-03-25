@@ -4,7 +4,7 @@ t_op	g_op_tab[16] =
 {
 	{"live", 1, {T_DIR}, 10, 0, 4, op_live},
 	{"ld", 2, {T_DIR | T_IND, T_REG}, 5, 1, 4, op_load},
-	{"st", 2, {T_REG, T_IND | T_REG}, 5, 1, 4},
+	{"st", 2, {T_REG, T_IND | T_REG}, 5, 1, 4, op_store},
 	{"add", 3, {T_REG, T_REG, T_REG}, 10, 1, 4},
 	{"sub", 3, {T_REG, T_REG, T_REG}, 10, 1, 4},
 	{"and", 3, {T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG}, 6, 1, 4},

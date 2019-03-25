@@ -1,29 +1,34 @@
 #include "corewar.h"
 
-int		get_dir_value(t_arena *arena, int pos, int dir_size)
+int		get_value(t_arena *arena, int pos, unsigned char len)
 {
 	int			i;
 	t_converter converter;
 
+	if (len > sizeof(int))
+		error_handle(E_INV_ALGO, arena, "беда в get_value");
 	converter.n = 0;
 	i = 0;
-	while (i < dir_size)
+	while (i < len)
 	{
-		converter.str[i] = arena->map[(pos + dir_size - 1 - i) % MEM_SIZE];
+		converter.str[i] = arena->map[(pos + len - 1 - i) % MEM_SIZE];
 		i++;
 	}
 	return (converter.n);
 }
 
-int		get_ind_value(t_arena *arena, int pos)
+void	put_value(t_arena *arena, int pos, int value)
 {
-	t_converter converter;
+	int			i;
+	t_converter	converter;
 
-	converter.str[0] = arena->map[(pos + 1) % MEM_SIZE];
-	converter.str[1] = arena->map[pos % MEM_SIZE];
-	converter.str[2] = 0;
-	converter.str[3] = 0;
-	return (get_dir_value(arena, pos + converter.n, REG_SIZE));
+	i = 0;
+	converter.n = value;
+	while (i < REG_SIZE)
+	{
+		arena->map[(pos + REG_SIZE - 1 - i) % MEM_SIZE] = converter.str[i];
+		i--;
+	}
 }
 
 int		get_reg_num(t_arena *arena, int pos)

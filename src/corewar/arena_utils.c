@@ -12,6 +12,8 @@ void	arena_ini(t_arena *arena)
 	while (i < FLAGS_COUNT)
 		arena->flags[i++] = -1;
 	arena->carg_lst = NULL;
+	arena->last_live_player = 0;
+	arena->live_call_count = 0;
 }
 
 //Дописать очистку арены.
