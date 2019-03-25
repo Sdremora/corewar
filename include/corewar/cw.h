@@ -31,7 +31,7 @@ typedef struct	s_carriage
 	int				carry;
 	char			op_id;
 	int				last_live;
-	int				args[4];				
+	int				args[3];				
 }				t_carriage;
 
 typedef enum	e_flag
@@ -52,6 +52,8 @@ typedef struct	s_arena
 	int				players_count;
 	int				cycle_to_die;
 	int				cur_cycle;
+	int				cycle_past_check;
+	int				checks;
 	int				flags[FLAGS_COUNT];
 	t_list			*carg_lst;
 }				t_arena;

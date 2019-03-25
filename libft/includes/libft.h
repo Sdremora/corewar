@@ -6,7 +6,7 @@
 /*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 14:04:27 by hharvey           #+#    #+#             */
-/*   Updated: 2019/03/24 11:25:33 by sdremora         ###   ########.fr       */
+/*   Updated: 2019/03/25 20:11:43 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,8 @@ void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 t_list				*ft_lstfold(t_list *lst, t_list *(*f)(t_list *, t_list *));
 void				ft_lstprint(t_list *lst);
+t_list				*ft_lstdelsave(t_list *src_lst, t_list *del_lst,
+					void (*del)(void *, size_t));
 
 void				ft_lstdelfun(void *content, size_t size);
 char				**ft_ltas(t_list *lst);
