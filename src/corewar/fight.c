@@ -43,14 +43,6 @@ void		load_args(t_carriage *carg, t_arena *arena)
 	unsigned char	arg;
 	unsigned char	temp;
 
-<<<<<<< HEAD
-	arg = arena->map[(carg->mem_pos + 1) % MEM_SIZE];
-	carg->args[0] = convert_args(arg >> 6);
-	carg->args[1] = convert_args(arg >> 4 & 3);
-	carg->args[2] = convert_args(arg >> 2 & 3);
-	carg->args[3] = convert_args(arg & 3);
-
-=======
 	if (g_op_tab[carg->op_id].kod_tipov_argumenta)
 	{
 		arg = arena->map[(carg->mem_pos + 1) % MEM_SIZE];
@@ -61,7 +53,6 @@ void		load_args(t_carriage *carg, t_arena *arena)
 	}
 	else
 		carg->args[0] = T_DIR;
->>>>>>> 66b7f1ed36842b19e9a23fd964bc2ef10b5dc729
 }
 
 int			check_code_args(int args[4], unsigned char op_id)
@@ -91,16 +82,11 @@ void		move_carriage(t_carriage *carg, int dir_size)
 	move += step_bites(carg->args[0], dir_size) + step_bites(carg->args[1], dir_size)
 			+ step_bites(carg->args[2], dir_size) + step_bites(carg->args[3], dir_size);
 	carg->mem_pos = (carg->mem_pos + move) % MEM_SIZE;
-<<<<<<< HEAD
-
-
-=======
 }
 void		clean_carg_op(t_carriage *carg)
 {
 	carg->op_id = -1;
 	ft_bzero(carg->args, sizeof(int) * 4);
->>>>>>> 66b7f1ed36842b19e9a23fd964bc2ef10b5dc729
 }
 
 static void	play_round(t_arena *arena)
