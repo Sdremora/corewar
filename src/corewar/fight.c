@@ -109,7 +109,7 @@ static void	play_round(t_arena *arena)
 			if (!g_op_tab[carg->op_id].kod_tipov_argumenta
 			|| check_code_args(carg->args, carg->op_id))
 			{
-				g_op_tab[carg->op_id].op_handler(carg, arena);
+//				g_op_tab[carg->op_id].op_handler(carg, arena);
 			}
 			move_carriage(carg, g_op_tab[carg->op_id].dir_size);
 			clean_carg_op(carg);
@@ -125,10 +125,8 @@ void		check_live(t_arena *arena)
 	t_list		*carg_node;
 	t_carriage	*carg;
 	t_list		*temp;
-	int			no_del;
 
 	carg_node = arena->carg_lst;
-	no_del = 1;
 	while (carg_node)
 	{
 		carg = (t_carriage *)carg_node->content;
@@ -137,24 +135,24 @@ void		check_live(t_arena *arena)
 			temp = carg_node->next;
 			arena->carg_lst = ft_lstdelsave(arena->carg_lst, carg_node, ft_lstdelfun);
 			carg_node = temp;
-			no_del = 0;
-			arena->checks = 0;
 			continue ;
 		}
 		else
 			carg->live = 0;
 		carg_node = carg_node->next;
 	}
-	if (no_del)
-		arena->checks++;
 }
 
 void		check_cycle_to_die(t_arena *arena)
 {
-	if (arena->live_call_count >= NBR_LIVE)
+	if (arena->live_call_count >= NBR_LIVE || arena->checks >= MAX_CHECKS)
+	{
 		arena->cycle_to_die -= CYCLE_DELTA;
-	if (arena->checks >= MAX_CHECKS)
-		arena->cycle_to_die -= CYCLE_DELTA;
+		arena->checks = 0;
+	}
+	else
+		arena->checks++;
+	arena->live_call_count = 0;
 }
 
 void		fight(t_arena *arena)
@@ -165,7 +163,7 @@ void		fight(t_arena *arena)
     {
 		arena->cur_cycle++;
 		arena->cycle_past_check++;
-		if (arena->cycle_past_check == arena->cycle_to_die)
+		if (arena->cycle_past_check == arena->cycle_to_die || arena->cycle_to_die <= 0)
 		{
 			arena->cycle_past_check -= arena->cycle_to_die;
 			check_live(arena);
