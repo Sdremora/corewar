@@ -109,7 +109,7 @@ static void	play_round(t_arena *arena)
 			if (!g_op_tab[carg->op_id].kod_tipov_argumenta
 			|| check_code_args(carg->args, carg->op_id))
 			{
-//				g_op_tab[carg->op_id].op_handler(carg, arena);
+				g_op_tab[carg->op_id].op_handler(carg, arena);
 			}
 			move_carriage(carg, g_op_tab[carg->op_id].dir_size);
 			clean_carg_op(carg);

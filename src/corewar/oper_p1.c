@@ -24,7 +24,7 @@ void	op_live(t_carriage *carg, t_arena *arena)
 **	T_DIR / T_IND : T_REG
 */
 
-void	op_load(t_carriage *carg, t_arena *arena)
+void	op_ld(t_carriage *carg, t_arena *arena)
 {
 	char			reg_num;
 	int				value;
@@ -48,7 +48,7 @@ void	op_load(t_carriage *carg, t_arena *arena)
 **	T_REG : T_REG / T_IND
 */
 
-void	op_store(t_carriage *carg, t_arena *arena)
+void	op_st(t_carriage *carg, t_arena *arena)
 {
 	int	value;
 	int	offset;

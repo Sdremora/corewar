@@ -1,22 +1,5 @@
 #include "corewar.h"
 
-// int		get_value(t_arena *arena, int pos, unsigned char len)
-// {
-// 	int			i;
-// 	t_converter converter;
-
-// 	if (len > sizeof(int))
-// 		error_handle(E_INV_ALGO, arena, "беда в get_value");
-// 	converter.n = 0;
-// 	i = 0;
-// 	while (i < len)
-// 	{
-// 		converter.str[i] = arena->map[(pos + len - 1 - i) % MEM_SIZE];
-// 		i++;
-// 	}
-// 	return (converter.n);
-// }
-
 int		get_value(t_arena *arena, t_carriage *carg, int mem_offset, char arg_type)
 {
 	int			i;

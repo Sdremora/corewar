@@ -99,12 +99,17 @@ t_carriage	*carg_new(int pos, int owner, int cycle);
 
 //	oper_p1.c
 void		op_live(t_carriage *carg, t_arena *arena);
-void		op_load(t_carriage *carg, t_arena *arena);
-void		op_store(t_carriage *carg, t_arena *arena);
+void		op_ld(t_carriage *carg, t_arena *arena);
+void		op_st(t_carriage *carg, t_arena *arena);
 void		op_add_sub(t_carriage *carg, t_arena *arena);
 void		op_and_or_xor(t_carriage *carg, t_arena *arena);
 
 //	oper_p2.c
+void		op_zjmp(t_carriage *carg, t_arena *arena);
+void		op_ldi(t_carriage *carg, t_arena *arena);
+void		op_sti(t_carriage *carg, t_arena *arena);
+void		op_fork(t_carriage *carg, t_arena *arena);
+void		op_aff(t_carriage *carg, t_arena *arena);
 void		op_invalid(t_carriage *carg, t_arena *arena);
 
 //	oper_utils.c
