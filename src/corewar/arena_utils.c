@@ -4,7 +4,7 @@ void	arena_ini(t_arena *arena)
 {
 	int i;
 
-	ft_bzero(arena->map, MEM_SIZE);
+	ft_bzero(arena->map, sizeof(unsigned char) * MEM_SIZE);
 	arena->players_count = 0;
     arena->cycle_to_die = CYCLE_TO_DIE;
     arena->cur_cycle = 0;
@@ -13,8 +13,11 @@ void	arena_ini(t_arena *arena)
 	i = 0;
 	while (i < FLAGS_COUNT)
 		arena->flags[i++] = -1;
+	i = 0;
+	while (i < MAX_PLAYERS)
+		arena->players[i++].id = -1;
 	arena->carg_lst = NULL;
-	arena->last_live_player = 0;
+	arena->last_live_player = -1;
 	arena->live_call_count = 0;
 }
 

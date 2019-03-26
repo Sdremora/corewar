@@ -61,7 +61,7 @@ void    read_code(int fd, int size, char *code, t_arena *arena)
     return ;
 }
 
-void	load_player(char *path, t_arena *arena)
+void	load_player(char *path, t_arena *arena, int pnb)
 {
 	t_player	*player;
     int			fd;
@@ -69,8 +69,8 @@ void	load_player(char *path, t_arena *arena)
     fd = open(path, O_RDONLY);
 	if (fd < 0)
 		error_handle(E_INV_PATH, arena, path);
-	player = &(arena->players[arena->players_count]);
-	player_ini(player, arena->players_count);
+	player = &(arena->players[pnb]);
+	player_ini(player, pnb);
     check_magic(fd, arena);
 	read_name(fd, player, arena);
 	check_null(fd, arena);
@@ -78,7 +78,8 @@ void	load_player(char *path, t_arena *arena)
 	read_comment(fd, player, arena);
     check_null(fd, arena);
     read_code(fd, player->code_size, player->code, arena);
-	arena->last_live_player = player->id;
+    if (arena->last_live_player < player->id)
+        arena->last_live_player = player->id;
 	arena->players_count++;
     close(fd);
 }

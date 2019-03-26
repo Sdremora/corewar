@@ -42,20 +42,30 @@ int			get_num_flag(char *str)
 		return (F_N);
 	if (ft_strequ(str, "--stealth"))
 		return (F_STEALTH);
+	if (ft_strequ(str, "-vis"))
+		return (F_VIS);
 	return (-1);
 }
 
-int			handle_flag(char **argv, int *pos, t_arena *arena)
+int			handle_flag(char **argv, int *pos, int argc, t_arena *arena)
 {
 	int i;
 
-	if ((i = get_num_flag(argv[*pos]) > 0))
+	if ((i = get_num_flag(argv[*pos])) > 0)
 	{
-		if (i >= F_D)
-			{
-				*pos += 1;
+		if (i >= F_D) //флаги с числами
+		{
+			*pos += 1;
+			if (*pos < argc)
 				arena->flags[i] = get_flag_nb(argv[*pos]);
-			}
+			else
+				print_usage();
+		}
+		else
+		{
+			arena->flags[i] = 1;
+		}
+		return (1);
 	}
 // Написать обработку флагов и заполнение их значений в массив arena->flags
 // Изначально там все значения = -1.
@@ -79,7 +89,7 @@ static void	locate_players(t_arena *arena)
     {
 		pos = i * MEM_SIZE / arena->players_count;
         ft_memcpy(arena->map + pos, arena->players[i].code, arena->players[i].code_size);
-		carriage = carg_new(pos, i + 1, 1);
+		carriage = carg_new(pos, arena->players[i].id, 1);
 		if (carriage == NULL)
 			error_handle(E_NO_MEM, arena, NULL);
 		node = ft_lstput(carriage, sizeof(t_carriage));
@@ -91,6 +101,47 @@ static void	locate_players(t_arena *arena)
     return ;
 }
 
+int			get_pnb(t_arena *arena)
+{
+	int i;
+	int res;
+	
+	if ((i = arena->flags[F_N]) != -1)
+	{
+		if (i < MAX_PLAYERS && arena->players[i].id == -1)
+		{
+			res = arena->flags[F_N];
+			arena->flags[F_N] = -1;
+			return (res);
+		}
+		else
+			error_handle(E_PLAYER_NUMBER, arena, NULL);
+	}
+	else
+	{
+		i = 0;
+		while (i < MAX_PLAYERS && arena->players[i].id != -1)
+			i++;
+	}
+	if (i == MAX_PLAYERS)
+		error_handle(E_OVER_PLAYERS, arena, NULL);
+	return (i);
+}
+
+int			check_players(t_arena *arena)
+{
+	int i;
+
+	i = 0;
+	while (i < arena->players_count)
+	{
+		if (arena->players[i].id == -1)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void		load_arena(int argc, char **argv, t_arena *arena)
 {
 	int i;
@@ -99,19 +150,20 @@ void		load_arena(int argc, char **argv, t_arena *arena)
 	i = 1;
 	while (i < argc)
 	{
-		if (!handle_flag(argv, &i, arena))
+		if (!handle_flag(argv, &i, argc, arena))
 		{
 			if (arena->players_count < MAX_PLAYERS)
-				load_player(argv[i], arena);
+				load_player(argv[i], arena, get_pnb(arena));
 			else
 				error_handle(E_OVER_PLAYERS, arena, NULL);
 		}
 		i++;
 	}
-	if (arena->players_count == 0)
+	if (arena->players_count == 0 || !check_players(arena))
 	{
 		arena_clear(arena);
-		print_usage();
+		error_handle(E_PLAYER_NUMBER, arena, NULL);
+//		print_usage();
 	}
 	locate_players(arena);
 }
