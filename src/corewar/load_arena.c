@@ -1,7 +1,62 @@
 #include "corewar.h"
 
-int			handle_flag(char *str, int *argc)
+int		get_flag_nb(char *str)
 {
+	long long int	nb;
+
+	nb = 0;
+	if (*str == '+' || *str == '-')
+	{
+		if (*str == '-')
+			print_usage();
+		str++;
+	}
+	if (*str == 0)
+		print_usage();
+	while (*str >= '0' && *str <= '9')
+	{
+		nb *= 10;
+		nb += *str - '0';
+		if (nb > 2147483647)
+			print_usage();
+		str++;
+	}
+	if (*str != 0)
+		print_usage();
+	return (nb);
+}
+
+int			get_num_flag(char *str)
+{
+	if (ft_strequ(str, "-a"))
+		return (F_A);
+	if (ft_strequ(str, "-dump"))
+		return (F_D);
+	if (ft_strequ(str, "-s"))
+		return (F_S);
+	if (ft_strequ(str, "-v"))
+		return (F_V);
+	if (ft_strequ(str, "-b"))
+		return (F_B);
+	if (ft_strequ(str, "-n"))
+		return (F_N);
+	if (ft_strequ(str, "--stealth"))
+		return (F_STEALTH);
+	return (-1);
+}
+
+int			handle_flag(char **argv, int *pos, t_arena *arena)
+{
+	int i;
+
+	if ((i = get_num_flag(argv[*pos]) > 0))
+	{
+		if (i >= F_D)
+			{
+				*pos += 1;
+				arena->flags[i] = get_flag_nb(argv[*pos]);
+			}
+	}
 // Написать обработку флагов и заполнение их значений в массив arena->flags
 // Изначально там все значения = -1.
 // Если флаг предполагает, что после него идет значение, например (d 100)
@@ -44,7 +99,7 @@ void		load_arena(int argc, char **argv, t_arena *arena)
 	i = 1;
 	while (i < argc)
 	{
-		if (!handle_flag(argv[i], &argc))
+		if (!handle_flag(argv, &i, arena))
 		{
 			if (arena->players_count < MAX_PLAYERS)
 				load_player(argv[i], arena);

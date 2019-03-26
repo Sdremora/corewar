@@ -77,6 +77,8 @@ void		move_carriage(t_carriage *carg, int dir_size)
 	int move;
 	int i;
 
+	if (carg->op_id == ZJMP)
+		return ;
 	i = 0;
 	move = 1 + g_op_tab[carg->op_id].kod_tipov_argumenta;
 	while (i < 3 && g_op_tab[carg->op_id].args[i])
