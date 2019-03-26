@@ -32,7 +32,7 @@ typedef struct	s_carriage
 	int				carry;
 	char			op_id;
 	int				live;
-	int				last_live;
+	int				last_live_cycle;
 	int				args[3];
 }				t_carriage;
 
@@ -78,7 +78,7 @@ void		fight(t_arena *arena);
 void		print_map(unsigned char *map);
 
 //	load_players.c
-void	load_player(char *path, t_arena *arena);
+void		load_player(char *path, t_arena *arena);
 
 //	load_arena.c
 void		load_arena(int argc, char **argv, t_arena *arena);
@@ -92,19 +92,25 @@ void		arena_print(t_arena *arena);
 void		error_handle(int error_id, t_arena *arena, char *addition);
 
 //	player_utils.c
-void		player_ini(t_player *player);
+void		player_ini(t_player *player, int player_id);
 
 //	carg_utils.c
 t_carriage	*carg_new(int pos, int owner, int cycle);
 
-//	instructs_p1.c
+//	oper_p1.c
 void		op_live(t_carriage *carg, t_arena *arena);
 void		op_load(t_carriage *carg, t_arena *arena);
 void		op_store(t_carriage *carg, t_arena *arena);
+void		op_add_sub(t_carriage *carg, t_arena *arena);
+void		op_and_or_xor(t_carriage *carg, t_arena *arena);
+
+//	oper_p2.c
 void		op_invalid(t_carriage *carg, t_arena *arena);
 
 //	oper_utils.c
-int			get_value(t_arena *arena, int pos, unsigned char len);
+int			get_value(t_arena *arena, t_carriage *carg, int mem_offset, char arg_type);
 void		put_value(t_arena *arena, int pos, int value);
 int			get_reg_num(t_arena *arena, int pos);
+int			get_arg_len(int oper_type, char arg_type);
+int			get_args_offset(t_carriage *carg, int arg_num);
 #endif

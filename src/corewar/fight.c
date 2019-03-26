@@ -109,7 +109,7 @@ static void	play_round(t_arena *arena)
 			if (!g_op_tab[carg->op_id].kod_tipov_argumenta
 			|| check_code_args(carg->args, carg->op_id))
 			{
-//				g_op_tab[carg->op_id].op_handler(carg, arena);
+				g_op_tab[carg->op_id].op_handler(carg, arena);
 			}
 			move_carriage(carg, g_op_tab[carg->op_id].dir_size);
 			clean_carg_op(carg);
@@ -126,7 +126,7 @@ void		check_live(t_arena *arena)
 	t_carriage	*carg;
 	t_list		*temp;
 	int			no_del;
-	
+
 	carg_node = arena->carg_lst;
 	no_del = 1;
 	while (carg_node)
@@ -160,14 +160,11 @@ void		check_cycle_to_die(t_arena *arena)
 void		fight(t_arena *arena)
 {
     int			carg_count;
-	int			i;
 
-	i = 0;
     while (arena->carg_lst && arena->cycle_to_die >= 0)
     {
 		arena->cur_cycle++;
 		arena->cycle_past_check++;
-		
 		if (arena->cycle_past_check == arena->cycle_to_die)
 		{
 			arena->cycle_past_check -= arena->cycle_to_die;
@@ -175,9 +172,6 @@ void		fight(t_arena *arena)
 			check_cycle_to_die(arena);
 		}
 		play_round(arena);
-		i++;
-//		if (i > 50)
-//			break;
     }
     arena_print(arena);
 }
