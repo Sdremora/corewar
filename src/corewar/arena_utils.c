@@ -8,6 +8,8 @@ void	arena_ini(t_arena *arena)
 	arena->players_count = 0;
     arena->cycle_to_die = CYCLE_TO_DIE;
     arena->cur_cycle = 0;
+	arena->cycle_past_check = 0;
+	arena->checks = 0;
 	i = 0;
 	while (i < FLAGS_COUNT)
 		arena->flags[i++] = -1;

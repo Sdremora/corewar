@@ -42,51 +42,54 @@ void		load_args(t_carriage *carg, t_arena *arena)
 {
 	unsigned char	arg;
 	unsigned char	temp;
+	int				i;
 
 	if (g_op_tab[carg->op_id].kod_tipov_argumenta)
 	{
+		i = 0;
 		arg = arena->map[(carg->mem_pos + 1) % MEM_SIZE];
-		carg->args[0] = convert_args(arg >> 6);
-		carg->args[1] = convert_args(arg >> 4 & 3);
-		carg->args[2] = convert_args(arg >> 2 & 3);
-		carg->args[3] = convert_args(arg & 3);
+		while (i < 3 && g_op_tab[carg->op_id].args[i])
+		{
+			carg->args[i] = convert_args(arg >> (6 - 2 * i) & 3);
+			i++;
+		}
 	}
 	else
 		carg->args[0] = T_DIR;
 }
 
-int			check_code_args(int args[4], unsigned char op_id)
+int			check_code_args(int args[3], unsigned char op_id)
 {
-	int	res;
 	int i;
 
-	res = 1;
 	i = 0;
-	while (i < 4)
+	while (i < 3 && g_op_tab[op_id].args[i])
 	{
-		if (g_op_tab[op_id].args[i] && args[i])
-			res *= ((args[i] & g_op_tab[op_id].args[i]) > 0);
-		else if (g_op_tab[op_id].args[i] != args[i])
+		if (!(args[i] & g_op_tab[op_id].args[i]))
 			return (0);
 		i++;
 	}
-	return (res);
+	return (1);
 }
 
 void		move_carriage(t_carriage *carg, int dir_size)
 {
 	int move;
-	int args[4];
+	int i;
 
+	i = 0;
 	move = 1 + g_op_tab[carg->op_id].kod_tipov_argumenta;
-	move += step_bites(carg->args[0], dir_size) + step_bites(carg->args[1], dir_size)
-			+ step_bites(carg->args[2], dir_size) + step_bites(carg->args[3], dir_size);
+	while (i < 3 && g_op_tab[carg->op_id].args[i])
+	{
+		move += step_bites(carg->args[i], dir_size);
+		i++;
+	}
 	carg->mem_pos = (carg->mem_pos + move) % MEM_SIZE;
 }
 void		clean_carg_op(t_carriage *carg)
 {
 	carg->op_id = -1;
-	ft_bzero(carg->args, sizeof(int) * 4);
+	ft_bzero(carg->args, sizeof(int) * 3);
 }
 
 static void	play_round(t_arena *arena)
@@ -104,9 +107,11 @@ static void	play_round(t_arena *arena)
 		{
 			load_args(carg, arena);
 			if (!g_op_tab[carg->op_id].kod_tipov_argumenta
-			|| check_code_args(carg->args, arena->map[carg->mem_pos] - 1))
+			|| check_code_args(carg->args, carg->op_id))
+			{
 				g_op_tab[carg->op_id].op_handler(carg, arena);
-			move_carriage(carg, g_op_tab[arena->map[carg->mem_pos] - 1].dir_size);
+			}
+			move_carriage(carg, g_op_tab[carg->op_id].dir_size);
 			clean_carg_op(carg);
 		}
 		else
@@ -115,19 +120,58 @@ static void	play_round(t_arena *arena)
     }
 }
 
+void		check_live(t_arena *arena)
+{
+	t_list		*carg_node;
+	t_carriage	*carg;
+	t_list		*temp;
+	int			no_del;
+
+	carg_node = arena->carg_lst;
+	no_del = 1;
+	while (carg_node)
+	{
+		carg = (t_carriage *)carg_node->content;
+		if (arena->cycle_to_die <= 0 || !carg->live)
+		{
+			temp = carg_node->next;
+			arena->carg_lst = ft_lstdelsave(arena->carg_lst, carg_node, ft_lstdelfun);
+			carg_node = temp;
+			no_del = 0;
+			arena->checks = 0;
+			continue ;
+		}
+		else
+			carg->live = 0;
+		carg_node = carg_node->next;
+	}
+	if (no_del)
+		arena->checks++;
+}
+
+void		check_cycle_to_die(t_arena *arena)
+{
+	if (arena->live_call_count >= NBR_LIVE)
+		arena->cycle_to_die -= CYCLE_DELTA;
+	if (arena->checks >= MAX_CHECKS)
+		arena->cycle_to_die -= CYCLE_DELTA;
+}
+
 void		fight(t_arena *arena)
 {
     int			carg_count;
-	int			i;
 
-	i = 0;
-    while (arena->carg_lst)
+    while (arena->carg_lst && arena->cycle_to_die >= 0)
     {
 		arena->cur_cycle++;
+		arena->cycle_past_check++;
+		if (arena->cycle_past_check == arena->cycle_to_die)
+		{
+			arena->cycle_past_check -= arena->cycle_to_die;
+			check_live(arena);
+			check_cycle_to_die(arena);
+		}
 		play_round(arena);
-		i++;
-		if (i > 50)
-			break;
     }
     arena_print(arena);
 }
