@@ -75,7 +75,7 @@ void		print_usage(void);
 void		fight(t_arena *arena);
 
 //	print_map.c
-void		print_map(unsigned char *map);
+void		print_map(unsigned char *map, int n);
 
 //	load_players.c
 void		load_player(char *path, t_arena *arena);

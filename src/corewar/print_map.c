@@ -19,17 +19,17 @@ void    print_mem(unsigned int n)
     ft_putstr(" ");
 }
 //wide = 64
-void  print_map(unsigned char *map)
+void  print_map(unsigned char *map, int n)
 {
     int i;
 
     i = 0;
     while (i < MEM_SIZE)
     {
-        if (i % 32 == 0)
+        if (i % n == 0)
             print_mem(i);
         print_octet(map[i]);
-        if (i % 32 == 31)
+        if (i % n == n - 1)
             ft_putchar('\n');
         else
             ft_putchar(' ');
