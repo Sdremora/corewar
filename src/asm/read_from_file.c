@@ -6,13 +6,13 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 14:54:49 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/26 17:16:24 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/03/27 11:11:31 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-void	write_binary_name(int argc, char *str)
+void	write_binary_name(char *str)
 {
 	int		len;
 	int		i;
@@ -20,7 +20,7 @@ void	write_binary_name(int argc, char *str)
 	len = ft_strlen(str);
 	i = -1;
 	if (str[len - 1] != 's' || str[len - 2] != '.')
-		usage();
+		close_with_error("Can't read source file\n");
 	while (len - 1 != 0 && str[len - 1] != '/')
 		len--;
 	if (!(g_asm->binary_name = ft_strnew(ft_strlen(str) - len - 1 + 3)))
@@ -38,11 +38,10 @@ void	write_binary_name(int argc, char *str)
 
 int		main(int argc, char **argv)
 {
-	int		len;
 	if (argc > 1)
 	{
 		init();
-		write_binary_name(argc, argv[argc - 1]);
+		write_binary_name(argv[argc - 1]);
 		parse_from_file(argc, argv);
 	}
 	else
