@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:52:48 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/26 17:58:14 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/03/27 11:08:58 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,5 @@ void	close_with_error(char *str)
 {
 	del_all_struct();
 	ft_putstr(str);
-	exit(0);
-}
-
-void	error_by_parsing(char *error_p1, int len_line, char *error_p2)
-{
-	ft_putstr(error_p1);
-	ft_putnbr(g_asm->str_counter);
-	ft_putstr(":");
-	ft_putnbr(len_line);
-	del_all_struct();
 	exit(0);
 }

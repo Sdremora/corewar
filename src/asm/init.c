@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:52:31 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/26 18:00:59 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/03/27 16:46:41 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void		init_matrix()
 	init_matrix_element(&SIZE, 8);
 	init_matrix_element(&COMMENT, COMMENT_LENGTH / 2);
 	init_matrix_element(&CODE, 500);
-	printf("header:%s\n\n\n name:%s\n\n\n, zero:%s\n\n\n size:%s\n\n\n comment:%s\n\n\n, code:%s\n\n\n", HEADER, NAME, ZERO, SIZE, COMMENT, CODE);
+	//printf("header:%s\n\n\n name:%s\n\n\n, zero:%s\n\n\n size:%s\n\n\n comment:%s\n\n\n, code:%s\n\n\n", HEADER, NAME, ZERO, SIZE, COMMENT, CODE);
 }
 
 void		init(void)
@@ -57,6 +57,9 @@ void		init(void)
 		close_with_error("Error by malloc");
     g_asm->binary_name = NULL;
 	g_asm->str_counter = 1;
+	g_asm->flag_name = -1;
+	g_asm->flag_comment = -1;
+	g_asm->quotes = 0;
 	init_matrix();
 	
 }

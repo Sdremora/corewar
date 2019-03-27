@@ -28,6 +28,8 @@ void	arena_clear(t_arena *arena)
 {
 	t_list	*temp;
 
+	if (!arena)
+		return ;
 	while (arena->carg_lst)
 	{
 		temp = arena->carg_lst->next;

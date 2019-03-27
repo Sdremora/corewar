@@ -12,11 +12,9 @@ void    print_mem(unsigned int n)
 {
     static char base[17] = "0123456789abcdef";
 
-    ft_putstr("0x0");
     ft_putchar(base[n / 16 / 16 % 16]);
     ft_putchar(base[n / 16 % 16]);
     ft_putchar(base[n % 16]);
-    ft_putstr(" ");
 }
 //wide = 64
 void  print_map(unsigned char *map, int n)
@@ -27,7 +25,7 @@ void  print_map(unsigned char *map, int n)
     while (i < MEM_SIZE)
     {
         if (i % n == 0)
-            print_mem(i);
+            ft_printf("%06p : ", i);
         print_octet(map[i]);
         if (i % n == n - 1)
             ft_putchar('\n');
