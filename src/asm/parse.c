@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 17:16:12 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/27 15:50:34 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/03/27 18:05:14 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	skip_comment_and_spaces(char *buf)
 {
 	while (buf[g_asm->i] < 32 || buf[g_asm->i] == '#')
 	{
+		if (buf[g_asm->i] == '\n')
+			g_asm->str_counter++;
 		if (buf[g_asm->i] == '#')
 		{
 			while (buf[g_asm->i] != '\n' && buf[g_asm->i] != '\0')
@@ -50,7 +52,6 @@ void    parse_from_file(int argc, char **argv)
     char    buf[BUFF];
     int     ret;
 	int		fd;
-	int		i;
 
 	fd = open(argv[argc - 1], O_RDONLY);
 	while ((ret = read(fd, buf, BUFF)) >= 0)
@@ -62,7 +63,6 @@ void    parse_from_file(int argc, char **argv)
 			skip_comment_and_spaces(buf);
 			if (g_asm->flag_comment == -1 || g_asm->flag_name == -1)
 				find_name_comment(buf);
-			//printf("%s\n\n", &buf[g_asm->i]);
 			skip_comment_and_spaces(buf);
 			if (g_asm->flag_comment == 1 && g_asm->flag_name == 1)
 			{
@@ -75,8 +75,6 @@ void    parse_from_file(int argc, char **argv)
 		}
 
 	}
-	printf("name: %s\n\n\n", NAME);
-	printf("comment: %s\n\n\n", COMMENT);
 	if (ret < 0)
 		close_with_error("Can't read source file\n");
 	// else if (ret == 0 && (buf || buf[i] != '\n'))

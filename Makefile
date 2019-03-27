@@ -21,7 +21,7 @@ NC=\033[0m # No Color
 
 .PHONY: all run debug add_dflags clean fclean re echo
 
-all: $(NAME)
+all: asm
 
 asm: $(LIB) $(OBJ_ASM)
 	@gcc $(OBJ_ASM) $(LIB) $(addprefix -I,$(INCLUDES)) -o $@

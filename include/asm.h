@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:08:27 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/27 15:36:43 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/03/27 18:21:37 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # define SIZE		g_asm->matrix[3] 
 # define COMMENT	g_asm->matrix[4] 
 # define CODE 		g_asm->matrix[5]
-# define BUFF		5000
+# define BUFF		3000
 
 /*struct g_asm is for different things:
 **	binary_name saves the name of the final binary file
@@ -64,6 +64,8 @@ void	skip_comment_and_spaces(char *buf);
 void		find_name_comment(char	*buf);
 void	skip_comment_and_spaces(char *buf);
 void	skip_whitespaces(char *buf);
+void    lexical_error(char *buf);
+void	syntax_error(int flag, char *buf);
 // int		find_name(char **line);
 // int		find_comment(char **line);
 
