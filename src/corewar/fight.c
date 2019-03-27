@@ -176,11 +176,14 @@ void		introducing(t_arena *arena)
 void		fight(t_arena *arena)
 {
     int			carg_count;
+	int 		i;
 
 	introducing(arena);
+	i = 0;
     while (arena->carg_lst && arena->cycle_to_die >= 0)
     {
 		arena->cur_cycle++;
+		ft_printf("It is now cycle %d\n", arena->cur_cycle);
 		arena->cycle_past_check++;
 		if (arena->cycle_past_check == arena->cycle_to_die || arena->cycle_to_die <= 0)
 		{
@@ -189,6 +192,9 @@ void		fight(t_arena *arena)
 			check_cycle_to_die(arena);
 		}
 		play_round(arena);
+		if (i == 100)
+			break;
+		i++;
     }
     arena_print(arena);
 }
