@@ -57,7 +57,11 @@ int			handle_flag(char **argv, int *pos, int argc, t_arena *arena)
 		{
 			*pos += 1;
 			if (*pos < argc)
+			{
 				arena->flags[i] = get_flag_nb(argv[*pos]);
+				arena->flags[7] = 16;
+
+			}
 			else
 				print_usage();
 				/*
