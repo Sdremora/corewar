@@ -101,6 +101,25 @@ static void	locate_players(t_arena *arena)
     return ;
 }
 
+void		add_swap_players(t_arena *arena, int pos)
+{
+	int			i;
+	t_player	temp;
+
+	i = 0;
+	while (i < pos && arena->players[i].id > arena->players[pos].id)
+		i++;
+	if (i == pos)
+		return ;
+	else
+	{
+		temp = arena->players[pos];
+		arena->players[pos] = arena->players[i];
+		arena->players[i] = temp;
+	}
+	add_swap_players(arena, i);
+}
+
 void		swap_players(t_arena *arena, int pos)
 {
 	int			i;
@@ -114,6 +133,7 @@ void		swap_players(t_arena *arena, int pos)
 	temp = arena->players[pos];
 	arena->players[pos] = arena->players[i];
 	arena->players[i] = temp;
+	add_swap_players(arena, i);
 }
 
 int			get_pnb(t_arena *arena)
@@ -128,7 +148,7 @@ int			get_pnb(t_arena *arena)
 		if (i >= 0 && i < MAX_PLAYERS && arena->players[i].id < 0)
 		{
 			res = arena->flags[F_N];
-			if (arena->players[i].id == -2)
+			if (arena->players[i].id < -1)
 				swap_players(arena, i);
 			return (i);
 		}
@@ -178,6 +198,10 @@ void		load_arena(int argc, char **argv, t_arena *arena)
 	}
 	if (arena->players_count == 0 || !check_players(arena))
 	{
+		printf("%d ", arena->players[0].id);
+		printf("%d ", arena->players[1].id);
+		printf("%d ", arena->players[2].id);
+		printf("%d ", arena->players[3].id);
 		arena_clear(arena);
 		error_handle(E_PLAYER_NUMBER, arena, NULL);
 	}
