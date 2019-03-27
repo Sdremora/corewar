@@ -45,8 +45,8 @@ typedef enum	e_flag
 	F_VIS,
 	F_D,
 	F_S,
-	F_V,
 	F_N,
+	F_V,
 }				t_flag;
 
 typedef struct	s_arena
@@ -96,7 +96,7 @@ void		arena_print(t_arena *arena);
 void		error_handle(int error_id, t_arena *arena, char *addition);
 
 //	player_utils.c
-void		player_ini(t_player *player, int player_id);
+void		player_ini(t_player *player, int *player_id);
 
 //	carg_utils.c
 t_carriage	*carg_new(int pos, int owner, int cycle);
