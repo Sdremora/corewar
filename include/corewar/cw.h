@@ -6,12 +6,13 @@
 
 #include "general/op.h"
 
-#define FLAGS_COUNT 7
+#define FLAGS_COUNT 8
 #define E_NO_MEMORY -1
 #define E_NO_PLAYERS -2
 #define E_OVER_PLAYERS -3
 #define E_INV_PATH -4
 #define E_INV_CHAMP -5
+#define E_PLAYER_NUMBER -6
 #define E_INV_ALGO -99
 
 typedef struct	s_player
@@ -39,12 +40,13 @@ typedef struct	s_carriage
 typedef enum	e_flag
 {
 	F_A,
+	F_B,
+	F_STEALTH,
+	F_VIS,
 	F_D,
 	F_S,
 	F_V,
-	F_B,
 	F_N,
-	F_STEALTH,
 }				t_flag;
 
 typedef struct	s_arena
@@ -56,10 +58,10 @@ typedef struct	s_arena
 	int				cur_cycle;
 	int				cycle_past_check;
 	int				checks;
-	int				flags[FLAGS_COUNT];
 	t_list			*carg_lst;
 	int				last_live_player;
 	int				live_call_count;
+	int				flags[FLAGS_COUNT];
 }				t_arena;
 
 typedef union	u_converter
@@ -82,6 +84,7 @@ void		load_player(char *path, t_arena *arena);
 
 //	load_arena.c
 void		load_arena(int argc, char **argv, t_arena *arena);
+int			get_pnb(t_arena *arena);
 
 //	arena_utils.c
 void		arena_ini(t_arena *arena);
