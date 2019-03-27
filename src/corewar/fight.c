@@ -157,10 +157,27 @@ void		check_cycle_to_die(t_arena *arena)
 	arena->live_call_count = 0;
 }
 
+void		introducing(t_arena *arena)
+{
+	int			i;
+	t_player	player;
+
+	ft_printf("Introducing contestants...\n");
+	i = 0;
+	while (i < arena->players_count)
+	{
+		player = arena->players[i];
+		i++;
+		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
+			i, player.code_size, player.name, player.comment);
+	}
+}
+
 void		fight(t_arena *arena)
 {
     int			carg_count;
 
+	introducing(arena);
     while (arena->carg_lst && arena->cycle_to_die >= 0)
     {
 		arena->cur_cycle++;

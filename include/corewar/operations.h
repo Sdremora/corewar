@@ -32,6 +32,7 @@ typedef struct	s_op
 	int				cost;
 	int				kod_tipov_argumenta;
 	int				dir_size;
+	int				is_idx_mod;
 	void			(*op_handler)(t_carriage *carg, t_arena *arena);
 }				t_op;
 

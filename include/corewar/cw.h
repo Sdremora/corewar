@@ -96,26 +96,29 @@ void		player_ini(t_player *player, int player_id);
 
 //	carg_utils.c
 t_carriage	*carg_new(int pos, int owner, int cycle);
+t_carriage	*carriage_copy(t_carriage *carg);
+void		carriage_free(t_carriage **carg);
 
 //	oper_p1.c
 void		op_live(t_carriage *carg, t_arena *arena);
-void		op_ld(t_carriage *carg, t_arena *arena);
+void		op_ld_lld(t_carriage *carg, t_arena *arena);
 void		op_st(t_carriage *carg, t_arena *arena);
 void		op_add_sub(t_carriage *carg, t_arena *arena);
 void		op_and_or_xor(t_carriage *carg, t_arena *arena);
 
 //	oper_p2.c
 void		op_zjmp(t_carriage *carg, t_arena *arena);
-void		op_ldi(t_carriage *carg, t_arena *arena);
+void		op_ldi_lldi(t_carriage *carg, t_arena *arena);
 void		op_sti(t_carriage *carg, t_arena *arena);
 void		op_fork(t_carriage *carg, t_arena *arena);
 void		op_aff(t_carriage *carg, t_arena *arena);
 void		op_invalid(t_carriage *carg, t_arena *arena);
 
 //	oper_utils.c
-int			get_value(t_arena *arena, t_carriage *carg, int mem_offset, char arg_type);
+int			get_value(t_arena *arena, int mem_pos, int	len);
 void		put_value(t_arena *arena, int pos, int value);
 int			get_reg_num(t_arena *arena, int pos);
 int			get_arg_len(int oper_type, char arg_type);
 int			get_args_offset(t_carriage *carg, int arg_num);
+int			read_arg(t_arena *arena, t_carriage *carg, int arg_num, int is_idx_mod);
 #endif
