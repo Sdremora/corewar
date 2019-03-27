@@ -9,6 +9,7 @@ t_carriage *carg_new(int pos, int owner, int cycle)
     res->mem_pos = pos;
     res->pause_count = 0;
     ft_bzero(res->reg, (REG_NUMBER) * sizeof(int));
+	res->reg[0] = owner * -1;
     res->op_id = -1;
     res->last_live_cycle = cycle;
     res->live = 0;

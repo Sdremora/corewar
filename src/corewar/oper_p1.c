@@ -15,6 +15,7 @@ void	op_live(t_carriage *carg, t_arena *arena)
 	if (player_num >= 1 && player_num <= arena->players_count)
 		arena->last_live_player = player_num - 1;
 	arena->live_call_count++;
+	ft_printf("P %4d | %s %d\n", carg->reg[0] * -1, g_op_tab[LIVE].name, player_num * -1);
 }
 
 /*

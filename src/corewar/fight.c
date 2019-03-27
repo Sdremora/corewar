@@ -72,7 +72,7 @@ int			check_code_args(int args[3], unsigned char op_id)
 	return (1);
 }
 
-void		move_carriage(t_carriage *carg, int dir_size)
+void		move_carriage(t_arena *arena, t_carriage *carg, int dir_size)
 {
 	int move;
 	int i;
@@ -86,8 +86,18 @@ void		move_carriage(t_carriage *carg, int dir_size)
 		move += step_bites(carg->args[i], dir_size);
 		i++;
 	}
+	ft_printf("ADV %d (0x -> 0x)", move);
+	i = 0;
+	while (i < move)
+	{
+		ft_putchar(' ');
+		print_octet(arena->map[(carg->mem_pos + i) % MEM_SIZE]);
+		i++;
+	}
+	ft_putchar('\n');
 	carg->mem_pos = (carg->mem_pos + move) % MEM_SIZE;
 }
+
 void		clean_carg_op(t_carriage *carg)
 {
 	carg->op_id = -1;
@@ -113,7 +123,7 @@ static void	play_round(t_arena *arena)
 			{
 				g_op_tab[carg->op_id].op_handler(carg, arena);
 			}
-			move_carriage(carg, g_op_tab[carg->op_id].dir_size);
+			move_carriage(arena, carg, g_op_tab[carg->op_id].dir_size);
 			clean_carg_op(carg);
 		}
 		else
@@ -195,6 +205,7 @@ void		fight(t_arena *arena)
 			check_cycle_to_die(arena);
 		}
 		play_round(arena);
+		ft_printf("It is now cycle %d\n", arena->cur_cycle);
     }
     arena_print(arena);
 }

@@ -21,7 +21,7 @@ NC=\033[0m # No Color
 
 .PHONY: all run debug add_dflags clean fclean re echo
 
-all: $(NAME)
+all: asm
 
 asm: $(LIB) $(OBJ_ASM)
 	@gcc $(OBJ_ASM) $(LIB) $(addprefix -I,$(INCLUDES)) -o $@
@@ -38,7 +38,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 $(LIB):
 	@$(MAKE) -C $(LIB_DIR) all
 
-debug: add_dflags all
+debug: add_dflags asm corewar
 
 add_dflags:
 	$(eval FLAGS = $(DEBUG_FLAGS))
