@@ -72,7 +72,7 @@ int			check_code_args(int args[3], unsigned char op_id)
 	return (1);
 }
 
-void		move_carriage(t_carriage *carg, int dir_size)
+void		move_carriage(t_arena *arena, t_carriage *carg, int dir_size)
 {
 	int move;
 	int i;
@@ -86,8 +86,18 @@ void		move_carriage(t_carriage *carg, int dir_size)
 		move += step_bites(carg->args[i], dir_size);
 		i++;
 	}
+	ft_printf("ADV %d (0x -> 0x)", move);
+	i = 0;
+	while (i < move)
+	{
+		ft_putchar(' ');
+		print_octet(arena->map[(carg->mem_pos + i) % MEM_SIZE]);
+		i++;
+	}
+	ft_putchar('\n');
 	carg->mem_pos = (carg->mem_pos + move) % MEM_SIZE;
 }
+
 void		clean_carg_op(t_carriage *carg)
 {
 	carg->op_id = -1;
@@ -111,9 +121,9 @@ static void	play_round(t_arena *arena)
 			if (!g_op_tab[carg->op_id].kod_tipov_argumenta
 			|| check_code_args(carg->args, carg->op_id))
 			{
-//				g_op_tab[carg->op_id].op_handler(carg, arena);
+				g_op_tab[carg->op_id].op_handler(carg, arena);
 			}
-			move_carriage(carg, g_op_tab[carg->op_id].dir_size);
+			move_carriage(arena, carg, g_op_tab[carg->op_id].dir_size);
 			clean_carg_op(carg);
 		}
 		else
@@ -157,12 +167,35 @@ void		check_cycle_to_die(t_arena *arena)
 	arena->live_call_count = 0;
 }
 
+void		introducing(t_arena *arena)
+{
+	int			i;
+	t_player	player;
+
+	ft_printf("Introducing contestants...\n");
+	i = 0;
+	while (i < arena->players_count)
+	{
+		player = arena->players[i];
+		i++;
+		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
+			i, player.code_size, player.name, player.comment);
+	}
+}
+
 void		fight(t_arena *arena)
 {
     int			carg_count;
+	int 		i;
 
+	introducing(arena);
+	i = 0;
     while (arena->carg_lst && arena->cycle_to_die >= 0)
     {
+		if (arena->cur_cycle == arena->flags[F_D])
+		{
+			return print_map(arena->map, 64);
+		}
 		arena->cur_cycle++;
 		arena->cycle_past_check++;
 		if (arena->cycle_past_check == arena->cycle_to_die || arena->cycle_to_die <= 0)
@@ -172,6 +205,7 @@ void		fight(t_arena *arena)
 			check_cycle_to_die(arena);
 		}
 		play_round(arena);
+		ft_printf("It is now cycle %d\n", arena->cur_cycle);
     }
     arena_print(arena);
 }

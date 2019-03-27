@@ -16,7 +16,7 @@ void    print_mem(unsigned int n)
     ft_putchar(base[n / 16 / 16 % 16]);
     ft_putchar(base[n / 16 % 16]);
     ft_putchar(base[n % 16]);
-    ft_putstr(" ");
+    ft_putstr(" : ");
 }
 //wide = 64
 void  print_map(unsigned char *map, int n)

@@ -38,7 +38,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 $(LIB):
 	@$(MAKE) -C $(LIB_DIR) all
 
-debug: add_dflags all
+debug: add_dflags asm corewar
 
 add_dflags:
 	$(eval FLAGS = $(DEBUG_FLAGS))

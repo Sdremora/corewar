@@ -12,6 +12,8 @@ static char	*errorid_to_str(int error_id)
 		msg = ft_strdup("сan't read source file ");
 	else if (error_id == E_INV_CHAMP)
 		msg = ft_strdup("mistake in the champion's code ");
+	else if (error_id == E_PLAYER_NUMBER)
+		msg = ft_strdup("invalid player number");
 	else
 		msg = ft_strdup("unknown error");
 	return (msg);
