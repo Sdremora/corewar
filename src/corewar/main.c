@@ -14,7 +14,7 @@ int	main(int argc, char **argv)
 		print_usage();
 	load_arena(argc, argv, &arena);
 	fight(&arena);
-	print_map(arena.map, 64);
+//	print_map(arena.map, 64);
 	ft_printf("Победитель => %s\n", arena.players[arena.last_live_player].name);
 	return (0);
 }

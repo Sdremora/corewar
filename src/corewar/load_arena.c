@@ -60,11 +60,15 @@ int			handle_flag(char **argv, int *pos, int argc, t_arena *arena)
 				arena->flags[i] = get_flag_nb(argv[*pos]);
 			else
 				print_usage();
+				/*
+			if (i == F_N && (arena->flags[i] == 0 || arena->flags[i] > MAX_PLAYERS))
+				print_usage();
+			else
+				arena->flags[i] -= 1;
+				*/
 		}
 		else
-		{
 			arena->flags[i] = 1;
-		}
 		return (1);
 	}
 // Написать обработку флагов и заполнение их значений в массив arena->flags
@@ -87,9 +91,9 @@ static void	locate_players(t_arena *arena)
     i = 0;
     while (i < arena->players_count)
     {
-		pos = i * MEM_SIZE / arena->players_count;
+		pos = arena->players[i].id * MEM_SIZE / arena->players_count;
         ft_memcpy(arena->map + pos, arena->players[i].code, arena->players[i].code_size);
-		carriage = carg_new(pos, arena->players[i].id, 1);
+		carriage = carg_new(pos, arena->players[i].id + 1, 1);
 		if (carriage == NULL)
 			error_handle(E_NO_MEM, arena, NULL);
 		node = ft_lstput(carriage, sizeof(t_carriage));
@@ -105,10 +109,11 @@ int			get_pnb(t_arena *arena)
 {
 	int i;
 	int res;
-	
+	static int nb = MAX_PLAYERS;
+
 	if ((i = arena->flags[F_N]) != -1)
 	{
-		if (i < MAX_PLAYERS && arena->players[i].id == -1)
+		if (i < MAX_PLAYERS)
 		{
 			res = arena->flags[F_N];
 			arena->flags[F_N] = -1;
@@ -117,6 +122,10 @@ int			get_pnb(t_arena *arena)
 		else
 			error_handle(E_PLAYER_NUMBER, arena, NULL);
 	}
+//	nb++;
+//	return (nb - 1);
+	return (nb++);
+	/*
 	else
 	{
 		i = 0;
@@ -126,6 +135,37 @@ int			get_pnb(t_arena *arena)
 	if (i == MAX_PLAYERS)
 		error_handle(E_OVER_PLAYERS, arena, NULL);
 	return (i);
+	*/
+}
+
+
+
+int		find_min_id(t_arena *arena)
+{
+	int i;
+	int j;
+	int flag;
+
+	i = 0;
+	flag = 1;
+	while (i < arena->players_count)
+	{
+		j = 0;
+		flag = 1;
+		while (j < arena->players_count)
+		{
+			if (arena->players[j].id == i)
+			{
+				flag = 0;
+				break ;
+			}
+			j++;
+		}
+		if (flag)
+			return (i);
+		i++;
+	}
+	return (-42);
 }
 
 int			check_players(t_arena *arena)
@@ -135,11 +175,29 @@ int			check_players(t_arena *arena)
 	i = 0;
 	while (i < arena->players_count)
 	{
-		if (arena->players[i].id == -1)
+		if (arena->players[i].id == -1 || arena->players[i].id >= arena->players_count)
 			return (0);
 		i++;
 	}
+	if (find_min_id(arena) >= 0)
+		return (0);
 	return (1);
+}
+
+void		relocate_players(t_arena *arena)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (i < arena->players_count)
+	{
+		if (arena->players[i].id >= MAX_PLAYERS)
+		{
+			arena->players[i].id = find_min_id(arena);
+		}
+		i++;
+	}
 }
 
 void		load_arena(int argc, char **argv, t_arena *arena)
@@ -153,12 +211,17 @@ void		load_arena(int argc, char **argv, t_arena *arena)
 		if (!handle_flag(argv, &i, argc, arena))
 		{
 			if (arena->players_count < MAX_PLAYERS)
-				load_player(argv[i], arena, get_pnb(arena));
+				load_player(argv[i], arena);
 			else
 				error_handle(E_OVER_PLAYERS, arena, NULL);
 		}
 		i++;
 	}
+	printf("---->ids %d %d %d     ", arena->players[0].id,arena->players[1].id,arena->players[2].id);
+	relocate_players(arena);
+	printf("---->ids %d %d %d", arena->players[0].id,arena->players[1].id,arena->players[2].id);
+	printf("{%d}{%d}", find_min_id(arena), !check_players(arena));
+
 	if (arena->players_count == 0 || !check_players(arena))
 	{
 		arena_clear(arena);

@@ -80,10 +80,11 @@ void		fight(t_arena *arena);
 void		print_map(unsigned char *map, int n);
 
 //	load_players.c
-void		load_player(char *path, t_arena *arena, int pnb);
+void		load_player(char *path, t_arena *arena);
 
 //	load_arena.c
 void		load_arena(int argc, char **argv, t_arena *arena);
+int			get_pnb(t_arena *arena);
 
 //	arena_utils.c
 void		arena_ini(t_arena *arena);
