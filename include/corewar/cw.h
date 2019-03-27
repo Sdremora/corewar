@@ -78,6 +78,7 @@ void		fight(t_arena *arena);
 
 //	print_map.c
 void		print_map(unsigned char *map, int n);
+void		print_octet(unsigned char p);
 
 //	load_players.c
 void		load_player(char *path, t_arena *arena);
