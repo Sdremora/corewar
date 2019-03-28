@@ -104,7 +104,7 @@ void	op_fork(t_carriage *carg, t_arena *arena)
 	ft_lstadd(&arena->carg_lst, node);
 	n1 = read_arg(arena, carg, 0, TRUE);
 	offset = carg->op_id == FORK ? n1 % IDX_MOD : n1;
-	new_carg->mem_pos = (carg->mem_pos + offset) % MEM_SIZE;
+	new_carg->mem_pos = get_pos(carg->mem_pos + offset);
 	if (arena->flags[F_V] & 4)
 		ft_printf("P %4d | %s %d (%d)\n", carg->carg_id, g_op_tab[carg->op_id].name,
 		n1, carg->mem_pos + offset);
