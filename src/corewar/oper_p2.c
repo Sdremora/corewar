@@ -58,13 +58,18 @@ void	op_sti(t_carriage *carg, t_arena *arena)
 	int n2;
 	int n3;
 	int value;
+	int	reg_num;
 
+	reg_num = get_reg_num(arena, carg->mem_pos + get_args_offset(carg, 0));
+	value = carg->reg[reg_num];
 	n2 = read_arg(arena, carg, 1, TRUE);
 	n3 = read_arg(arena, carg, 2, TRUE);
 	offset = (n2 + n3) % IDX_MOD;
-	value = get_value(arena, carg->mem_pos + offset, REG_SIZE);
-	offset = get_args_offset(carg, 0);
-	carg->reg[get_reg_num(arena, carg->mem_pos + offset)] = value;
+	put_value(arena, carg->mem_pos + offset, value);
+	ft_printf("P %4d | %s r%d %d %d\n", carg->owner, g_op_tab[carg->op_id].name,
+		reg_num + 1, n2, n3);
+	ft_printf("%7.s| -> store to %d + %d = %d (with pc and mod %d)\n",
+		"", n2, n3, n2 + n3, offset);
 }
 
 /*

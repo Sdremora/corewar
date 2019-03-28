@@ -12,10 +12,14 @@ void	op_live(t_carriage *carg, t_arena *arena)
 	carg->last_live_cycle = arena->cur_cycle;
 	carg->live = 1;
 	player_num = read_arg(arena, carg, 0, TRUE) * -1;
-	if (player_num >= 1 && player_num <= arena->players_count)
-		arena->last_live_player = player_num - 1;
-	arena->live_call_count++;
 	ft_printf("P %4d | %s %d\n", carg->owner, g_op_tab[LIVE].name, player_num * -1);
+	if (player_num >= 1 && player_num <= arena->players_count)
+	{
+		arena->last_live_player = player_num - 1;
+		ft_printf("Player %d (%s) is said to be alive\n", player_num,
+			arena->players[player_num - 1].name);
+	}
+	arena->live_call_count++;
 }
 
 /*

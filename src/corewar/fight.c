@@ -181,7 +181,7 @@ void		fight(t_arena *arena)
 		if (arena->cur_cycle == arena->flags[F_D])
 			return print_map(arena->map, 64);
 		arena->cur_cycle++;
-		ft_printf("It is now cycle %d\n", arena->cur_cycle);
+		ft_printf("{yellow}It is now cycle %d{def}\n", arena->cur_cycle);
 		arena->cycle_past_check++;
 		if (arena->cycle_past_check == arena->cycle_to_die || arena->cycle_to_die <= 0)
 		{
