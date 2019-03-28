@@ -6,28 +6,28 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 17:16:12 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/28 11:37:22 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/03/28 14:46:00 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 //Error by parsing schould be other, we need to think abou how to find right position of false element
 
-void	skip_whitespaces(char *buf)
+void	skip_whitespaces(void)
 {
-	while (buf[g_asm->i] == ' ' || buf[g_asm->i] == '\t')
+	while (g_asm->buf[g_asm->i] == ' ' || g_asm->buf[g_asm->i] == '\t')
 		g_asm->i++;
 }
 
-void	skip_comment_and_spaces(char *buf)
+void	skip_comment_and_spaces(void)
 {
-	while ((buf[g_asm->i] < 32 || buf[g_asm->i] == '#') && buf[g_asm->i] != '\0')
+	while ((g_asm->buf[g_asm->i] < 32 || g_asm->buf[g_asm->i] == '#') && g_asm->buf[g_asm->i] != '\0')
 	{
-		if (buf[g_asm->i] == '\n')
+		if (g_asm->buf[g_asm->i] == '\n')
 			g_asm->str_counter++;
-		if (buf[g_asm->i] == '#')
+		if (g_asm->buf[g_asm->i] == '#')
 		{
-			while (buf[g_asm->i] != '\n' && buf[g_asm->i] != '\0')
+			while (g_asm->buf[g_asm->i] != '\n' && g_asm->buf[g_asm->i] != '\0')
 				g_asm->i++;
 		}
 		else
@@ -37,40 +37,36 @@ void	skip_comment_and_spaces(char *buf)
 
 void    parse_from_file(int argc, char **argv)
 {
-    char    buf[BUFF];
     int     ret;
 	int		fd;
 
 	fd = open(argv[argc - 1], O_RDONLY);
-	while ((ret = read(fd, buf, BUFF)) > 0)
+	while ((ret = read(fd, g_asm->buf, BUFF)) > 0)
 	{
-		buf[ret] = '\0';
+		g_asm->buf[ret] = '\0';
 		g_asm->i = 0;
-		while(buf[g_asm->i] != '\0')
+		while(g_asm->buf[g_asm->i] != '\0')
 		{
-			skip_comment_and_spaces(buf);
+			skip_comment_and_spaces();
 			if (g_asm->flag_comment == -1 || g_asm->flag_name == -1)
-				find_name_comment(buf);
-			skip_comment_and_spaces(buf);
+				find_name_comment();
+			skip_comment_and_spaces();
 			if (g_asm->flag_comment > -1 && g_asm->flag_name > -1)
 			{
-				if (buf[g_asm->i] == '\0')
-					syntax_error(6, buf);
+				if (g_asm->buf[g_asm->i] == '\0')
+					syntax_error(6);
 				if (g_asm->flag_name == 0)
 					length_error(1);
 				else if (g_asm->flag_comment == 0)
 					length_error(2);
-				//printf("name: %s\n\n\n", NAME);
-				//printf("comment: %s\n\n\n", COMMENT);
-				//exit(0);
+				write_labels_commands();
 			}
-			// 	analyse_labels_commands(buf);
 			g_asm->i++;
 		}
 	}
 	if (ret < 0)
 		close_with_error("Can't read source file\n");
-	// else if (ret == 0 && (buf || buf[i] != '\n'))
+	// else if (ret == 0 && (g_asm->buf || g_asm->buf[i] != '\n'))
 	// 	error_by_parsing(); NO \n!
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:52:31 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/27 16:46:41 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/03/28 16:35:00 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,41 @@ void		init(void)
 	g_asm->str_counter = 1;
 	g_asm->flag_name = -1;
 	g_asm->flag_comment = -1;
-	g_asm->quotes = 0;
 	init_matrix();
-	
+}
+
+int			count_all_str(void)
+{
+	int		i;
+	int		counter;
+
+	i = g_asm->i;
+	counter = 1;
+	while(BUFFER[i] != '\0')
+	{
+		if (BUFFER[i] == '\n')
+			counter++;
+		i++;
+	}
+	return(counter);
+}
+
+void		init_struct(void)
+{
+	int		i;
+	int		counter;
+
+	i = -1;
+	counter = count_all_str();
+	if (!(g_struct = (t_parse*)malloc(sizeof(t_parse) * counter)))
+		close_with_error("Error by malloc");
+	while(++i < counter)
+	{
+		g_struct[i].label = NULL;
+		g_struct[i].command = NULL;
+		g_struct[i].arg1 = NULL;
+		g_struct[i].arg2 = NULL;
+		g_struct[i].arg3 = NULL;
+		g_struct[i].str_number = 0;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 09:47:29 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/28 11:03:00 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/03/28 14:46:32 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@
 
  */
 
-int		find_position_in_str(char *buf)
+int		find_position_in_str(void)
 {
 	int		i;
 
 	i = 0;
-	if (buf[g_asm->i] == '\n')
+	if (g_asm->buf[g_asm->i] == '\n')
 	{
 		g_asm->i--;
 		i += 2;
 	}
-	while (buf[g_asm->i] != '\n' && g_asm->i != 0)
+	while (g_asm->buf[g_asm->i] != '\n' && g_asm->i != 0)
 	{
 		g_asm->i--;
 		i++;
@@ -42,12 +42,12 @@ int		find_position_in_str(char *buf)
 	return (i);
 }
 
-void    lexical_error(char *buf)
+void    lexical_error(void)
 {
     ft_putstr("Lexical error at [");
    	ft_putnbr(g_asm->str_counter);
 	ft_putchar(':');
-	ft_putnbr(find_position_in_str(buf));
+	ft_putnbr(find_position_in_str());
 	putchar(']');
 	del_all_struct();
 	exit(0);
@@ -64,14 +64,14 @@ void	print_noll(int nb)
 		ft_putnbr(0);
 }
 
-void	syntax_error(int flag, char *buf)
+void	syntax_error(int flag)
 {
 	int		i;
 	ft_putstr("Syntax error at token [TOKEN][");
 	print_noll(g_asm->str_counter);
 	ft_putnbr(g_asm->str_counter);
 	ft_putchar(':');
-	i = find_position_in_str(buf);
+	i = find_position_in_str();
 	print_noll(i);
 	ft_putnbr(i);
 	ft_putstr("] ");

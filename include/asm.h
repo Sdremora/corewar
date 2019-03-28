@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:08:27 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/28 10:56:08 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/03/28 16:28:24 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "general/op.h"
 #include "libft.h"
 #include <stdio.h>
+#include "corewar/operations.h"
 
 # define HEADER		g_asm->matrix[0] 
 # define NAME		g_asm->matrix[1] 
@@ -24,6 +25,7 @@
 # define COMMENT	g_asm->matrix[4] 
 # define CODE 		g_asm->matrix[5]
 # define BUFF		3000
+# define BUFFER		g_asm->buf
 
 /*struct g_asm is for different things:
 **	binary_name saves the name of the final binary file
@@ -37,37 +39,57 @@
 **	quotes show if there was an open quote and no closed quote
 **	i is an iterator in buf
 **	flag_comment id the same as flag_name but for comment
+**
+** The struct g_parse we will use to write info about commands. In every element
+** we will write label(if we have it), name of command, its args and str number in 
+** file.
 */	
 
 typedef struct s_asm
 {
 	char		*binary_name;
 	char		**matrix;
+	char		buf[BUFF];
 	int			str_counter;
 	int			flag_name;
 	int			flag_comment;
-	int			quotes;
 	int			i;
 
 }				t_asm;
 
+typedef struct s_parse
+{
+	char		*label;
+	char		*command;
+	char		*arg1;
+	char		*arg2;
+	char		*arg3;
+	int			str_number;
+	//probably we will need to count number of bytes for command
+}				t_parse;
 
 t_asm			*g_asm;
+t_parse			*g_struct;
 
 void    usage(void);
 void	close_with_error(char *str);
-void    lexical_error(char *buf);
-void	syntax_error(int flag, char *buf);
+void    lexical_error(void);
+void	syntax_error(int flag);
 void	length_error(int nb);
 void	del_all_struct(void);
 void    init(void);
+void		init_struct(void);
 // void	find_position_error_lex_name_comment(char **line);
 void    parse_from_file(int argc, char **argv);
-void	skip_comment_and_spaces(char *buf);
-void		find_name_comment(char	*buf);
-void	skip_comment_and_spaces(char *buf);
-void	skip_whitespaces(char *buf);
-int		find_position_in_str(char *buf);
+void	skip_comment_and_spaces(void);
+void		find_name_comment(void);
+void	skip_comment_and_spaces(void);
+void	skip_whitespaces(void);
+int		find_position_in_str(void);
+void    write_labels_commands(void);
+int     count_chars(void);
+int		check_if_command_exist(char *temp);
+int		check_if_label_exist(char *temp);
 // int		find_name(char **line);
 // int		find_comment(char **line);
 
