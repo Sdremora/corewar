@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 14:04:27 by hharvey           #+#    #+#             */
-/*   Updated: 2019/03/27 09:18:25 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/03/28 21:04:30 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ char				*ft_strjdelfst(char *str, const char *str2);
 
 int					ft_max(int a, int b);
 int					ft_min(int a, int b);
+int					ft_reminder(int a, int b);
 
 char				*ft_strndup(const char *s, size_t maxlen);
 char				*ft_addr_char(char *str, char c);

@@ -19,10 +19,14 @@ void	op_zjmp(t_carriage *carg, t_arena *arena)
 	else
 	{
 		offset += get_arg_len(ZJMP, T_DIR);
-		answer = "KO";
+		answer = "FAILED";
 	}
-	carg->mem_pos = (carg->mem_pos + offset) % MEM_SIZE;
-	ft_printf("P %4d | %s %d %s\n", carg->carg_id, g_op_tab[ZJMP].name,
+	carg->mem_pos = ft_reminder(carg->mem_pos + offset, MEM_SIZE);
+//	carg->mem_pos = (carg->mem_pos + offset) % MEM_SIZE;
+//	if (carg->mem_pos < 0)
+//		carg->mem_pos = carg->mem_pos + MEM_SIZE;
+	if (arena->flags[F_V] & 4)
+		ft_printf("P %4d | %s %d %s\n", carg->carg_id, g_op_tab[ZJMP].name,
 		offset, answer);
 }
 
@@ -66,10 +70,13 @@ void	op_sti(t_carriage *carg, t_arena *arena)
 	n3 = read_arg(arena, carg, 2, TRUE);
 	offset = (n2 + n3) % IDX_MOD;
 	put_value(arena, carg->mem_pos + offset, value);
-	ft_printf("P %4d | %s r%d %d %d\n", carg->carg_id, g_op_tab[carg->op_id].name,
-		reg_num + 1, n2, n3);
-	ft_printf("%7.s| -> store to %d + %d = %d (with pc and mod %d)\n",
-		"", n2, n3, n2 + n3, offset);
+	if (arena->flags[F_V] & 4)
+	{
+		ft_printf("P %4d | %s r%d %d %d\n", carg->carg_id, g_op_tab[carg->op_id].name,
+			reg_num + 1, n2, n3);
+		ft_printf("%7.s| -> store to %d + %d = %d (with pc and mod %d)\n",
+			"", n2, n3, n2 + n3, offset + carg->mem_pos);
+	}
 }
 
 /*
@@ -98,7 +105,8 @@ void	op_fork(t_carriage *carg, t_arena *arena)
 	n1 = read_arg(arena, carg, 0, TRUE);
 	offset = carg->op_id == FORK ? n1 % IDX_MOD : n1;
 	new_carg->mem_pos = (carg->mem_pos + offset) % MEM_SIZE;
-	ft_printf("P %4d | %s %d (%d)\n", carg->carg_id, g_op_tab[carg->op_id].name,
+	if (arena->flags[F_V] & 4)
+		ft_printf("P %4d | %s %d (%d)\n", carg->carg_id, g_op_tab[carg->op_id].name,
 		n1, carg->mem_pos + offset);
 }
 
