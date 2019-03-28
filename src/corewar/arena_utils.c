@@ -9,7 +9,7 @@ void	arena_ini(t_arena *arena)
     arena->cycle_to_die = CYCLE_TO_DIE;
     arena->cur_cycle = 0;
 	arena->cycle_past_check = 0;
-	arena->checks = 0;
+	arena->checks = 1;
 	i = 0;
 	while (i < FLAGS_COUNT)
 		arena->flags[i++] = -1;

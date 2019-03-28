@@ -162,7 +162,8 @@ void		check_cycle_to_die(t_arena *arena)
 	if (arena->live_call_count >= NBR_LIVE || arena->checks >= MAX_CHECKS)
 	{
 		arena->cycle_to_die -= CYCLE_DELTA;
-		arena->checks = 0;
+		ft_printf("Cycle to die is now %d\n", arena->cycle_to_die);
+		arena->checks = 1;
 	}
 	else
 		arena->checks++;
@@ -176,20 +177,19 @@ void		fight(t_arena *arena)
 
 	introducing(arena);
 	i = 0;
-    while (arena->carg_lst && arena->cycle_to_die >= 0)
+    while (arena->carg_lst)
     {
-		if (arena->cur_cycle == arena->flags[F_D])
-			return print_map(arena->map, 64);
-		arena->cur_cycle++;
-		ft_printf("It is now cycle %d\n", arena->cur_cycle);
-		arena->cycle_past_check++;
-		if (arena->cycle_past_check == arena->cycle_to_die || arena->cycle_to_die <= 0)
-		{
-			arena->cycle_past_check -= arena->cycle_to_die;
-			check_live(arena);
-			check_cycle_to_die(arena);
-		}
-		play_round(arena);
+			if (arena->cur_cycle == arena->flags[F_D])
+				return print_map(arena->map, 64);
+			arena->cur_cycle++;
+			ft_printf("It is now cycle %d\n", arena->cur_cycle);
+			arena->cycle_past_check++;
+			if (arena->cycle_past_check == arena->cycle_to_die || arena->cycle_to_die <= 0)
+			{
+				arena->cycle_past_check -= arena->cycle_to_die;
+				check_live(arena);
+				check_cycle_to_die(arena);
+			}
+			play_round(arena);
     }
-    arena_print(arena);
 }
