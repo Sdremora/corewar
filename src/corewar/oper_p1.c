@@ -15,7 +15,7 @@ void	op_live(t_carriage *carg, t_arena *arena)
 	if (player_num >= 1 && player_num <= arena->players_count)
 		arena->last_live_player = player_num - 1;
 	arena->live_call_count++;
-	ft_printf("P %4d | %s %d\n", carg->reg[0] * -1, g_op_tab[LIVE].name, player_num * -1);
+	ft_printf("P %4d | %s %d\n", carg->owner, g_op_tab[LIVE].name, player_num * -1);
 }
 
 /*
@@ -89,7 +89,7 @@ void	op_and_or_xor(t_carriage *carg, t_arena *arena)
 	int	n1;
 	int	n2;
 	int	n3;
-	int	offset;
+	int	reg_num;
 
 	n1 = read_arg(arena, carg, 0, TRUE);
 	n2 = read_arg(arena, carg, 1, TRUE);
@@ -99,7 +99,9 @@ void	op_and_or_xor(t_carriage *carg, t_arena *arena)
 		n3 = n1 | n2;
 	else
 		n3 = n1 ^ n2;
-	offset = get_args_offset(carg, 2);
-	carg->reg[get_reg_num(arena, carg->mem_pos + offset)] = n3;
+	reg_num = get_reg_num(arena, carg->mem_pos + get_args_offset(carg, 2));
+	carg->reg[reg_num] = n3;
 	carg->carry = n3 == 0 ? 1 : 0;
+	ft_printf("P %4d | %s %d %d r%d\n", carg->owner, g_op_tab[carg->op_id].name,
+		n1, n2, reg_num + 1);
 }

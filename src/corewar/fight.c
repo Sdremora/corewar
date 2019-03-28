@@ -13,7 +13,7 @@ int			step_bites(int arg, int dir_size) //счетчик отступов для
 	return (-42);
 }
 
-static void	operations_sort(t_carriage *carg, t_arena *arena)
+static void	operations_handle(t_carriage *carg, t_arena *arena)
 {
 	unsigned char	oper;
 
@@ -24,7 +24,7 @@ static void	operations_sort(t_carriage *carg, t_arena *arena)
 			carg->op_id = oper;
 	}
 	else
-		op_invalid(carg, arena);
+		carg->mem_pos = (carg->mem_pos + 1) % MEM_SIZE;
 }
 
 int			convert_args(unsigned char arg)
@@ -86,7 +86,7 @@ void		move_carriage(t_arena *arena, t_carriage *carg, int dir_size)
 		move += step_bites(carg->args[i], dir_size);
 		i++;
 	}
-	ft_printf("ADV %d (0x -> 0x)", move);
+	ft_printf("ADV %d (%06p -> %06p)", move, carg->mem_pos, carg->mem_pos + move);
 	i = 0;
 	while (i < move)
 	{
@@ -113,9 +113,13 @@ static void	play_round(t_arena *arena)
     while (carg_node)
     {
 		carg = (t_carriage *)carg_node->content;
-        if (carg->pause_count > 0)
+		if (carg->op_id == -1)
+		{
+			operations_handle(carg, arena);
+		}
+		if (carg->pause_count > 0)
 			carg->pause_count--;
-		else if (carg->op_id > -1)
+		if (carg->op_id > -1 && carg->pause_count == 0)
 		{
 			load_args(carg, arena);
 			if (!g_op_tab[carg->op_id].kod_tipov_argumenta
@@ -126,8 +130,6 @@ static void	play_round(t_arena *arena)
 			move_carriage(arena, carg, g_op_tab[carg->op_id].dir_size);
 			clean_carg_op(carg);
 		}
-		else
-			operations_sort(carg, arena);
     	carg_node = carg_node->next;
     }
 }
@@ -167,22 +169,6 @@ void		check_cycle_to_die(t_arena *arena)
 	arena->live_call_count = 0;
 }
 
-void		introducing(t_arena *arena)
-{
-	int			i;
-	t_player	player;
-
-	ft_printf("Introducing contestants...\n");
-	i = 0;
-	while (i < arena->players_count)
-	{
-		player = arena->players[i];
-		i++;
-		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
-			i, player.code_size, player.name, player.comment);
-	}
-}
-
 void		fight(t_arena *arena)
 {
     int			carg_count;
@@ -193,10 +179,9 @@ void		fight(t_arena *arena)
     while (arena->carg_lst && arena->cycle_to_die >= 0)
     {
 		if (arena->cur_cycle == arena->flags[F_D])
-		{
 			return print_map(arena->map, 64);
-		}
 		arena->cur_cycle++;
+		ft_printf("It is now cycle %d\n", arena->cur_cycle);
 		arena->cycle_past_check++;
 		if (arena->cycle_past_check == arena->cycle_to_die || arena->cycle_to_die <= 0)
 		{
@@ -205,7 +190,6 @@ void		fight(t_arena *arena)
 			check_cycle_to_die(arena);
 		}
 		play_round(arena);
-		ft_printf("It is now cycle %d\n", arena->cur_cycle);
     }
     arena_print(arena);
 }

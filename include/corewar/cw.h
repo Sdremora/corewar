@@ -77,6 +77,7 @@ void		print_usage(void);
 void		fight(t_arena *arena);
 
 //	print_map.c
+void		print_mem(unsigned int n);
 void		print_map(unsigned char *map, int n);
 void		print_octet(unsigned char p);
 
@@ -116,7 +117,6 @@ void		op_ldi_lldi(t_carriage *carg, t_arena *arena);
 void		op_sti(t_carriage *carg, t_arena *arena);
 void		op_fork(t_carriage *carg, t_arena *arena);
 void		op_aff(t_carriage *carg, t_arena *arena);
-void		op_invalid(t_carriage *carg, t_arena *arena);
 
 //	oper_utils.c
 int			get_value(t_arena *arena, int mem_pos, int	len);
@@ -125,4 +125,7 @@ int			get_reg_num(t_arena *arena, int pos);
 int			get_arg_len(int oper_type, char arg_type);
 int			get_args_offset(t_carriage *carg, int arg_num);
 int			read_arg(t_arena *arena, t_carriage *carg, int arg_num, int is_idx_mod);
+
+//	support.c
+void		introducing(t_arena *arena);
 #endif
