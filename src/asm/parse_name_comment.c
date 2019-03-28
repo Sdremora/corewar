@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 11:58:45 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/27 18:27:41 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/03/28 11:36:28 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void    write_name_comment_to_matrix(char i, char *matrix_element, int j)
 }
  
 
-void		going_throw_two_quotes(int	limit, char *matrix_element, char *buf)
+int		going_throw_two_quotes(int	limit, char *matrix_element, char *buf)
 {
 	int		counter;
 	skip_whitespaces(buf);
@@ -44,12 +44,11 @@ void		going_throw_two_quotes(int	limit, char *matrix_element, char *buf)
 		if (buf[g_asm->i] == '\n')
 			g_asm->str_counter++;
 		if (counter > limit)
-			close_with_error("Champion name too long (Max length 128 - PROGRAMM_LENGTH)");
+			return (-1);
 		write_name_comment_to_matrix(buf[g_asm->i], matrix_element, counter - 2);
 		g_asm->i++;
 	}
-	if (buf[g_asm->i] == '\0')
-		close_with_error("Syntax error at token [TOKEN][002:010] ENDLINE");
+		return (1);
 }
 
 void		find_name_comment(char	*buf)
@@ -61,7 +60,11 @@ void		find_name_comment(char	*buf)
 		else if (g_asm->flag_name == 1)
 			syntax_error(2, buf);
 		g_asm->i += 5;
-		going_throw_two_quotes(PROG_NAME_LENGTH, NAME, buf);
+		if (going_throw_two_quotes(PROG_NAME_LENGTH, NAME, buf) == -1)
+		{
+			g_asm->flag_comment = 1;
+			g_asm->flag_name = 0;
+		}
 	}
 	else if (ft_strnequ(".comment", &buf[g_asm->i], 8) != 0)
 	{
@@ -70,8 +73,17 @@ void		find_name_comment(char	*buf)
 		else if (g_asm->flag_comment == 1)
 			syntax_error(1, buf);
 		g_asm->i += 8;
-		going_throw_two_quotes(COMMENT_LENGTH, COMMENT, buf);
+		if (going_throw_two_quotes(COMMENT_LENGTH, COMMENT, buf) == -1)
+		{
+			g_asm->flag_name = 1;
+			g_asm->flag_comment = 0;
+		}	
 	}
+	else if (buf[g_asm->i] == '\0')
+	{
+		g_asm->flag_comment = 0;
+		g_asm->flag_name = 0;
+	}	
 	else
 		close_with_error("Syntax error at token [TOKEN][003:001] LABEL \"l2:\" || INSTRUCTION \"sti\" || REGISTER \"r1\"....");
 }

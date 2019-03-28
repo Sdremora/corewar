@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:08:27 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/27 18:21:37 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/03/28 10:56:08 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ t_asm			*g_asm;
 
 void    usage(void);
 void	close_with_error(char *str);
+void    lexical_error(char *buf);
+void	syntax_error(int flag, char *buf);
+void	length_error(int nb);
 void	del_all_struct(void);
 void    init(void);
 // void	find_position_error_lex_name_comment(char **line);
@@ -64,8 +67,7 @@ void	skip_comment_and_spaces(char *buf);
 void		find_name_comment(char	*buf);
 void	skip_comment_and_spaces(char *buf);
 void	skip_whitespaces(char *buf);
-void    lexical_error(char *buf);
-void	syntax_error(int flag, char *buf);
+int		find_position_in_str(char *buf);
 // int		find_name(char **line);
 // int		find_comment(char **line);
 
