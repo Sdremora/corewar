@@ -35,6 +35,7 @@ typedef struct	s_carriage
 	int				live;
 	int				last_live_cycle;
 	int				args[3];
+	int				carg_id;
 }				t_carriage;
 
 typedef enum	e_flag
@@ -62,6 +63,7 @@ typedef struct	s_arena
 	int				last_live_player;
 	int				live_call_count;
 	int				flags[FLAGS_COUNT];
+	int				max_carg_id;
 }				t_arena;
 
 typedef union	u_converter
@@ -100,8 +102,8 @@ void		error_handle(int error_id, t_arena *arena, char *addition);
 void		player_ini(t_player *player, int *player_id);
 
 //	carg_utils.c
-t_carriage	*carg_new(int pos, int owner, int cycle);
-t_carriage	*carriage_copy(t_carriage *carg);
+t_carriage	*carg_new(int pos, int owner, int cycle, int carg_id);
+t_carriage	*carriage_copy(t_carriage *carg, int new_id);
 void		carriage_free(t_carriage **carg);
 
 //	oper_p1.c
@@ -125,6 +127,7 @@ int			get_reg_num(t_arena *arena, int pos);
 int			get_arg_len(int oper_type, char arg_type);
 int			get_args_offset(t_carriage *carg, int arg_num);
 int			read_arg(t_arena *arena, t_carriage *carg, int arg_num, int is_idx_mod);
+int			get_pos(int index);
 
 //	support.c
 void		introducing(t_arena *arena);

@@ -22,7 +22,7 @@ void	op_zjmp(t_carriage *carg, t_arena *arena)
 		answer = "KO";
 	}
 	carg->mem_pos = (carg->mem_pos + offset) % MEM_SIZE;
-	ft_printf("P %4d | %s %d %s\n", carg->owner, g_op_tab[ZJMP].name,
+	ft_printf("P %4d | %s %d %s\n", carg->carg_id, g_op_tab[ZJMP].name,
 		offset, answer);
 }
 
@@ -58,13 +58,18 @@ void	op_sti(t_carriage *carg, t_arena *arena)
 	int n2;
 	int n3;
 	int value;
+	int	reg_num;
 
+	reg_num = get_reg_num(arena, carg->mem_pos + get_args_offset(carg, 0));
+	value = carg->reg[reg_num];
 	n2 = read_arg(arena, carg, 1, TRUE);
 	n3 = read_arg(arena, carg, 2, TRUE);
 	offset = (n2 + n3) % IDX_MOD;
-	value = get_value(arena, carg->mem_pos + offset, REG_SIZE);
-	offset = get_args_offset(carg, 0);
-	carg->reg[get_reg_num(arena, carg->mem_pos + offset)] = value;
+	put_value(arena, carg->mem_pos + offset, value);
+	ft_printf("P %4d | %s r%d %d %d\n", carg->carg_id, g_op_tab[carg->op_id].name,
+		reg_num + 1, n2, n3);
+	ft_printf("%7.s| -> store to %d + %d = %d (with pc and mod %d)\n",
+		"", n2, n3, n2 + n3, offset);
 }
 
 /*
@@ -80,7 +85,8 @@ void	op_fork(t_carriage *carg, t_arena *arena)
 	t_carriage	*new_carg;
 
 	node = NULL;
-	new_carg = carriage_copy(carg);
+	arena->max_carg_id++;
+	new_carg = carriage_copy(carg, arena->max_carg_id);
 	node = ft_lstput(new_carg, sizeof(t_carriage));
 	if (new_carg == NULL || node == NULL)
 	{
@@ -92,7 +98,7 @@ void	op_fork(t_carriage *carg, t_arena *arena)
 	n1 = read_arg(arena, carg, 0, TRUE);
 	offset = carg->op_id == FORK ? n1 % IDX_MOD : n1;
 	new_carg->mem_pos = (carg->mem_pos + offset) % MEM_SIZE;
-	ft_printf("P %4d | %s %d (%d)\n", carg->owner, g_op_tab[carg->op_id].name,
+	ft_printf("P %4d | %s %d (%d)\n", carg->carg_id, g_op_tab[carg->op_id].name,
 		n1, carg->mem_pos + offset);
 }
 

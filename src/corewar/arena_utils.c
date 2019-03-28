@@ -9,7 +9,7 @@ void	arena_ini(t_arena *arena)
     arena->cycle_to_die = CYCLE_TO_DIE;
     arena->cur_cycle = 0;
 	arena->cycle_past_check = 0;
-	arena->checks = 0;
+	arena->checks = 1;
 	i = 0;
 	while (i < FLAGS_COUNT)
 		arena->flags[i++] = -1;
@@ -19,6 +19,7 @@ void	arena_ini(t_arena *arena)
 	arena->carg_lst = NULL;
 	arena->last_live_player = -1;
 	arena->live_call_count = 0;
+	arena->max_carg_id = 0;
 }
 
 //Дописать очистку арены.
