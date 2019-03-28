@@ -19,6 +19,7 @@ void	arena_ini(t_arena *arena)
 	arena->carg_lst = NULL;
 	arena->last_live_player = -1;
 	arena->live_call_count = 0;
+	arena->max_carg_id = 0;
 }
 
 //Дописать очистку арены.

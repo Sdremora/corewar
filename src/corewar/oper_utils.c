@@ -33,7 +33,7 @@ int		get_value(t_arena *arena, int mem_pos, int	len)
 	k = len - 1;
 	while (i < len)
 	{
-		converter.str[i] = arena->map[(mem_pos + k) % MEM_SIZE];
+		converter.str[i] = arena->map[get_pos(mem_pos + k)];
 		i++;
 		k--;
 	}
@@ -51,7 +51,7 @@ void	put_value(t_arena *arena, int pos, int value)
 	converter.n = value;
 	while (i < REG_SIZE)
 	{
-		arena->map[(pos + REG_SIZE - 1 - i) % MEM_SIZE] = converter.str[i];
+		arena->map[get_pos(pos + REG_SIZE - 1 - i)] = converter.str[i];
 		i++;
 	}
 }
@@ -60,7 +60,7 @@ int		get_reg_num(t_arena *arena, int pos)
 {
 	char	reg_num;
 
-	reg_num = arena->map[pos % MEM_SIZE] % REG_NUMBER;
+	reg_num = arena->map[get_pos(pos)] % REG_NUMBER;
 	reg_num = reg_num != 0 ? reg_num : 16;
 	return (reg_num - 1);
 }
@@ -104,4 +104,14 @@ int		read_arg(t_arena *arena, t_carriage *carg, int arg_num, int is_idx_mod)
 		value = get_value(arena, carg->mem_pos + offset, REG_SIZE);
 	}
 	return (value);
+}
+
+int	get_pos(int index)
+{
+	int	pos;
+
+	pos = index % MEM_SIZE;
+	if (pos < 0)
+		pos += MEM_SIZE;
+	return (pos);
 }

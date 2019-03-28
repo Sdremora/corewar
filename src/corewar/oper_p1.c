@@ -12,7 +12,7 @@ void	op_live(t_carriage *carg, t_arena *arena)
 	carg->last_live_cycle = arena->cur_cycle;
 	carg->live = 1;
 	player_num = read_arg(arena, carg, 0, TRUE) * -1;
-	ft_printf("P %4d | %s %d\n", carg->owner, g_op_tab[LIVE].name, player_num * -1);
+	ft_printf("P %4d | %s %d\n", carg->carg_id, g_op_tab[LIVE].name, player_num * -1);
 	if (player_num >= 1 && player_num <= arena->players_count)
 	{
 		arena->last_live_player = player_num - 1;
@@ -31,13 +31,15 @@ void	op_ld_lld(t_carriage *carg, t_arena *arena)
 {
 	char			is_idx_mod;
 	int				value;
-	int				offset;
+	int				reg_num;
 
 	is_idx_mod = carg->op_id == LD ? TRUE : FALSE;
 	value = read_arg(arena, carg, 0, is_idx_mod);
-	offset = get_args_offset(carg, 1);
-	carg->reg[get_reg_num(arena, carg->mem_pos + offset)] = value;
+	reg_num = get_reg_num(arena, carg->mem_pos + get_args_offset(carg, 1));
+	carg->reg[reg_num] = value;
 	carg->carry = value == 0 ? 1 : 0;
+	ft_printf("P %4d | %s %d r%d\n", carg->carg_id, g_op_tab[carg->op_id].name,
+		value, reg_num + 1);
 }
 
 /*
@@ -48,17 +50,26 @@ void	op_ld_lld(t_carriage *carg, t_arena *arena)
 void	op_st(t_carriage *carg, t_arena *arena)
 {
 	int	value;
+	int	reg_num1;
+	int	reg_num2;
 	int	offset;
 
-	offset = get_args_offset(carg, 0);
-	value = carg->reg[get_reg_num(arena, carg->mem_pos + offset)];
+	reg_num1 = get_reg_num(arena, carg->mem_pos + get_args_offset(carg, 0));
+	value = carg->reg[reg_num1];
 	offset = get_args_offset(carg, 1);
 	if (carg->args[1] == T_REG)
-		carg->reg[get_reg_num(arena, carg->mem_pos + offset)] = value;
+	{
+		reg_num2 = get_reg_num(arena, carg->mem_pos + get_args_offset(carg, 1));
+		carg->reg[reg_num2] = value;
+		ft_printf("P %4d | %s r%d %d\n", carg->carg_id, g_op_tab[carg->op_id].name,
+		reg_num1 + 1, reg_num2 + 1);
+	}
 	else
 	{
 		offset = get_value(arena, carg->mem_pos + offset, IND_SIZE) % IDX_MOD;
 		put_value(arena, carg->mem_pos + offset, value);
+		ft_printf("P %4d | %s r%d %d\n", carg->carg_id, g_op_tab[carg->op_id].name,
+		reg_num1 + 1, offset);
 	}
 }
 
@@ -106,6 +117,6 @@ void	op_and_or_xor(t_carriage *carg, t_arena *arena)
 	reg_num = get_reg_num(arena, carg->mem_pos + get_args_offset(carg, 2));
 	carg->reg[reg_num] = n3;
 	carg->carry = n3 == 0 ? 1 : 0;
-	ft_printf("P %4d | %s %d %d r%d\n", carg->owner, g_op_tab[carg->op_id].name,
+	ft_printf("P %4d | %s %d %d r%d\n", carg->carg_id, g_op_tab[carg->op_id].name,
 		n1, n2, reg_num + 1);
 }
