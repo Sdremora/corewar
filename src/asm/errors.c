@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 09:47:29 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/27 18:35:34 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/03/28 11:03:00 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@
  ** 3 - for STRING
  ** 4 - for INSTRUCTION
  ** 5 - for ENDLINE
- **
+ **	6 - for END
+ ** for printing error if champion name or comment length too long we have 
+ ** function length error: 1 for name, 2 for comment
+
  */
 
 int		find_position_in_str(char *buf)
@@ -64,13 +67,11 @@ void	print_noll(int nb)
 void	syntax_error(int flag, char *buf)
 {
 	int		i;
-	//printf("%d\n", g_asm->i);
 	ft_putstr("Syntax error at token [TOKEN][");
 	print_noll(g_asm->str_counter);
 	ft_putnbr(g_asm->str_counter);
 	ft_putchar(':');
 	i = find_position_in_str(buf);
-	//printf("i:%d\n", i);
 	print_noll(i);
 	ft_putnbr(i);
 	ft_putstr("] ");
@@ -82,8 +83,28 @@ void	syntax_error(int flag, char *buf)
 	{
 		ft_putstr("COMMAND_NAME \".name\"\n");
 	}
-	else if(flag == 5)
+	else if (flag == 5)
 		ft_putstr("ENDLINE\n");
+	else if (flag == 6)
+		ft_putstr("END \"(null)\"\n");
 	del_all_struct();
 	exit(0);
-}	
+}
+
+void	length_error(int nb)
+{
+	if (nb == 1)
+	{
+		ft_putstr("Champion name too long (Max length ");
+		ft_putnbr(PROG_NAME_LENGTH);
+		ft_putstr(")\n");
+	}
+	else if (nb == 2)
+	{
+		ft_putstr("Champion comment too long (Max length ");
+		ft_putnbr(COMMENT_LENGTH);
+		ft_putstr(")\n");
+	}
+	del_all_struct();
+	exit(0);
+}
