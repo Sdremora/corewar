@@ -7,14 +7,23 @@
 
 void	op_zjmp(t_carriage *carg, t_arena *arena)
 {
-	int	offset;
+	int		offset;
+	char	*answer;
 
 	offset = get_args_offset(carg, 0);
 	if (carg->carry)
+	{
 		offset = read_arg(arena, carg, 0, TRUE) % IDX_MOD;
+		answer = "OK";
+	}
 	else
+	{
 		offset += get_arg_len(ZJMP, T_DIR);
+		answer = "KO";
+	}
 	carg->mem_pos = (carg->mem_pos + offset) % MEM_SIZE;
+	ft_printf("P %4d | %s %d %s\n", carg->owner, g_op_tab[ZJMP].name,
+		offset, answer);
 }
 
 /*
@@ -66,6 +75,7 @@ void	op_sti(t_carriage *carg, t_arena *arena)
 void	op_fork(t_carriage *carg, t_arena *arena)
 {
 	int			n1;
+	int			offset;
 	t_list		*node;
 	t_carriage	*new_carg;
 
@@ -80,8 +90,10 @@ void	op_fork(t_carriage *carg, t_arena *arena)
 	}
 	ft_lstadd(&arena->carg_lst, node);
 	n1 = read_arg(arena, carg, 0, TRUE);
-	n1 = carg->op_id == FORK ? n1 % IDX_MOD : n1;
-	new_carg->mem_pos = (carg->mem_pos + n1) % MEM_SIZE;
+	offset = carg->op_id == FORK ? n1 % IDX_MOD : n1;
+	new_carg->mem_pos = (carg->mem_pos + offset) % MEM_SIZE;
+	ft_printf("P %4d | %s %d (%d)\n", carg->owner, g_op_tab[carg->op_id].name,
+		n1, carg->mem_pos + offset);
 }
 
 /*
@@ -94,7 +106,3 @@ void	op_aff(t_carriage *carg, t_arena *arena)
 
 }
 
-void	op_invalid(t_carriage *carg, t_arena *arena)
-{
-	carg->mem_pos = (carg->mem_pos + 1) % MEM_SIZE;
-}
