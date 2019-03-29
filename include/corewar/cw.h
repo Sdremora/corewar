@@ -72,6 +72,13 @@ typedef union	u_converter
 	char	str[sizeof(int)];
 }				t_converter;
 
+typedef enum	e_arg_num
+{
+	ARG_1,
+	ARG_2,
+	ARG_3
+}				t_arg_num;
+
 //	main.c
 void		print_usage(void);
 
@@ -125,8 +132,8 @@ int			get_value(t_arena *arena, int mem_pos, int	len);
 void		put_value(t_arena *arena, int pos, int value);
 int			get_reg_num(t_arena *arena, int pos);
 int			get_arg_len(int oper_type, char arg_type);
-int			get_args_offset(t_carriage *carg, int arg_num);
-int			read_arg(t_arena *arena, t_carriage *carg, int arg_num, int is_idx_mod);
+int			get_args_offset(t_carriage *carg, t_arg_num arg_num);
+int			read_arg(t_arena *arena, t_carriage *carg, t_arg_num arg_num, int is_idx_mod);
 int			get_pos(int index);
 
 //	support.c
