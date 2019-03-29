@@ -5,14 +5,16 @@ t_carriage *carg_new(int pos, int owner, int cycle, int carg_id)
     t_carriage *res;
 
     res = (t_carriage*)malloc(sizeof(t_carriage));
-    res->owner = owner;
-    res->mem_pos = pos;
-    res->pause_count = 0;
     ft_bzero(res->reg, (REG_NUMBER) * sizeof(int));
 	res->reg[0] = owner * -1;
+    res->pause_count = 0;
+    res->mem_pos = get_pos(pos);
+    res->owner = owner;
+	res->carry = 0;
     res->op_id = -1;
-    res->last_live_cycle = cycle;
     res->live = 0;
+    res->last_live_cycle = cycle;
+	ft_bzero(res->args, 3 * sizeof(int));
 	res->carg_id = carg_id;
     return (res);
 }

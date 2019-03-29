@@ -21,10 +21,7 @@ void	op_zjmp(t_carriage *carg, t_arena *arena)
 		offset += get_arg_len(ZJMP, T_DIR);
 		answer = "FAILED";
 	}
-	carg->mem_pos = ft_reminder(carg->mem_pos + offset, MEM_SIZE);
-//	carg->mem_pos = (carg->mem_pos + offset) % MEM_SIZE;
-//	if (carg->mem_pos < 0)
-//		carg->mem_pos = carg->mem_pos + MEM_SIZE;
+	carg->mem_pos = get_pos(carg->mem_pos + offset);
 	if (arena->flags[F_V] & 4)
 		ft_printf("P %4d | %s %d %s\n", carg->carg_id, g_op_tab[ZJMP].name,
 		offset, answer);
@@ -39,6 +36,7 @@ void	op_ldi_lldi(t_carriage *carg, t_arena *arena)
 {
 	int n1;
 	int n2;
+	int	reg_num;
 	int n3;
 	int offset;
 
@@ -47,8 +45,15 @@ void	op_ldi_lldi(t_carriage *carg, t_arena *arena)
 	offset = n1 + n2;
 	offset = carg->op_id == LDI ? offset % IDX_MOD : offset;
 	n3 = get_value(arena, carg->mem_pos + offset, REG_SIZE);
-	offset = get_args_offset(carg, 2);
-	carg->reg[get_reg_num(arena, carg->mem_pos + offset)] = n3;
+	reg_num = get_reg_num(arena, carg->mem_pos + get_args_offset(carg, 2));
+	carg->reg[reg_num] = n3;
+	if (arena->flags[F_V] & 4)
+	{
+		ft_printf("P %4d | %s %d %d r%d\n", carg->carg_id, g_op_tab[carg->op_id].name,
+			n1, n2, reg_num + 1);
+		ft_printf("%7.s| -> load from %d + %d = %d (with pc and mod %d)\n",
+			"", n1, n2, n1 + n2, offset + carg->mem_pos);
+	}
 }
 
 /*

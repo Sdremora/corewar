@@ -88,15 +88,23 @@ void	op_add_sub(t_carriage *carg, t_arena *arena)
 	int	n1;
 	int	n2;
 	int	n3;
+	int	reg_num;
+	int	offset;
 
-	n1 = carg->reg[get_reg_num(arena, carg->mem_pos + 2)];
-	n2 = carg->reg[get_reg_num(arena, carg->mem_pos + 3)];
+	offset = get_args_offset(carg, 0);
+	n1 = carg->reg[get_reg_num(arena, carg->mem_pos + offset)];
+	offset = get_args_offset(carg, 1);
+	n2 = carg->reg[get_reg_num(arena, carg->mem_pos + offset)];
 	if (carg->op_id == ADD)
 		n3 = n1 + n2;
 	else
 		n3 = n1 - n2;
-	carg->reg[get_reg_num(arena, carg->mem_pos + 4)] = n3;
+	reg_num = get_reg_num(arena, carg->mem_pos + get_args_offset(carg, 2));
+	carg->reg[reg_num] = n3;
 	carg->carry = n3 == 0 ? 1 : 0;
+	if (arena->flags[F_V] & 4)
+		ft_printf("P %4d | %s %d %d r%d\n", carg->carg_id, g_op_tab[carg->op_id].name,
+		n1, n2, reg_num + 1);
 }
 
 /*

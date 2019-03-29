@@ -69,14 +69,12 @@ int		get_reg_num(t_arena *arena, int pos)
 **	arg_num 0..2
 */
 
-int		get_args_offset(t_carriage *carg, int arg_num)
+int		get_args_offset(t_carriage *carg, t_arg_num arg_num)
 {
 	int	offset;
 
-	if (arg_num >= g_op_tab[carg->op_id].var_count)
-		error_handle(E_INV_ALGO, NULL, "беда в get_args_offset");
 	offset = g_op_tab[carg->op_id].kod_tipov_argumenta == 0 ? 1 : 2;
-	if (arg_num == 0)
+	if (arg_num == FIRST)
 		return (offset);
 	offset += get_arg_len(carg->op_id, carg->args[0]);
 	if (arg_num == 1)
