@@ -187,8 +187,6 @@ void		fight(t_arena *arena)
     {
 			if (arena->cur_cycle == arena->flags[F_D])
 				return print_map(arena->map, 64);
-			if (arena->cur_cycle == 1533)
-				ft_printf("=)\n");
 			arena->cur_cycle++;
 			if (arena->flags[F_V] & 2)
 				ft_printf("It is now cycle %d\n", arena->cur_cycle);
