@@ -11,19 +11,15 @@ void	op_zjmp(t_carriage *carg, t_arena *arena)
 	int		value;
 	char	*answer;
 
+	value = read_arg(arena, carg, ARG_1, TRUE);
 	if (carg->carry)
 	{
-		value = read_arg(arena, carg, ARG_1, TRUE);
 		offset =  value % IDX_MOD;
+		carg->mem_pos = get_pos(carg->mem_pos + offset);
 		answer = "OK";
 	}
 	else
-	{
-		offset = get_args_offset(carg, ARG_1) + get_arg_len(ZJMP, T_DIR);
-		value = offset;
 		answer = "FAILED";
-	}
-	carg->mem_pos = get_pos(carg->mem_pos + offset);
 	if (arena->flags[F_V] & 4)
 		ft_printf("P %4d | %s %d %s\n", carg->carg_id, g_op_tab[ZJMP].name,
 		value, answer);

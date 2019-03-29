@@ -5,6 +5,7 @@
 #define REVERSE_MAGIC 4085508608
 
 #include "general/op.h"
+#include <curses.h>
 
 #define FLAGS_COUNT 8
 #define E_NO_MEMORY -1

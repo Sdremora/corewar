@@ -178,27 +178,100 @@ void		check_cycle_to_die(t_arena *arena)
 	arena->live_call_count = 0;
 }
 
+void		draw_map(unsigned char *str, int x, int y)
+{
+	int i;
+	int j;
+	static char base[17] = "0123456789abcdef";
+
+	i = 0;
+	while (i < MEM_SIZE / 64)
+	{
+		j = 0;
+		while (j < 64 * 3)
+		{
+			mvaddch(i + y, x + j, base[str[i * 64 + j] / 16 % 16]);
+			mvaddch(i + y, x + j + 1, base[str[i * 64 + j] % 16]);
+			mvaddch(i + y, x + j + 2, ' ');
+			j += 3;
+		}
+		i++;
+	}
+}
+
+void		draw_players(t_arena *arena, int x, int y)
+{
+	int i;
+	int pos;
+	static char base[17] = "0123456789abcdef";
+
+	start_color();
+	init_pair(1,  COLOR_GREEN, COLOR_BLACK);
+	init_pair(2,  COLOR_BLUE, COLOR_BLACK);
+	init_pair(3,  COLOR_RED, COLOR_BLACK);
+    init_pair(4,  COLOR_CYAN, COLOR_BLACK);
+
+	init_pair(5,  COLOR_BLACK, COLOR_GREEN);
+	init_pair(6,  COLOR_BLACK, COLOR_BLUE);
+	init_pair(7,  COLOR_BLACK, COLOR_RED);
+    init_pair(8,  COLOR_BLACK, COLOR_CYAN);
+
+	color_set(1, NULL);
+	i = 0;
+	int step;
+
+	while (i < arena->players_count)
+	{
+		color_set(i + 1 + 4, NULL);
+		pos = i * MEM_SIZE / arena->players_count;
+		step = 0;
+		while (pos < i * MEM_SIZE / arena->players_count + arena->players[i].code_size)
+		{
+			mvaddch(y + pos / 64, x + pos % 64 + step % 128, base[arena->map[pos] / 16 % 16]);
+			mvaddch(y + pos / 64, x + pos % 64 + step % 128 + 1, base[arena->map[pos] / 16 % 16]);
+			if (!step)
+				color_set(i + 1, NULL);
+			step += 2;
+			pos++;
+		}
+
+		i++;
+	}
+
+}
+
 void		fight(t_arena *arena)
 {
 	introducing(arena);
+	
+	if (arena->flags[F_VIS] == 1)
+	{
+		int x = 5;
+		int y = 5;
+		initscr();
+		draw_map(arena->map, 5, 5);
+		draw_players(arena, x, y);
+		curs_set(0);
+		refresh();
+		getch();
+		endwin();
+	}
     while (arena->carg_lst)
     {
 			if (arena->cur_cycle == arena->flags[F_D])
 				return print_map(arena->map, 64);
-			if (arena->cur_cycle == 1533)
-				ft_printf("=)\n");
 			arena->cur_cycle++;
 			if (arena->flags[F_V] & 2)
 				ft_printf("It is now cycle %d\n", arena->cur_cycle);
 				//ft_printf("{yellow}It is now cycle %d{def}\n", arena->cur_cycle);
 			arena->cycle_past_check++;
+			play_round(arena);
 			if (arena->cycle_past_check == arena->cycle_to_die || arena->cycle_to_die <= 0)
 			{
 				arena->cycle_past_check -= arena->cycle_to_die;
 				check_live(arena);
 				check_cycle_to_die(arena);
 			}
-			play_round(arena);
     }
 	ft_printf("циклов -> %d\n", arena->cur_cycle);
 }
