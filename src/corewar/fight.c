@@ -24,7 +24,7 @@ static void	operations_handle(t_carriage *carg, t_arena *arena)
 			carg->op_id = oper;
 	}
 	else
-		carg->mem_pos = (carg->mem_pos + 1) % MEM_SIZE;
+		carg->mem_pos = get_pos(carg->mem_pos + 1);
 }
 
 int			convert_args(unsigned char arg)
@@ -47,7 +47,7 @@ void		load_args(t_carriage *carg, t_arena *arena)
 	if (g_op_tab[carg->op_id].kod_tipov_argumenta)
 	{
 		i = 0;
-		arg = arena->map[(carg->mem_pos + 1) % MEM_SIZE];
+		arg = arena->map[get_pos(carg->mem_pos + 1)];
 		while (i < 3 && g_op_tab[carg->op_id].args[i])
 		{
 			carg->args[i] = convert_args(arg >> (6 - 2 * i) & 3);
@@ -90,12 +90,13 @@ void		move_carriage(t_arena *arena, t_carriage *carg, int dir_size)
 	next_pos = get_pos(carg->mem_pos + move);
 	if (arena->flags[F_V] & 16)
 	{
-		ft_printf("ADV %d (%06p -> %06p)", move, carg->mem_pos, next_pos);
+		ft_printf("ADV %d (%06p -> %06p) ", move, carg->mem_pos, next_pos);
 		i = 0;
 		while (i < move)
 		{
-			ft_putchar(' ');
-			print_octet(arena->map[get_pos(carg->mem_pos + i)]);
+			ft_printf("%02x ", arena->map[get_pos(carg->mem_pos + i)]);
+			// ft_putchar(' ');
+			// print_octet(arena->map[get_pos(carg->mem_pos + i)]);
 			i++;
 		}
 		ft_putchar('\n');
@@ -190,7 +191,8 @@ void		fight(t_arena *arena)
 				ft_printf("=)\n");
 			arena->cur_cycle++;
 			if (arena->flags[F_V] & 2)
-				ft_printf("{yellow}It is now cycle %d{def}\n", arena->cur_cycle);
+				ft_printf("It is now cycle %d\n", arena->cur_cycle);
+				//ft_printf("{yellow}It is now cycle %d{def}\n", arena->cur_cycle);
 			arena->cycle_past_check++;
 			if (arena->cycle_past_check == arena->cycle_to_die || arena->cycle_to_die <= 0)
 			{

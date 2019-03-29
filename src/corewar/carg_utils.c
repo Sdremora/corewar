@@ -28,6 +28,7 @@ t_carriage	*carriage_copy(t_carriage *carg, int new_id)
 		return (NULL);
 	ft_memcpy(new_carg->reg, carg->reg, REG_NUMBER * sizeof(int));
     new_carg->live = carg->live;
+    new_carg->carry = carg->carry;
 	return (new_carg);
 }
 
