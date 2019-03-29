@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:08:27 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/28 16:28:24 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/03/29 11:16:28 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "general/op.h"
 #include "libft.h"
 #include <stdio.h>
-#include "corewar/operations.h"
+
 
 # define HEADER		g_asm->matrix[0] 
 # define NAME		g_asm->matrix[1] 
@@ -26,7 +26,7 @@
 # define CODE 		g_asm->matrix[5]
 # define BUFF		3000
 # define BUFFER		g_asm->buf
-
+# define INDEX		g_asm->index
 /*struct g_asm is for different things:
 **	binary_name saves the name of the final binary file
 **	in matrix we will have 5 str for final binary code: 
@@ -39,6 +39,7 @@
 **	quotes show if there was an open quote and no closed quote
 **	i is an iterator in buf
 **	flag_comment id the same as flag_name but for comment
+**	index is an index of current command in g_struct array of structs
 **
 ** The struct g_parse we will use to write info about commands. In every element
 ** we will write label(if we have it), name of command, its args and str number in 
@@ -54,6 +55,7 @@ typedef struct s_asm
 	int			flag_name;
 	int			flag_comment;
 	int			i;
+	int			index;
 
 }				t_asm;
 
@@ -68,8 +70,23 @@ typedef struct s_parse
 	//probably we will need to count number of bytes for command
 }				t_parse;
 
+typedef struct 	s_op
+{
+	char		name[10];
+	int			var_count;
+	int			args[3];
+	int			id;
+	int			cost;
+	char		description[100];
+	int			kod_tipov_argumenta;
+	int			t_dir_size_eq_4;
+	//void		(*op_handler)();
+	/* data */
+}				t_op;
+
 t_asm			*g_asm;
 t_parse			*g_struct;
+t_op   			g_op_tab[17];
 
 void    usage(void);
 void	close_with_error(char *str);
@@ -90,6 +107,7 @@ void    write_labels_commands(void);
 int     count_chars(void);
 int		check_if_command_exist(char *temp);
 int		check_if_label_exist(char *temp);
+char			**split(char const *str, char c);
 // int		find_name(char **line);
 // int		find_comment(char **line);
 

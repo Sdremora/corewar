@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 17:16:12 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/28 14:46:00 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/03/29 12:17:51 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void    parse_from_file(int argc, char **argv)
 			skip_comment_and_spaces();
 			if (g_asm->flag_comment == -1 || g_asm->flag_name == -1)
 				find_name_comment();
+			//printf("%s\n", &BUFFER[g_asm->i]);
 			skip_comment_and_spaces();
 			if (g_asm->flag_comment > -1 && g_asm->flag_name > -1)
 			{
@@ -61,7 +62,7 @@ void    parse_from_file(int argc, char **argv)
 					length_error(2);
 				write_labels_commands();
 			}
-			g_asm->i++;
+			// g_asm->i++;
 		}
 	}
 	if (ret < 0)

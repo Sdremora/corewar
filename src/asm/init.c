@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:52:31 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/28 16:35:00 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/03/29 12:08:53 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void		init(void)
 	g_asm->str_counter = 1;
 	g_asm->flag_name = -1;
 	g_asm->flag_comment = -1;
+	g_asm->index = 0;
 	init_matrix();
 }
 
