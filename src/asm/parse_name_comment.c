@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 11:58:45 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/28 14:48:29 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/03/29 12:14:31 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		going_throw_two_quotes(int	limit, char *matrix_element)
 		write_name_comment_to_matrix(g_asm->buf[g_asm->i], matrix_element, counter - 2);
 		g_asm->i++;
 	}
-		return (1);
+	return (1);
 }
 
 void		find_name_comment(void)
@@ -65,6 +65,8 @@ void		find_name_comment(void)
 			g_asm->flag_comment = 1;
 			g_asm->flag_name = 0;
 		}
+		if (g_asm->buf[g_asm->i] == '"')
+			g_asm->i++;
 	}
 	else if (ft_strnequ(".comment", &g_asm->buf[g_asm->i], 8) != 0)
 	{
@@ -77,7 +79,9 @@ void		find_name_comment(void)
 		{
 			g_asm->flag_name = 1;
 			g_asm->flag_comment = 0;
-		}	
+		}
+		if (g_asm->buf[g_asm->i] == '"')
+			g_asm->i++;
 	}
 	else if (g_asm->buf[g_asm->i] == '\0')
 	{
