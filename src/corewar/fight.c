@@ -78,7 +78,7 @@ void		move_carriage(t_arena *arena, t_carriage *carg, int dir_size)
 	int	next_pos;
 	int i;
 
-	if (carg->op_id == ZJMP)
+	if (carg->op_id == ZJMP && carg->carry == 1)
 		return ;
 	i = 0;
 	move = 1 + g_op_tab[carg->op_id].kod_tipov_argumenta;
@@ -95,8 +95,6 @@ void		move_carriage(t_arena *arena, t_carriage *carg, int dir_size)
 		while (i < move)
 		{
 			ft_printf("%02x ", arena->map[get_pos(carg->mem_pos + i)]);
-			// ft_putchar(' ');
-			// print_octet(arena->map[get_pos(carg->mem_pos + i)]);
 			i++;
 		}
 		ft_putchar('\n');
