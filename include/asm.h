@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:08:27 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/29 11:16:28 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/03/29 16:21:55 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ void    write_labels_commands(void);
 int     count_chars(void);
 int		check_if_command_exist(char *temp);
 int		check_if_label_exist(char *temp);
-char			**split(char const *str, char c);
-// int		find_name(char **line);
-// int		find_comment(char **line);
+char	**split(char const *str, char c);
+int     check_if_command_has_arg(char **array);
+
 
 #endif
