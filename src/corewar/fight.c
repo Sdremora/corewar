@@ -24,7 +24,7 @@ static void	operations_handle(t_carriage *carg, t_arena *arena)
 			carg->op_id = oper;
 	}
 	else
-		carg->mem_pos = (carg->mem_pos + 1) % MEM_SIZE;
+		carg->mem_pos = get_pos(carg->mem_pos + 1);
 }
 
 int			convert_args(unsigned char arg)
@@ -47,7 +47,7 @@ void		load_args(t_carriage *carg, t_arena *arena)
 	if (g_op_tab[carg->op_id].kod_tipov_argumenta)
 	{
 		i = 0;
-		arg = arena->map[(carg->mem_pos + 1) % MEM_SIZE];
+		arg = arena->map[get_pos(carg->mem_pos + 1)];
 		while (i < 3 && g_op_tab[carg->op_id].args[i])
 		{
 			carg->args[i] = convert_args(arg >> (6 - 2 * i) & 3);
@@ -75,9 +75,10 @@ int			check_code_args(int args[3], unsigned char op_id)
 void		move_carriage(t_arena *arena, t_carriage *carg, int dir_size)
 {
 	int move;
+	int	next_pos;
 	int i;
 
-	if (carg->op_id == ZJMP)
+	if (carg->op_id == ZJMP && carg->carry == 1)
 		return ;
 	i = 0;
 	move = 1 + g_op_tab[carg->op_id].kod_tipov_argumenta;
@@ -86,16 +87,19 @@ void		move_carriage(t_arena *arena, t_carriage *carg, int dir_size)
 		move += step_bites(carg->args[i], dir_size);
 		i++;
 	}
-	ft_printf("ADV %d (%06p -> %06p)", move, carg->mem_pos, carg->mem_pos + move);
-	i = 0;
-	while (i < move)
+	next_pos = get_pos(carg->mem_pos + move);
+	if (arena->flags[F_V] & 16)
 	{
-		ft_putchar(' ');
-		print_octet(arena->map[(carg->mem_pos + i) % MEM_SIZE]);
-		i++;
+		ft_printf("ADV %d (%06p -> %06p) ", move, carg->mem_pos, next_pos);
+		i = 0;
+		while (i < move)
+		{
+			ft_printf("%02x ", arena->map[get_pos(carg->mem_pos + i)]);
+			i++;
+		}
+		ft_putchar('\n');
 	}
-	ft_putchar('\n');
-	carg->mem_pos = (carg->mem_pos + move) % MEM_SIZE;
+	carg->mem_pos = next_pos;
 }
 
 void		clean_carg_op(t_carriage *carg)
@@ -145,8 +149,11 @@ void		check_live(t_arena *arena)
 	{
 		carg = (t_carriage *)carg_node->content;
 		if (arena->cycle_to_die <= 0 || !carg->live)
+		//if (arena->cycle_to_die <= 0 || arena->cur_cycle - carg->last_live_cycle > arena->cycle_to_die)
 		{
 			temp = carg_node->next;
+			if (arena->flags[F_V] & 8)
+				ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", carg->carg_id, arena->cur_cycle - carg->last_live_cycle, arena->cycle_to_die);
 			arena->carg_lst = ft_lstdelsave(arena->carg_lst, carg_node, ft_lstdelfun);
 			carg_node = temp;
 			continue ;
@@ -162,7 +169,8 @@ void		check_cycle_to_die(t_arena *arena)
 	if (arena->live_call_count >= NBR_LIVE || arena->checks >= MAX_CHECKS)
 	{
 		arena->cycle_to_die -= CYCLE_DELTA;
-		ft_printf("Cycle to die is now %d\n", arena->cycle_to_die);
+		if (arena->flags[F_V] & 2)
+			ft_printf("Cycle to die is now %d\n", arena->cycle_to_die);
 		arena->checks = 1;
 	}
 	else
@@ -172,17 +180,15 @@ void		check_cycle_to_die(t_arena *arena)
 
 void		fight(t_arena *arena)
 {
-    int			carg_count;
-	int 		i;
-
 	introducing(arena);
-	i = 0;
     while (arena->carg_lst)
     {
 			if (arena->cur_cycle == arena->flags[F_D])
 				return print_map(arena->map, 64);
 			arena->cur_cycle++;
-			ft_printf("{yellow}It is now cycle %d{def}\n", arena->cur_cycle);
+			if (arena->flags[F_V] & 2)
+				ft_printf("It is now cycle %d\n", arena->cur_cycle);
+				//ft_printf("{yellow}It is now cycle %d{def}\n", arena->cur_cycle);
 			arena->cycle_past_check++;
 			if (arena->cycle_past_check == arena->cycle_to_die || arena->cycle_to_die <= 0)
 			{
@@ -192,4 +198,5 @@ void		fight(t_arena *arena)
 			}
 			play_round(arena);
     }
+	ft_printf("циклов -> %d\n", arena->cur_cycle);
 }

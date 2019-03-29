@@ -30,7 +30,7 @@ int			get_num_flag(char *str)
 {
 	if (ft_strequ(str, "-a"))
 		return (F_A);
-	if (ft_strequ(str, "-dump"))
+	if (ft_strequ(str, "-dump") || ft_strequ(str, "-d"))
 		return (F_D);
 	if (ft_strequ(str, "-s"))
 		return (F_S);
@@ -90,7 +90,7 @@ static void	locate_players(t_arena *arena)
 		pos = i * MEM_SIZE / arena->players_count;
         ft_memcpy(arena->map + pos, arena->players[i].code, arena->players[i].code_size);
 		arena->max_carg_id++;
-		carriage = carg_new(pos, i + 1, 1, arena->max_carg_id);
+		carriage = carg_new(pos, i + 1, 0, arena->max_carg_id);
 		if (carriage == NULL)
 			error_handle(E_NO_MEM, arena, NULL);
 		node = ft_lstput(carriage, sizeof(t_carriage));
@@ -157,7 +157,7 @@ int			get_pnb(t_arena *arena)
 			error_handle(E_PLAYER_NUMBER, arena, NULL);
 	}
 	i = 0;
-	while (arena->players[i].id != -1)
+	while (arena->players[i].id != -99)
 		i++;
 	return (i);
 }
@@ -199,10 +199,6 @@ void		load_arena(int argc, char **argv, t_arena *arena)
 	}
 	if (arena->players_count == 0 || !check_players(arena))
 	{
-		printf("%d ", arena->players[0].id);
-		printf("%d ", arena->players[1].id);
-		printf("%d ", arena->players[2].id);
-		printf("%d ", arena->players[3].id);
 		arena_clear(arena);
 		error_handle(E_PLAYER_NUMBER, arena, NULL);
 	}

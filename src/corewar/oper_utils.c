@@ -61,7 +61,8 @@ int		get_reg_num(t_arena *arena, int pos)
 	char	reg_num;
 
 	reg_num = arena->map[get_pos(pos)] % REG_NUMBER;
-	reg_num = reg_num != 0 ? reg_num : 16;
+	reg_num = (reg_num < 0) ? reg_num + REG_NUMBER : reg_num;
+	reg_num = (reg_num != 0) ? reg_num : REG_NUMBER;
 	return (reg_num - 1);
 }
 
@@ -69,23 +70,24 @@ int		get_reg_num(t_arena *arena, int pos)
 **	arg_num 0..2
 */
 
-int		get_args_offset(t_carriage *carg, int arg_num)
+int		get_args_offset(t_carriage *carg, t_arg_num arg_num)
 {
 	int	offset;
 
-	if (arg_num >= g_op_tab[carg->op_id].var_count)
-		error_handle(E_INV_ALGO, NULL, "беда в get_args_offset");
 	offset = g_op_tab[carg->op_id].kod_tipov_argumenta == 0 ? 1 : 2;
-	if (arg_num == 0)
+	if (arg_num == ARG_1)
 		return (offset);
 	offset += get_arg_len(carg->op_id, carg->args[0]);
-	if (arg_num == 1)
+	if (arg_num == ARG_2)
 		return (offset);
 	offset += get_arg_len(carg->op_id, carg->args[1]);
+	if (arg_num == ARG_3)
+		return (offset);
+	offset += get_arg_len(carg->op_id, carg->args[2]);
 	return (offset);
 }
 
-int		read_arg(t_arena *arena, t_carriage *carg, int arg_num, int is_idx_mod)
+int		read_arg(t_arena *arena, t_carriage *carg, t_arg_num arg_num, int is_idx_mod)
 {
 	int	value;
 	int	arg_type;
