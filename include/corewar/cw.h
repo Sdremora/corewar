@@ -65,6 +65,7 @@ typedef struct	s_arena
 	int				live_call_count;
 	int				flags[FLAGS_COUNT];
 	int				max_carg_id;
+	t_point			shift;
 }				t_arena;
 
 typedef union	u_converter
@@ -139,4 +140,9 @@ int			get_pos(int index);
 
 //	support.c
 void		introducing(t_arena *arena);
+
+//vis.c
+int			get_color_pair(int pos, t_point p);
+void		draw_pos(t_arena *arena, int color, int pos, t_point shift);
+
 #endif

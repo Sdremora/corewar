@@ -108,15 +108,50 @@ void		clean_carg_op(t_carriage *carg)
 	ft_bzero(carg->args, sizeof(int) * 3);
 }
 
+int			nb_carg_pos(t_arena *arena, int pos)
+{
+	t_list *carg_node;
+	t_carriage	*carg;
+	int			res;
+
+	res = 0;
+	carg_node = arena->carg_lst;
+	while (carg_node)
+	{
+		carg = (t_carriage *)carg_node->content;
+
+		if (carg->mem_pos == pos)
+			res++;
+		carg_node = carg_node->next;
+	}
+	return (res);
+}
+
+void		vis_move_carg(int old, int new, t_arena *arena)
+{
+	int color;
+
+	if ((color = get_color_pair(old, arena->shift)) > 4 && !nb_carg_pos(arena, old))
+	{
+		draw_pos(arena, color - 5, old, arena->shift);
+	}
+	if ((color = get_color_pair(new, arena->shift)) < 5)
+	{
+		draw_pos(arena, color + 5, new, arena->shift);
+	}	
+}
+
 static void	play_round(t_arena *arena)
 {
 	t_list		*carg_node;
 	t_carriage	*carg;
+	int			cur_pos;
 
     carg_node = arena->carg_lst;
     while (carg_node)
     {
 		carg = (t_carriage *)carg_node->content;
+		cur_pos = carg->mem_pos;
 		if (carg->op_id == -1)
 		{
 			operations_handle(carg, arena);
@@ -134,6 +169,8 @@ static void	play_round(t_arena *arena)
 			move_carriage(arena, carg, g_op_tab[carg->op_id].dir_size);
 			clean_carg_op(carg);
 		}
+		if (arena->flags[F_VIS])
+			vis_move_carg(get_pos(cur_pos), get_pos(carg->mem_pos), arena);
     	carg_node = carg_node->next;
     }
 }
@@ -178,60 +215,70 @@ void		check_cycle_to_die(t_arena *arena)
 	arena->live_call_count = 0;
 }
 
-void		draw_map(unsigned char *str, int x, int y)
+void		draw_map(unsigned char *str, t_point p)
 {
 	int i;
 	int j;
 	static char base[17] = "0123456789abcdef";
 
 	i = 0;
+	while (i < MEM_SIZE)
+	{
+		mvaddch(p.y + i / 64, p.x +  3 * (i % 64), base[str[i] / 16 % 16]);
+		mvaddch(p.y + i / 64, p.x + 3 * (i % 64) + 1, base[str[i] % 16]);
+		i++;
+	}
+	/*
 	while (i < MEM_SIZE / 64)
 	{
 		j = 0;
 		while (j < 64 * 3)
 		{
-			mvaddch(i + y, x + j, base[str[i * 64 + j] / 16 % 16]);
-			mvaddch(i + y, x + j + 1, base[str[i * 64 + j] % 16]);
-			mvaddch(i + y, x + j + 2, ' ');
+			mvaddch(i + p.y, p.x + j, base[str[i * 64 + j] / 16 % 16]);
+			mvaddch(i + p.y, p.x + j + 1, base[str[i * 64 + j] % 16]);
 			j += 3;
 		}
 		i++;
 	}
+	*/
 }
 
-void		draw_players(t_arena *arena, int x, int y)
+void		set_color_pairs(void)
 {
-	int i;
-	int pos;
-	static char base[17] = "0123456789abcdef";
-
 	start_color();
+	
+	init_pair(0,  COLOR_WHITE, COLOR_BLACK);
 	init_pair(1,  COLOR_GREEN, COLOR_BLACK);
 	init_pair(2,  COLOR_BLUE, COLOR_BLACK);
 	init_pair(3,  COLOR_RED, COLOR_BLACK);
     init_pair(4,  COLOR_CYAN, COLOR_BLACK);
 
-	init_pair(5,  COLOR_BLACK, COLOR_GREEN);
-	init_pair(6,  COLOR_BLACK, COLOR_BLUE);
-	init_pair(7,  COLOR_BLACK, COLOR_RED);
-    init_pair(8,  COLOR_BLACK, COLOR_CYAN);
+	init_pair(5,  COLOR_BLACK, COLOR_WHITE);
+	init_pair(6,  COLOR_BLACK, COLOR_GREEN);
+	init_pair(7,  COLOR_BLACK, COLOR_BLUE);
+	init_pair(8,  COLOR_BLACK, COLOR_RED);
+    init_pair(9,  COLOR_BLACK, COLOR_CYAN);
+}
 
-	color_set(1, NULL);
+void		draw_players(t_arena *arena)
+{
+	int i;
+	int pos;
+	static char base[17] = "0123456789abcdef";
+
 	i = 0;
-	int step;
 
 	while (i < arena->players_count)
 	{
-		color_set(i + 1 + 4, NULL);
+		color_set(i + 1 + 5, NULL);
 		pos = i * MEM_SIZE / arena->players_count;
-		step = 0;
 		while (pos < i * MEM_SIZE / arena->players_count + arena->players[i].code_size)
 		{
-			mvaddch(y + pos / 64, x + pos % 64 + step % 128, base[arena->map[pos] / 16 % 16]);
-			mvaddch(y + pos / 64, x + pos % 64 + step % 128 + 1, base[arena->map[pos] / 16 % 16]);
-			if (!step)
+//			draw_pos(arena, i + 1, pos, arena->shift);
+			mvaddch(arena->shift.y + pos / 64, arena->shift.x + 3 * (pos % 64), base[arena->map[pos] / 16 % 16]);
+			mvaddch(arena->shift.y + pos / 64, arena->shift.x + 3 * (pos % 64) + 1, base[arena->map[pos] % 16]);
+			if (pos == i * MEM_SIZE / arena->players_count)
 				color_set(i + 1, NULL);
-			step += 2;
 			pos++;
 		}
 
@@ -243,21 +290,26 @@ void		draw_players(t_arena *arena, int x, int y)
 void		fight(t_arena *arena)
 {
 	introducing(arena);
-	
+	char temp;
 	if (arena->flags[F_VIS] == 1)
 	{
 		int x = 5;
 		int y = 5;
+
+		arena->shift = ft_pnt(x, y);
 		initscr();
-		draw_map(arena->map, 5, 5);
-		draw_players(arena, x, y);
+		noecho(); 
+		set_color_pairs();
+		draw_map(arena->map, arena->shift);
+		draw_players(arena);
 		curs_set(0);
 		refresh();
+//		mvaddstr(0, 5 +  3 * (44 % 64),"1");
 		getch();
-		endwin();
 	}
     while (arena->carg_lst)
     {
+			mvaddstr(0,0, ft_itoa(arena->cur_cycle));
 			if (arena->cur_cycle == arena->flags[F_D])
 				return print_map(arena->map, 64);
 			arena->cur_cycle++;
@@ -272,6 +324,11 @@ void		fight(t_arena *arena)
 				check_live(arena);
 				check_cycle_to_die(arena);
 			}
+//			curs_set(0);
+			getch();
     }
+	if (arena->flags[F_VIS])
+		endwin();
+	printf("----->get_color_pair %d \n", get_color_pair(44, arena->shift));
 	ft_printf("циклов -> %d\n", arena->cur_cycle);
 }
