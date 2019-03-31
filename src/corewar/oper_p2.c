@@ -72,7 +72,7 @@ void	op_sti(t_carriage *carg, t_arena *arena)
 	n2 = read_arg(arena, carg, ARG_2, TRUE);
 	n3 = read_arg(arena, carg, ARG_3, TRUE);
 	offset = (n2 + n3) % IDX_MOD;
-	put_value(arena, carg->mem_pos + offset, value);
+	put_value(arena, carg->mem_pos + offset, value, carg->owner);
 	if (arena->flags[F_V] & 4)
 	{
 		ft_printf("P %4d | %s r%d %d %d\n", carg->carg_id, g_op_tab[carg->op_id].name,

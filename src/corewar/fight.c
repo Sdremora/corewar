@@ -108,6 +108,7 @@ void		clean_carg_op(t_carriage *carg)
 	ft_bzero(carg->args, sizeof(int) * 3);
 }
 
+/*
 int			nb_carg_pos(t_arena *arena, int pos)
 {
 	t_list *carg_node;
@@ -126,6 +127,7 @@ int			nb_carg_pos(t_arena *arena, int pos)
 	}
 	return (res);
 }
+*/
 
 void		vis_move_carg(int old, int new, t_arena *arena)
 {
@@ -133,11 +135,11 @@ void		vis_move_carg(int old, int new, t_arena *arena)
 
 	if ((color = get_color_pair(old, arena->shift)) > 4 && !nb_carg_pos(arena, old))
 	{
-		draw_pos(arena, color - 5, old, arena->shift);
+		draw_pos(arena, color - 5, old);
 	}
 	if ((color = get_color_pair(new, arena->shift)) < 5)
 	{
-		draw_pos(arena, color + 5, new, arena->shift);
+		draw_pos(arena, color + 5, new);
 	}	
 }
 
@@ -188,6 +190,8 @@ void		check_live(t_arena *arena)
 		if (arena->cycle_to_die <= 0 || !carg->live)
 		//if (arena->cycle_to_die <= 0 || arena->cur_cycle - carg->last_live_cycle > arena->cycle_to_die)
 		{
+			if (arena->flags[F_VIS])
+				remove_carg(arena, carg->mem_pos);
 			temp = carg_node->next;
 			if (arena->flags[F_V] & 8)
 				ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", carg->carg_id, arena->cur_cycle - carg->last_live_cycle, arena->cycle_to_die);
@@ -228,19 +232,6 @@ void		draw_map(unsigned char *str, t_point p)
 		mvaddch(p.y + i / 64, p.x + 3 * (i % 64) + 1, base[str[i] % 16]);
 		i++;
 	}
-	/*
-	while (i < MEM_SIZE / 64)
-	{
-		j = 0;
-		while (j < 64 * 3)
-		{
-			mvaddch(i + p.y, p.x + j, base[str[i * 64 + j] / 16 % 16]);
-			mvaddch(i + p.y, p.x + j + 1, base[str[i * 64 + j] % 16]);
-			j += 3;
-		}
-		i++;
-	}
-	*/
 }
 
 void		set_color_pairs(void)
@@ -274,7 +265,6 @@ void		draw_players(t_arena *arena)
 		pos = i * MEM_SIZE / arena->players_count;
 		while (pos < i * MEM_SIZE / arena->players_count + arena->players[i].code_size)
 		{
-//			draw_pos(arena, i + 1, pos, arena->shift);
 			mvaddch(arena->shift.y + pos / 64, arena->shift.x + 3 * (pos % 64), base[arena->map[pos] / 16 % 16]);
 			mvaddch(arena->shift.y + pos / 64, arena->shift.x + 3 * (pos % 64) + 1, base[arena->map[pos] % 16]);
 			if (pos == i * MEM_SIZE / arena->players_count)
@@ -309,7 +299,7 @@ void		fight(t_arena *arena)
 	}
     while (arena->carg_lst)
     {
-			mvaddstr(0,0, ft_itoa(arena->cur_cycle));
+			print_nb(arena->cur_cycle, 0, 0);
 			if (arena->cur_cycle == arena->flags[F_D])
 				return print_map(arena->map, 64);
 			arena->cur_cycle++;
@@ -324,11 +314,13 @@ void		fight(t_arena *arena)
 				check_live(arena);
 				check_cycle_to_die(arena);
 			}
-//			curs_set(0);
-			getch();
+			if (arena->flags[F_VIS])
+			{
+				refresh();
+				usleep(5000);
+			}
     }
 	if (arena->flags[F_VIS])
 		endwin();
-	printf("----->get_color_pair %d \n", get_color_pair(44, arena->shift));
 	ft_printf("циклов -> %d\n", arena->cur_cycle);
 }
