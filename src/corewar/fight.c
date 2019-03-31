@@ -281,6 +281,9 @@ void		fight(t_arena *arena)
 {
 	introducing(arena);
 	char temp;
+	int speed;
+	int pause;
+
 	if (arena->flags[F_VIS] == 1)
 	{
 		int x = 5;
@@ -295,7 +298,10 @@ void		fight(t_arena *arena)
 		curs_set(0);
 		refresh();
 //		mvaddstr(0, 5 +  3 * (44 % 64),"1");
-		getch();
+//		getch();
+		timeout(0);
+		speed = 20000;
+		pause = 0;
 	}
     while (arena->carg_lst)
     {
@@ -317,10 +323,38 @@ void		fight(t_arena *arena)
 			if (arena->flags[F_VIS])
 			{
 				refresh();
-				usleep(5000);
+				temp = getch();
+				print_nb(temp, 1, 0);
+				if (temp == 32 && !pause)
+				{
+					timeout(-1);
+					mvaddstr(2,0,"pause");
+					pause = 1;
+				}
+				else if (temp == 32)
+				{
+					timeout(0);
+					mvaddstr(2,0,"     ");
+					pause = 0;
+				}
+				else if (temp == 'q' && speed < 1000000 - 10000)
+				{
+					speed += 10000;
+				}
+				else if (temp == 'w' && speed > 10000)
+				{
+					speed -= 10000;
+				}
+				print_nb(speed, 1, 20);
+				mvaddstr(3,0,"cycles max per seconds");
+				mvaddstr(4,0,"       ");
+				print_nb(1000000 / speed, 4, 0);
+				refresh();
+				usleep(speed);
 			}
     }
 	if (arena->flags[F_VIS])
 		endwin();
 	ft_printf("циклов -> %d\n", arena->cur_cycle);
 }
+//space = 32
