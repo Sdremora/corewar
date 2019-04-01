@@ -8,6 +8,7 @@ SRC_COREWAR := $(patsubst src/%, %, $(wildcard $(SRC_COREWAR_DIR)*.c))
 
 LIB_DIR := libft/
 LIB := $(LIB_DIR)libft.a
+CURS := -lncurses
 
 OBJ_DIR := out/
 OBJ_ASM := $(addprefix $(OBJ_DIR), $(patsubst %.c, %.o, $(SRC_ASM)))
@@ -28,7 +29,7 @@ asm: $(LIB) $(OBJ_ASM)
 	@printf "$@ $(GREEN)✔$(NC)                                        \n"
 
 corewar: $(LIB) $(OBJ_COREWAR)
-	@gcc $(OBJ_COREWAR) $(LIB) $(addprefix -I,$(INCLUDES)) -o $@
+	@gcc $(OBJ_COREWAR) $(LIB) $(addprefix -I,$(INCLUDES)) $(CURS) -o $@
 	@printf "$@ $(GREEN)✔$(NC)                                        \n"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
