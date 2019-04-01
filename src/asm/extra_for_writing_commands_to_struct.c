@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:01:16 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/01 12:15:19 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/01 15:37:32 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,84 +55,23 @@ int		check_if_label_exist(char *temp)
 	return (1);
 }
 
-
-
-
-static int		ft_addworld(char **dest, char *str, int count_chars, char c)
-{
-	int		i;
-	int		j;
-
-	j = 0;
-	i = count_chars;
-	while (str[i] == c && str[i] != '\0' && str[i] != '\n')
+ int	find_flag(char *array)
+ {
+	if (array[0] == 'r')
 	{
-		i++;
-		count_chars++;
-	}
-	while (str[i] != c && str[i] != '\0' && str[i] != '\n')
-		i++;
-	*dest = (char*)malloc(sizeof(char) * (i - count_chars + 1));
-	while (count_chars < i)
+		if (check_register(array, -1))
+			return (4);
+	}		
+	else if (array[0] == DIRECT_CHAR)
 	{
-		if (str[count_chars] != ' ' && str[count_chars] != '\t')
-		{
-			(*dest)[j] = str[count_chars];
-			j++;
-		}	
-		count_chars++;
-	}
-	(*dest)[j] = '\0';
-	return (i);
-}
-
-static int		count_words(char *str, char c)
-{
-	int		i;
-	int		counter;
-	int		temp;
-
-	i = 0;
-	counter = 0;
-	temp = 0;
-	while (str[i] != '\0' && str[i] != '\n')
+		if (check_direct_or_indirect(array, -1, 1))
+			return (3);
+	}		
+	else if ((array[0] >= '0' && array[0] <= '9') ||
+			array[0] == '-' || array[0] == LABEL_CHAR)
 	{
-		if (str[i] != c)
-			temp = 1;
-		else if (str[i] == c && temp != 0 && str[i] != '\n')
-		{
-			counter++;
-			temp = 0;
-		}
-		i++;
+		if (check_direct_or_indirect(array, -1, 0))
+			return (2);
 	}
-	if (temp != 0)
-		counter++;
-	return (counter);
-}
-
-char			**split(char const *str, char c)
-{
-	int		i;
-	int		word;
-	char	**array;
-	int		count_chars;
-	int		extra;
-
-	i = 0;
-	extra = 0;
-	if (!str)
-		return (NULL);
-	word = count_words((char *)str, c);
-	count_chars = 0;
-	if (!(array = malloc(sizeof(char*) * (word + 1))))
-		return (0);
-	while (i < word)
-	{
-		extra = ft_addworld(&array[i], (char *)str, count_chars, c);
-		count_chars = extra;
-		i++;
-	}
-	array[i] = NULL;
-	return (array);
+	return (1);
 }
