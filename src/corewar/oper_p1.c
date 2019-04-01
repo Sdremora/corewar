@@ -18,6 +18,7 @@ void	op_live(t_carriage *carg, t_arena *arena)
 	if (player_num >= 1 && player_num <= arena->players_count)
 	{
 		arena->last_live_player = player_num - 1;
+		arena->player_live_in_cp[player_num - 1] += 1;
 		if (arena->flags[F_V] & 1)
 			ft_printf("Player %d (%s) is said to be alive\n", player_num,
 		arena->players[player_num - 1].name);

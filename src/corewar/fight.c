@@ -183,6 +183,7 @@ void		check_live(t_arena *arena)
 	t_carriage	*carg;
 	t_list		*temp;
 
+	ft_bzero(arena->player_live_in_cp, sizeof(int) * MAX_PLAYERS);
 	carg_node = arena->carg_lst;
 	while (carg_node)
 	{
@@ -310,7 +311,6 @@ void		fight(t_arena *arena)
 			arena->cur_cycle++;
 			if (arena->flags[F_V] & 2)
 				ft_printf("It is now cycle %d\n", arena->cur_cycle);
-				//ft_printf("{yellow}It is now cycle %d{def}\n", arena->cur_cycle);
 			arena->cycle_past_check++;
 			play_round(arena);
 			if (arena->cycle_past_check == arena->cycle_to_die || arena->cycle_to_die <= 0)

@@ -55,6 +55,7 @@ typedef struct	s_arena
 {
 	unsigned char	map[MEM_SIZE];
 	t_player		players[MAX_PLAYERS];
+	int				player_live_in_cp[MAX_PLAYERS];
 	int				players_count;
 	int				cycle_to_die;
 	int				cur_cycle;
