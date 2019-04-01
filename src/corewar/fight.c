@@ -24,7 +24,7 @@ static void	operations_handle(t_carriage *carg, t_arena *arena)
 			carg->op_id = oper;
 	}
 	else
-		carg->mem_pos = get_pos(carg->mem_pos + 1);
+		carg->mem_pos = looping(carg->mem_pos + 1);
 }
 
 int			convert_args(unsigned char arg)
@@ -47,7 +47,7 @@ void		load_args(t_carriage *carg, t_arena *arena)
 	if (g_op_tab[carg->op_id].kod_tipov_argumenta)
 	{
 		i = 0;
-		arg = arena->map[get_pos(carg->mem_pos + 1)];
+		arg = arena->map[looping(carg->mem_pos + 1)];
 		while (i < 3 && g_op_tab[carg->op_id].args[i])
 		{
 			carg->args[i] = convert_args(arg >> (6 - 2 * i) & 3);
@@ -87,14 +87,14 @@ void		move_carriage(t_arena *arena, t_carriage *carg, int dir_size)
 		move += step_bites(carg->args[i], dir_size);
 		i++;
 	}
-	next_pos = get_pos(carg->mem_pos + move);
+	next_pos = looping(carg->mem_pos + move);
 	if (arena->flags[F_V] & 16)
 	{
 		ft_printf("ADV %d (%06p -> %06p) ", move, carg->mem_pos, next_pos);
 		i = 0;
 		while (i < move)
 		{
-			ft_printf("%02x ", arena->map[get_pos(carg->mem_pos + i)]);
+			ft_printf("%02x ", arena->map[looping(carg->mem_pos + i)]);
 			i++;
 		}
 		ft_putchar('\n');
@@ -172,7 +172,7 @@ static void	play_round(t_arena *arena)
 			clean_carg_op(carg);
 		}
 		if (arena->flags[F_VIS])
-			vis_move_carg(get_pos(cur_pos), get_pos(carg->mem_pos), arena);
+			vis_move_carg(looping(cur_pos), looping(carg->mem_pos), arena);
     	carg_node = carg_node->next;
     }
 }

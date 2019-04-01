@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   arena_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/01 18:07:56 by sdremora          #+#    #+#             */
+/*   Updated: 2019/04/01 18:09:17 by sdremora         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar.h"
 
 void	arena_ini(t_arena *arena)
@@ -10,8 +22,8 @@ void	arena_ini(t_arena *arena)
 		arena->players[i++].id = -99;
 	ft_bzero(arena->player_live_in_cp, sizeof(int) * MAX_PLAYERS);
 	arena->players_count = 0;
-    arena->cycle_to_die = CYCLE_TO_DIE;
-    arena->cur_cycle = 0;
+	arena->cycle_to_die = CYCLE_TO_DIE;
+	arena->cur_cycle = 0;
 	arena->cycle_past_check = 0;
 	arena->checks = 1;
 	arena->carg_lst = NULL;
@@ -25,9 +37,6 @@ void	arena_ini(t_arena *arena)
 	arena->max_carg_id = 0;
 }
 
-//Дописать очистку арены.
-//Оставить проверку на ноль.
-//Арена может приходить на очистку в не полностью загруженном состояние (при ошибках в её загрузке), учесть что могут быть нули.
 void	arena_clear(t_arena *arena)
 {
 	t_list	*temp;
@@ -42,14 +51,15 @@ void	arena_clear(t_arena *arena)
 	}
 }
 
-void    arena_print(t_arena *arena)
+void	arena_print(t_arena *arena)
 {
-    t_list *lst;
+	t_list *lst;
 
-    lst = arena->carg_lst;
-    while (lst)
-    {
-        ft_printf("pos %d owner %d\n", ((t_carriage*)lst->content)->mem_pos, ((t_carriage*)lst->content)->owner);
-        lst = lst->next;
-    }
+	lst = arena->carg_lst;
+	while (lst)
+	{
+		ft_printf("pos %d owner %d\n", ((t_carriage*)lst->content)->mem_pos,
+			((t_carriage*)lst->content)->owner);
+		lst = lst->next;
+	}
 }
