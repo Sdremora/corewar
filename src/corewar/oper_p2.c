@@ -110,13 +110,14 @@ void	op_fork(t_carriage *carg, t_arena *arena)
 		free(node);
 		error_handle(E_NO_MEM, arena, NULL);
 	}
-	ft_lstadd(&arena->carg_lst, node);
 	read_arg(&n1, arena, carg, ARG_1);
 	offset = carg->op_id == FORK ? n1 % IDX_MOD : n1;
 	new_carg->mem_pos = get_pos(carg->mem_pos + offset);
+	ft_lstadd(&arena->carg_lst, node);
 	if (arena->flags[F_V] & 4)
 		ft_printf("P %4d | %s %d (%d)\n", carg->carg_id, g_op_tab[carg->op_id].name,
 		n1, carg->mem_pos + offset);
+
 }
 
 /*
@@ -126,6 +127,10 @@ void	op_fork(t_carriage *carg, t_arena *arena)
 
 void	op_aff(t_carriage *carg, t_arena *arena)
 {
+	int n1;
 
+	if (read_arg(&n1, arena, carg, ARG_1))
+		return ;
+	ft_printf("Aff: %c\n", (char)n1);
 }
 

@@ -68,30 +68,27 @@ void	op_st(t_carriage *carg, t_arena *arena)
 	int	offset;
 	int	temp;
 
-	reg_num1 = get_reg_num(arena, carg->mem_pos + get_args_offset(carg, ARG_1));
-	if (reg_num1 < 0)
+	if ((reg_num1 = get_reg_num(arena,
+			carg->mem_pos + get_args_offset(carg, ARG_1))) < 0)
 		return ;
 	value = carg->reg[reg_num1];
 	offset = get_args_offset(carg, ARG_2);
 	if (carg->args[ARG_2] == T_REG)
 	{
-		reg_num2 = get_reg_num(arena, carg->mem_pos + get_args_offset(carg, ARG_2));
-		if (reg_num2 < 0)
+		if ((reg_num2 = get_reg_num(arena,
+				carg->mem_pos + get_args_offset(carg, ARG_2))) < 0)
 			return ;
 		carg->reg[reg_num2] = value;
-		if (arena->flags[F_V] & 4)
-			ft_printf("P %4d | %s r%d %d\n", carg->carg_id, g_op_tab[carg->op_id].name,
-		reg_num1 + 1, reg_num2 + 1);
 	}
 	else
 	{
 		temp = get_value(arena, carg->mem_pos + offset, IND_SIZE);
 		offset = temp % IDX_MOD;
 		put_value(arena, carg->mem_pos + offset, value, carg->owner);
-		if (arena->flags[F_V] & 4)
-			ft_printf("P %4d | %s r%d %d\n", carg->carg_id, g_op_tab[carg->op_id].name,
-		reg_num1 + 1, temp);
 	}
+	if (arena->flags[F_V] & 4)
+			ft_printf("P %4d | %s r%d %d\n", carg->carg_id, g_op_tab[carg->op_id].name,
+		reg_num1 + 1, carg->args[ARG_2] == T_REG ? reg_num2 + 1 : temp);
 }
 
 /*

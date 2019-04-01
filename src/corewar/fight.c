@@ -188,7 +188,6 @@ void		check_live(t_arena *arena)
 	{
 		carg = (t_carriage *)carg_node->content;
 		if (arena->cycle_to_die <= 0 || !carg->live)
-		//if (arena->cycle_to_die <= 0 || arena->cur_cycle - carg->last_live_cycle > arena->cycle_to_die)
 		{
 			if (arena->flags[F_VIS])
 				remove_carg(arena, carg->mem_pos);
@@ -355,6 +354,4 @@ void		fight(t_arena *arena)
     }
 	if (arena->flags[F_VIS])
 		endwin();
-	ft_printf("циклов -> %d\n", arena->cur_cycle);
 }
-//space = 32
