@@ -140,7 +140,7 @@ void		vis_move_carg(int old, int new, t_arena *arena)
 	if ((color = get_color_pair(new, arena->shift)) < 5)
 	{
 		draw_pos(arena, color + 5, new);
-	}	
+	}
 }
 
 static void	play_round(t_arena *arena)
@@ -237,7 +237,7 @@ void		draw_map(unsigned char *str, t_point p)
 void		set_color_pairs(void)
 {
 	start_color();
-	
+
 	init_pair(0,  COLOR_WHITE, COLOR_BLACK);
 	init_pair(1,  COLOR_GREEN, COLOR_BLACK);
 	init_pair(2,  COLOR_BLUE, COLOR_BLACK);
@@ -291,7 +291,7 @@ void		fight(t_arena *arena)
 
 		arena->shift = ft_pnt(x, y);
 		initscr();
-		noecho(); 
+		noecho();
 		set_color_pairs();
 		draw_map(arena->map, arena->shift);
 		draw_players(arena);
@@ -320,8 +320,6 @@ void		fight(t_arena *arena)
 				check_live(arena);
 				check_cycle_to_die(arena);
 			}
-<<<<<<< HEAD
-=======
 			if (arena->flags[F_VIS])
 			{
 				refresh();
@@ -354,7 +352,6 @@ void		fight(t_arena *arena)
 				refresh();
 				usleep(speed);
 			}
->>>>>>> 2d42d2890df8e9622be572bf2b52654632053fb9
     }
 	if (arena->flags[F_VIS])
 		endwin();
