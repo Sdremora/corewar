@@ -3,16 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   writing_commands_to_struct.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 14:35:56 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/29 16:38:29 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/01 12:23:03 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int   check_label(char **temp)
+int		find_id_in_tab(void)
+{
+	int i;
+
+	i = -1;
+	while (++i < 16)
+	{
+		if (ft_strequ(g_struct[INDEX].command, g_op_tab[i].name) == 1)
+			return (i);
+	}
+	return (-1);
+}
+
+int		check_label(char **temp)
 {
     int     i;
 
@@ -35,7 +48,7 @@ int   check_label(char **temp)
 		}	
         g_struct[INDEX].label = ft_strdup(*temp);
 		g_asm->i++;
-		//printf("label: %s\n", g_struct[INDEX].label);
+		// printf("\n\nlabel: %s\n", g_struct[INDEX].label);
         return (1);
     }    
     else if (BUFFER[g_asm->i] == '\n')
@@ -55,8 +68,10 @@ void    check_command(char **temp)
         }
 		//printf("temp5: %s\n", *temp);
 		g_struct[INDEX].command = ft_strdup(temp[0]);
+		g_struct[INDEX].id_in_tab = find_id_in_tab();
         ft_strdel(temp);
-		//printf("command: %s\n", g_struct[INDEX].command);
+		// printf("command: %s\n", g_struct[INDEX].command);
+		// printf("id in tab = %d\n", g_struct[INDEX].id_in_tab);
     }
     else if (BUFFER[g_asm->i] == '\n')
          close_with_error("error Syntax error at token [TOKEN][008:004] ENDLINE");
@@ -86,9 +101,10 @@ void	check_args(void)
 		//free(array);
 		 close_with_error("Syntax error at token [TOKEN][007:015] INDIRECT \"6\"");
 	}
-	//i = -1;
-	//while (array[++i] != NULL)
-		//printf("arg: %s\n", array[i]);
+	i = -1;
+	// while (array[++i] != NULL)
+	// 	printf("arg: %s\n", array[i]);
+	// printf("\n");
 }
 
 void    write_labels_commands(void)
@@ -118,7 +134,4 @@ void    write_labels_commands(void)
 		INDEX++;
 		g_asm->i++;
     }
-	// i = -1;
-	// while(++i < 3)
-	// 	printf("%d\n", g_op_tab[0].args[i]);
 }
