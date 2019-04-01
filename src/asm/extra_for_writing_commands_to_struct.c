@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extra_for_writing_commands_to_struct.c             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:01:16 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/29 16:38:20 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/01 12:15:19 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
