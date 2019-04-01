@@ -17,5 +17,5 @@ t_op	g_op_tab[16] =
 	{"lld", 2, {T_DIR | T_IND, T_REG}, 10, 1, 4, FALSE, op_ld_lld},
 	{"lldi", 3, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, 50, 1, 2, FALSE, op_ldi_lldi},
 	{"lfork", 1, {T_DIR}, 1000, 0, 2, FALSE, op_fork},
-	{"aff", 1, {T_REG}, 2, 1, 4, TRUE, op_fork},
+	{"aff", 1, {T_REG}, 2, 1, 4, TRUE, op_aff},
 };

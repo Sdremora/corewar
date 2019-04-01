@@ -69,10 +69,10 @@ int		get_reg_num(t_arena *arena, int pos)
 {
 	char	reg_num;
 
-	reg_num = arena->map[get_pos(pos)] % REG_NUMBER;
-	reg_num = (reg_num < 0) ? reg_num + REG_NUMBER : reg_num;
-	reg_num = (reg_num != 0) ? reg_num : REG_NUMBER;
-	return (reg_num - 1);
+	reg_num = arena->map[get_pos(pos)];
+	if (reg_num >= 1 && reg_num <= REG_NUMBER)
+		return (reg_num - 1);
+	return (-1);
 }
 
 /*
@@ -96,25 +96,29 @@ int		get_args_offset(t_carriage *carg, t_arg_num arg_num)
 	return (offset);
 }
 
-int		read_arg(t_arena *arena, t_carriage *carg, t_arg_num arg_num, int is_idx_mod)
+int		read_arg(int *value, t_arena *arena, t_carriage *carg, t_arg_num arg_num)
 {
-	int	value;
 	int	arg_type;
 	int offset;
+	int	reg_num;
 
 	arg_type = carg->args[arg_num];
 	offset = get_args_offset(carg, arg_num);
 	if (arg_type == T_REG)
-		value = carg->reg[get_reg_num(arena, carg->mem_pos + offset)];
+	{
+		reg_num = get_reg_num(arena, carg->mem_pos + offset);
+		if (reg_num < 0)
+			return (-1);
+		*value = carg->reg[reg_num];
+	}
 	else if (arg_type == T_DIR)
-		value = get_value(arena, carg->mem_pos + offset, g_op_tab[carg->op_id].dir_size);
+		*value = get_value(arena, carg->mem_pos + offset, g_op_tab[carg->op_id].dir_size);
 	else
 	{
-		offset = get_value(arena, carg->mem_pos + offset, IND_SIZE);
-		offset = is_idx_mod == TRUE ? offset % IDX_MOD : offset;
-		value = get_value(arena, carg->mem_pos + offset, REG_SIZE);
+		offset = get_value(arena, carg->mem_pos + offset, IND_SIZE) % IDX_MOD;
+		*value = get_value(arena, carg->mem_pos + offset, REG_SIZE);
 	}
-	return (value);
+	return (0);
 }
 
 int	get_pos(int index)

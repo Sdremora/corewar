@@ -51,7 +51,7 @@ int			handle_flag(char **argv, int *pos, int argc, t_arena *arena)
 {
 	int i;
 
-	if ((i = get_num_flag(argv[*pos])) > 0)
+	if ((i = get_num_flag(argv[*pos])) >= 0)
 	{
 		if (i >= F_D) //флаги с числами
 		{
