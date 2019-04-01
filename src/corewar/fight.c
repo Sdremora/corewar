@@ -190,13 +190,13 @@ void		fight(t_arena *arena)
 				ft_printf("It is now cycle %d\n", arena->cur_cycle);
 				//ft_printf("{yellow}It is now cycle %d{def}\n", arena->cur_cycle);
 			arena->cycle_past_check++;
+			play_round(arena);
 			if (arena->cycle_past_check == arena->cycle_to_die || arena->cycle_to_die <= 0)
 			{
 				arena->cycle_past_check -= arena->cycle_to_die;
 				check_live(arena);
 				check_cycle_to_die(arena);
 			}
-			play_round(arena);
     }
 	ft_printf("циклов -> %d\n", arena->cur_cycle);
 }

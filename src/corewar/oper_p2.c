@@ -11,7 +11,7 @@ void	op_zjmp(t_carriage *carg, t_arena *arena)
 	int		value;
 	char	*answer;
 
-	value = read_arg(arena, carg, ARG_1, TRUE);
+	read_arg(&value, arena, carg, ARG_1);
 	if (carg->carry)
 	{
 		offset =  value % IDX_MOD;
@@ -38,12 +38,15 @@ void	op_ldi_lldi(t_carriage *carg, t_arena *arena)
 	int n3;
 	int offset;
 
-	n1 = read_arg(arena, carg, ARG_1, TRUE);
-	n2 = read_arg(arena, carg, ARG_2, TRUE);
+	if (read_arg(&n1, arena, carg, ARG_1) ||
+		read_arg(&n2, arena, carg, ARG_2))
+		return ;
 	offset = n1 + n2;
 	offset = carg->op_id == LDI ? offset % IDX_MOD : offset;
 	n3 = get_value(arena, carg->mem_pos + offset, REG_SIZE);
 	reg_num = get_reg_num(arena, carg->mem_pos + get_args_offset(carg, ARG_3));
+	if (reg_num < 0)
+		return ;
 	carg->reg[reg_num] = n3;
 	if (arena->flags[F_V] & 4)
 	{
@@ -68,9 +71,12 @@ void	op_sti(t_carriage *carg, t_arena *arena)
 	int	reg_num;
 
 	reg_num = get_reg_num(arena, carg->mem_pos + get_args_offset(carg, ARG_1));
+	if (reg_num < 0)
+		return ;
 	value = carg->reg[reg_num];
-	n2 = read_arg(arena, carg, ARG_2, TRUE);
-	n3 = read_arg(arena, carg, ARG_3, TRUE);
+	if (read_arg(&n2, arena, carg, ARG_2) ||
+		read_arg(&n3, arena, carg, ARG_3))
+		return ;
 	offset = (n2 + n3) % IDX_MOD;
 	put_value(arena, carg->mem_pos + offset, value);
 	if (arena->flags[F_V] & 4)
@@ -105,7 +111,7 @@ void	op_fork(t_carriage *carg, t_arena *arena)
 		error_handle(E_NO_MEM, arena, NULL);
 	}
 	ft_lstadd(&arena->carg_lst, node);
-	n1 = read_arg(arena, carg, ARG_1, TRUE);
+	read_arg(&n1, arena, carg, ARG_1);
 	offset = carg->op_id == FORK ? n1 % IDX_MOD : n1;
 	new_carg->mem_pos = get_pos(carg->mem_pos + offset);
 	if (arena->flags[F_V] & 4)
