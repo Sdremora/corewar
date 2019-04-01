@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 17:16:12 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/01 10:30:24 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/01 14:57:31 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	skip_whitespaces(void)
 
 void	skip_comment_and_spaces(void)
 {
-	while ((g_asm->buf[g_asm->i] < 32 || g_asm->buf[g_asm->i] == '#') && g_asm->buf[g_asm->i] != '\0')
+	while ((g_asm->buf[g_asm->i] <= 32 || g_asm->buf[g_asm->i] == COMMENT_CHAR) && g_asm->buf[g_asm->i] != '\0')
 	{
 		if (g_asm->buf[g_asm->i] == '\n')
 			g_asm->str_counter++;
-		if (g_asm->buf[g_asm->i] == '#')
+		if (g_asm->buf[g_asm->i] == COMMENT_CHAR)
 		{
 			while (g_asm->buf[g_asm->i] != '\n' && g_asm->buf[g_asm->i] != '\0')
 				g_asm->i++;

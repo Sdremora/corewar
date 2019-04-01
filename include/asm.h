@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:08:27 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/01 12:02:52 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/01 16:10:57 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,12 @@ void    usage(void);
 void	close_with_error(char *str);
 void    lexical_error(void);
 void	syntax_error(int flag);
+void	syntax_error_instruction(char *instruction, int flag);
+void	invalid_error_instruction(char **instruction, int flag);
 void	length_error(int nb);
 void	del_all_struct(void);
 void    init(void);
 void	init_struct(void);
-// void	find_position_error_lex_name_comment(char **line);
 void    parse_from_file(int argc, char **argv);
 void	skip_comment_and_spaces(void);
 void	find_name_comment(void);
@@ -109,7 +110,8 @@ int     count_chars(void);
 int		check_if_command_exist(char *temp);
 int		check_if_label_exist(char *temp);
 char	**split(char const *str, char c);
-int     check_if_command_has_arg(char **array);
-
-
+void    check_if_command_has_arg(char **array);
+int		check_direct_or_indirect(char *array, int element, int flag);
+int		check_register(char *array, int element);
+ int	find_flag(char *array);
 #endif

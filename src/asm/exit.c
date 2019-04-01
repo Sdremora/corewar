@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:52:48 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/27 11:08:58 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/01 15:41:27 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,6 @@ void	close_with_error(char *str)
 {
 	del_all_struct();
 	ft_putstr(str);
+	ft_putstr("\n");
 	exit(0);
 }
