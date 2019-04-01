@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_name_comment.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 11:58:45 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/29 12:14:31 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/01 14:08:48 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		going_throw_two_quotes(int	limit, char *matrix_element)
 {
 	int		counter;
 	skip_whitespaces();
-	if (g_asm->buf[g_asm->i] == '\n' || g_asm->buf[g_asm->i] == '#')
+	if (g_asm->buf[g_asm->i] == '\n' || g_asm->buf[g_asm->i] == COMMENT_CHAR)
 		syntax_error(5);
 	if (g_asm->buf[g_asm->i] != '"')
 		lexical_error();
@@ -42,7 +42,7 @@ int		going_throw_two_quotes(int	limit, char *matrix_element)
 	{
 		counter += 2;
 		if (g_asm->buf[g_asm->i] == '\n')
-			g_asm->str_counter++;
+			skip_comment_and_spaces();
 		if (counter > limit)
 			return (-1);
 		write_name_comment_to_matrix(g_asm->buf[g_asm->i], matrix_element, counter - 2);

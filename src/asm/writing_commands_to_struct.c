@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 14:35:56 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/01 12:23:03 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/01 16:36:20 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ int		check_label(char **temp)
     if (BUFFER[g_asm->i] == LABEL_CHAR)
     {
         if (!(check_if_label_exist(*temp)))
-        {
-            ft_strdel(temp);
-            close_with_error("Invalid instruction at token [TOKEN][008:001] LABEL EXIST");
-        }
+		{
+			ft_strdel(temp);
+       		lexical_error();
+		}	   
 		while (temp[0][++i] != '\0')
 		{
 			if (ft_strchr(LABEL_CHARS, temp[0][i]) == 0)
@@ -51,8 +51,17 @@ int		check_label(char **temp)
 		// printf("\n\nlabel: %s\n", g_struct[INDEX].label);
         return (1);
     }    
-    else if (BUFFER[g_asm->i] == '\n')
-        close_with_error("error Syntax error at token [TOKEN][008:004] ENDLINE");
+    else
+	{
+		i = g_asm->i;
+		while (BUFFER[i] != '\n' && BUFFER[i] != '\0')
+		{
+			if (BUFFER[i] > 32)
+				return (0);
+			i++;
+		}
+		syntax_error(5);
+	}
     return (0);
 }
 
@@ -62,10 +71,7 @@ void    check_command(char **temp)
     {
 		//printf("temp4: %s\n", *temp);
         if (!(check_if_command_exist(*temp)))
-        {
-            ft_strdel(temp);
-            close_with_error("Invalid instruction at token [TOKEN][008:001] INSTRUCTION \"agnd\"");
-        }
+			invalid_error_instruction(temp, 1);
 		//printf("temp5: %s\n", *temp);
 		g_struct[INDEX].command = ft_strdup(temp[0]);
 		g_struct[INDEX].id_in_tab = find_id_in_tab();
@@ -73,8 +79,8 @@ void    check_command(char **temp)
 		// printf("command: %s\n", g_struct[INDEX].command);
 		// printf("id in tab = %d\n", g_struct[INDEX].id_in_tab);
     }
-    else if (BUFFER[g_asm->i] == '\n')
-         close_with_error("error Syntax error at token [TOKEN][008:004] ENDLINE");
+    else
+        syntax_error(5);
 }        
 
 void	check_args(void)
@@ -85,22 +91,44 @@ void	check_args(void)
 
 	i = 0;
 	skip_whitespaces();
-	while (BUFFER[g_asm->i] != '\n')
+	while (BUFFER[g_asm->i] != '\n' && BUFFER[g_asm->i] != '\0')
 	{
 		i++;
 		g_asm->i++;
-	}	
+	}
 	temp = ft_strnew(i);
+	// if (g_asm->buf[g_asm->i] == '\n')
+	// {
+	// 	g_asm->str_counter++;
+	// 	//g_asm->i++;
+	// }
 	g_asm->i -= i;
 	i = -1;
-	while (BUFFER[g_asm->i] != '\n')
+	while (BUFFER[g_asm->i] != '\n' && BUFFER[g_asm->i] != '\0')
 		temp[++i] = BUFFER[g_asm->i++];
+	if (BUFFER[g_asm->i] == '\0')
+	{
+		ft_putstr("Syntax error - unexpected end of input ");
+		close_with_error("(Perhaps you forgot to end with a newline ?)");
+	}
 	array = split(temp, SEPARATOR_CHAR);
-	if (!(check_if_command_has_arg(array)))
+	i = 0;
+	while (array[i] != NULL)
+		i++;
+	if (i < g_op_tab[g_struct[INDEX].id_in_tab].var_count)
 	{
 		//free(array);
-		 close_with_error("Syntax error at token [TOKEN][007:015] INDIRECT \"6\"");
+		ft_putstr("Invalid parameter count for instruction ");
+		close_with_error(g_struct[INDEX].command);
 	}
+	check_if_command_has_arg(array);
+	if (i > g_op_tab[g_struct[INDEX].id_in_tab].var_count)
+	{
+		i = g_op_tab[g_struct[INDEX].id_in_tab].var_count + 1;
+		syntax_error_instruction(array[i], find_flag(array[i]));
+	}
+		
+	//free(array);
 	i = -1;
 	// while (array[++i] != NULL)
 	// 	printf("arg: %s\n", array[i]);
@@ -132,6 +160,8 @@ void    write_labels_commands(void)
 		check_args();
 		ft_strdel(&temp);
 		INDEX++;
+		if (g_asm->buf[g_asm->i] == '\n')
+			g_asm->str_counter++;
 		g_asm->i++;
     }
 }

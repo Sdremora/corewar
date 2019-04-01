@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:54:20 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/01 12:23:35 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/01 15:27:59 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		check_register(char *array, int element)
 	value = atoi(&array[1]);
 	if (value > REG_NUMBER || value <= 0)
 		return (0);
-	if (!(check_arg_type(element, 1)))
+	if (element >= 0 && !(check_arg_type(element, 1)))
 		return( 0);
 	return (1);
 }
@@ -54,7 +54,7 @@ int		check_direct_or_indirect(char *array, int element, int flag)
 {
 	int		i;
 
-	i = -1;
+	i = flag;
 	if (array[flag] == LABEL_CHAR)
 	{
 		while (array[++i] != '\0')
@@ -68,53 +68,21 @@ int		check_direct_or_indirect(char *array, int element, int flag)
 	}
 	else if ((array[flag] >= '0' && array[flag] <= '9') || array[flag] == '-')
 	{
-		i = -1;
-		if (array[flag] == '-')
+		if (array[i] == '-')
 			i++;
 		while (array[i] != '\0')
 		{
 			if (array[i] < '0' || array[i] > '9')
 				return (0);
+			i++;
 		}
 	}
-	if (!(check_arg_type(element, 2)))
+	if (element >= 0 && !(check_arg_type(element, 2)))
 		return (0);
 	return (1);
 }
 
-// int		check_indirect(char *array, int element)
-// {
-// 	int		i;
-
-// 	i = -1;
-// 	if (array[0] == LABEL_CHAR)
-// 	{
-// 		while (array[++i] != '\0')
-// 		{
-// 			if (ft_strchr(LABEL_CHARS, array[i]) == 0)
-// 			{
-// 				//g_asm->i = g_asm->i - ft_strlen(array) + i;
-// 				return (0);
-// 			}	
-// 		}
-// 	}
-// 	else if ((array[0] >= '0' && array[0] <= '9') || array[0] == '-')
-// 	{
-// 		i = -1;
-// 		if (array[0] == '-')
-// 			i++;
-// 		while (array[i] != '\0')
-// 		{
-// 			if (array[i] < '0' || array[i] > '9')
-// 				return (0);
-// 		}
-// 	}
-// 	if (!(check_arg_type(element, 4)))
-// 		return (0);
-// 	return (1);
-// }
-
-int     check_if_command_has_arg(char **array)
+void     check_if_command_has_arg(char **array)
 {
     int i;
 
@@ -124,21 +92,20 @@ int     check_if_command_has_arg(char **array)
         if (array[i][0] == 'r')
 		{
 			if (!(check_register(array[i], i)))
-				return (-1);
+				syntax_error_instruction(array[i], 1);
 		}
         else if (array[i][0] == DIRECT_CHAR)
 		{
 			if (!(check_direct_or_indirect(array[i], i, 1)))
-				return (-1);
+				syntax_error_instruction(array[i], 1);
 		}
 		else if ((array[i][0] >= '0' && array[i][0] <= '9') ||
 				array[i][0] == '-' || array[i][0] == LABEL_CHAR) 
 		{
 			if (!(check_direct_or_indirect(array[i], i, 0)))
-				return (-1);
+				syntax_error_instruction(array[i], 1);
 		}
 		else
-			return (0);
+			syntax_error_instruction(array[i], 1);
     }
-	return(1);
 }

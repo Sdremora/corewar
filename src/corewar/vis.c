@@ -6,7 +6,7 @@
 /*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/30 19:00:56 by hharvey           #+#    #+#             */
-/*   Updated: 2019/03/31 17:27:52 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/01 20:59:44 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,50 @@ void		print_nb(int nb, int y, int x)
 	char *str;
 
 	str = ft_itoa(nb);
+	mvaddstr(y, x, "          ");
 	mvaddstr(y, x, str);
 	free(str);
+}
+
+void		vis_pause(int *pause, int *speed)
+{
+	char temp;
+
+	temp = getch();
+	print_nb(temp, 1, 0);
+	if (temp == 32 && !(*pause))
+	{
+		timeout(-1);
+		mvaddstr(2,201,"** PAUSED ** ");
+		*pause = 1;
+	}
+	else if (temp == 32)
+	{
+		timeout(0);
+		mvaddstr(2,201,"** RUNNING **");
+		*pause = 0;
+	}
+	else if (temp == 'q' && *speed > 100)
+	{
+		*speed = 1000000 / (10 + 1000000 / (*speed));
+	}
+	else if (temp == 'w' && *speed < 100000)
+	{
+		*speed = 1000000 / (-10 + 1000000 / (*speed));
+	}
+	else if (temp == 'a' && *speed > 100)
+	{
+		*speed = 1000000 / (1 + 1000000 / (*speed));
+	}
+	else if (temp == 's' && *speed < 999999)
+	{
+		*speed = 1000000 / (-1 + 1000000 / (*speed));
+	}
+	else if (temp == 27)
+	{
+		endwin();
+		exit(1);
+	}
+	if (*pause)
+		vis_pause(pause, speed);
 }

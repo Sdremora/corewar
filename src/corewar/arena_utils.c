@@ -8,6 +8,7 @@ void	arena_ini(t_arena *arena)
 	i = 0;
 	while (i < MAX_PLAYERS)
 		arena->players[i++].id = -99;
+	ft_bzero(arena->player_live_in_cp, sizeof(int) * MAX_PLAYERS);
 	arena->players_count = 0;
     arena->cycle_to_die = CYCLE_TO_DIE;
     arena->cur_cycle = 0;
