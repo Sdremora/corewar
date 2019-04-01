@@ -298,7 +298,7 @@ void		fight(t_arena *arena)
 		curs_set(0);
 		refresh();
 //		mvaddstr(0, 5 +  3 * (44 % 64),"1");
-//		getch();
+		//getch();
 		timeout(0);
 		speed = 20000;
 		pause = 0;
@@ -350,7 +350,7 @@ void		fight(t_arena *arena)
 				mvaddstr(4,0,"       ");
 				print_nb(1000000 / speed, 4, 0);
 				refresh();
-				usleep(speed);
+				//usleep(speed);
 			}
     }
 	if (arena->flags[F_VIS])

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asm.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:08:27 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/29 11:16:28 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/01 12:02:52 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_parse
 	char		*arg2;
 	char		*arg3;
 	int			str_number;
+	int			id_in_tab;
 	//probably we will need to count number of bytes for command
 }				t_parse;
 
@@ -95,11 +96,11 @@ void	syntax_error(int flag);
 void	length_error(int nb);
 void	del_all_struct(void);
 void    init(void);
-void		init_struct(void);
+void	init_struct(void);
 // void	find_position_error_lex_name_comment(char **line);
 void    parse_from_file(int argc, char **argv);
 void	skip_comment_and_spaces(void);
-void		find_name_comment(void);
+void	find_name_comment(void);
 void	skip_comment_and_spaces(void);
 void	skip_whitespaces(void);
 int		find_position_in_str(void);
@@ -107,8 +108,8 @@ void    write_labels_commands(void);
 int     count_chars(void);
 int		check_if_command_exist(char *temp);
 int		check_if_label_exist(char *temp);
-char			**split(char const *str, char c);
-// int		find_name(char **line);
-// int		find_comment(char **line);
+char	**split(char const *str, char c);
+int     check_if_command_has_arg(char **array);
+
 
 #endif
