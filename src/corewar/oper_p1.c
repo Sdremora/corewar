@@ -87,7 +87,7 @@ void	op_st(t_carriage *carg, t_arena *arena)
 	{
 		temp = get_value(arena, carg->mem_pos + offset, IND_SIZE);
 		offset = temp % IDX_MOD;
-		put_value(arena, carg->mem_pos + offset, value);
+		put_value(arena, carg->mem_pos + offset, value, carg->owner);
 		if (arena->flags[F_V] & 4)
 			ft_printf("P %4d | %s r%d %d\n", carg->carg_id, g_op_tab[carg->op_id].name,
 		reg_num1 + 1, temp);

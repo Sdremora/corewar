@@ -5,6 +5,7 @@
 #define REVERSE_MAGIC 4085508608
 
 #include "general/op.h"
+#include <curses.h>
 
 #define FLAGS_COUNT 8
 #define E_NO_MEMORY -1
@@ -64,6 +65,7 @@ typedef struct	s_arena
 	int				live_call_count;
 	int				flags[FLAGS_COUNT];
 	int				max_carg_id;
+	t_point			shift;
 }				t_arena;
 
 typedef union	u_converter
@@ -129,7 +131,7 @@ void		op_aff(t_carriage *carg, t_arena *arena);
 
 //	oper_utils.c
 int			get_value(t_arena *arena, int mem_pos, int	len);
-void		put_value(t_arena *arena, int pos, int value);
+void		put_value(t_arena *arena, int pos, int value, int pnb);
 int			get_reg_num(t_arena *arena, int pos);
 int			get_arg_len(int oper_type, char arg_type);
 int			get_args_offset(t_carriage *carg, t_arg_num arg_num);
@@ -138,4 +140,14 @@ int			get_pos(int index);
 
 //	support.c
 void		introducing(t_arena *arena);
+
+//vis.c
+int			get_color_pair(int pos, t_point p);
+void		draw_pos(t_arena *arena, int color, int pos);
+void		remove_carg(t_arena *arena, int pos);
+
+//vis_utils
+int			nb_carg_pos(t_arena *arena, int pos);
+void		print_nb(int nb, int y, int x);
+
 #endif

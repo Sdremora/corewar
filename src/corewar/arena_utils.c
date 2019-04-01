@@ -19,6 +19,8 @@ void	arena_ini(t_arena *arena)
 	i = 0;
 	while (i < FLAGS_COUNT)
 		arena->flags[i++] = -1;
+	arena->flags[F_V] = 0;
+	arena->flags[F_VIS] = 0;
 	arena->max_carg_id = 0;
 }
 

@@ -42,16 +42,25 @@ int		get_value(t_arena *arena, int mem_pos, int	len)
 	return (converter.n);
 }
 
-void	put_value(t_arena *arena, int pos, int value)
+void	put_value(t_arena *arena, int pos, int value, int pnb)
 {
 	int			i;
 	t_converter	converter;
+	int			new_pos;
 
 	i = 0;
 	converter.n = value;
 	while (i < REG_SIZE)
 	{
-		arena->map[get_pos(pos + REG_SIZE - 1 - i)] = converter.str[i];
+		new_pos = get_pos(pos + REG_SIZE - 1 - i);
+		arena->map[new_pos] = converter.str[i];
+		if (arena->flags[F_VIS])
+		{
+			if (get_color_pair(new_pos, arena->shift) < 5)
+				draw_pos(arena, pnb, new_pos);
+			else
+				draw_pos(arena, pnb + 5, new_pos);
+		}
 		i++;
 	}
 }

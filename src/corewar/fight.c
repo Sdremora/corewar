@@ -108,15 +108,52 @@ void		clean_carg_op(t_carriage *carg)
 	ft_bzero(carg->args, sizeof(int) * 3);
 }
 
+/*
+int			nb_carg_pos(t_arena *arena, int pos)
+{
+	t_list *carg_node;
+	t_carriage	*carg;
+	int			res;
+
+	res = 0;
+	carg_node = arena->carg_lst;
+	while (carg_node)
+	{
+		carg = (t_carriage *)carg_node->content;
+
+		if (carg->mem_pos == pos)
+			res++;
+		carg_node = carg_node->next;
+	}
+	return (res);
+}
+*/
+
+void		vis_move_carg(int old, int new, t_arena *arena)
+{
+	int color;
+
+	if ((color = get_color_pair(old, arena->shift)) > 4 && !nb_carg_pos(arena, old))
+	{
+		draw_pos(arena, color - 5, old);
+	}
+	if ((color = get_color_pair(new, arena->shift)) < 5)
+	{
+		draw_pos(arena, color + 5, new);
+	}	
+}
+
 static void	play_round(t_arena *arena)
 {
 	t_list		*carg_node;
 	t_carriage	*carg;
+	int			cur_pos;
 
     carg_node = arena->carg_lst;
     while (carg_node)
     {
 		carg = (t_carriage *)carg_node->content;
+		cur_pos = carg->mem_pos;
 		if (carg->op_id == -1)
 		{
 			operations_handle(carg, arena);
@@ -134,6 +171,8 @@ static void	play_round(t_arena *arena)
 			move_carriage(arena, carg, g_op_tab[carg->op_id].dir_size);
 			clean_carg_op(carg);
 		}
+		if (arena->flags[F_VIS])
+			vis_move_carg(get_pos(cur_pos), get_pos(carg->mem_pos), arena);
     	carg_node = carg_node->next;
     }
 }
@@ -151,6 +190,8 @@ void		check_live(t_arena *arena)
 		if (arena->cycle_to_die <= 0 || !carg->live)
 		//if (arena->cycle_to_die <= 0 || arena->cur_cycle - carg->last_live_cycle > arena->cycle_to_die)
 		{
+			if (arena->flags[F_VIS])
+				remove_carg(arena, carg->mem_pos);
 			temp = carg_node->next;
 			if (arena->flags[F_V] & 8)
 				ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", carg->carg_id, arena->cur_cycle - carg->last_live_cycle, arena->cycle_to_die);
@@ -178,11 +219,93 @@ void		check_cycle_to_die(t_arena *arena)
 	arena->live_call_count = 0;
 }
 
+void		draw_map(unsigned char *str, t_point p)
+{
+	int i;
+	int j;
+	static char base[17] = "0123456789abcdef";
+
+	i = 0;
+	while (i < MEM_SIZE)
+	{
+		mvaddch(p.y + i / 64, p.x +  3 * (i % 64), base[str[i] / 16 % 16]);
+		mvaddch(p.y + i / 64, p.x + 3 * (i % 64) + 1, base[str[i] % 16]);
+		i++;
+	}
+}
+
+void		set_color_pairs(void)
+{
+	start_color();
+	
+	init_pair(0,  COLOR_WHITE, COLOR_BLACK);
+	init_pair(1,  COLOR_GREEN, COLOR_BLACK);
+	init_pair(2,  COLOR_BLUE, COLOR_BLACK);
+	init_pair(3,  COLOR_RED, COLOR_BLACK);
+    init_pair(4,  COLOR_CYAN, COLOR_BLACK);
+
+	init_pair(5,  COLOR_BLACK, COLOR_WHITE);
+	init_pair(6,  COLOR_BLACK, COLOR_GREEN);
+	init_pair(7,  COLOR_BLACK, COLOR_BLUE);
+	init_pair(8,  COLOR_BLACK, COLOR_RED);
+    init_pair(9,  COLOR_BLACK, COLOR_CYAN);
+}
+
+void		draw_players(t_arena *arena)
+{
+	int i;
+	int pos;
+	static char base[17] = "0123456789abcdef";
+
+	i = 0;
+
+	while (i < arena->players_count)
+	{
+		color_set(i + 1 + 5, NULL);
+		pos = i * MEM_SIZE / arena->players_count;
+		while (pos < i * MEM_SIZE / arena->players_count + arena->players[i].code_size)
+		{
+			mvaddch(arena->shift.y + pos / 64, arena->shift.x + 3 * (pos % 64), base[arena->map[pos] / 16 % 16]);
+			mvaddch(arena->shift.y + pos / 64, arena->shift.x + 3 * (pos % 64) + 1, base[arena->map[pos] % 16]);
+			if (pos == i * MEM_SIZE / arena->players_count)
+				color_set(i + 1, NULL);
+			pos++;
+		}
+
+		i++;
+	}
+
+}
+
 void		fight(t_arena *arena)
 {
 	introducing(arena);
+	char temp;
+	int speed;
+	int pause;
+
+	if (arena->flags[F_VIS] == 1)
+	{
+		int x = 5;
+		int y = 5;
+
+		arena->shift = ft_pnt(x, y);
+		initscr();
+		noecho(); 
+		set_color_pairs();
+		draw_map(arena->map, arena->shift);
+		draw_players(arena);
+		curs_set(0);
+		refresh();
+//		mvaddstr(0, 5 +  3 * (44 % 64),"1");
+//		getch();
+		timeout(0);
+		speed = 20000;
+		pause = 0;
+	}
     while (arena->carg_lst)
     {
+			print_nb(arena->cur_cycle, 0, 0);
 			if (arena->cur_cycle == arena->flags[F_D])
 				return print_map(arena->map, 64);
 			arena->cur_cycle++;
@@ -197,6 +320,44 @@ void		fight(t_arena *arena)
 				check_live(arena);
 				check_cycle_to_die(arena);
 			}
+<<<<<<< HEAD
+=======
+			if (arena->flags[F_VIS])
+			{
+				refresh();
+				temp = getch();
+				print_nb(temp, 1, 0);
+				if (temp == 32 && !pause)
+				{
+					timeout(-1);
+					mvaddstr(2,0,"pause");
+					pause = 1;
+				}
+				else if (temp == 32)
+				{
+					timeout(0);
+					mvaddstr(2,0,"     ");
+					pause = 0;
+				}
+				else if (temp == 'q' && speed < 1000000 - 10000)
+				{
+					speed += 10000;
+				}
+				else if (temp == 'w' && speed > 10000)
+				{
+					speed -= 10000;
+				}
+				print_nb(speed, 1, 20);
+				mvaddstr(3,0,"cycles max per seconds");
+				mvaddstr(4,0,"       ");
+				print_nb(1000000 / speed, 4, 0);
+				refresh();
+				usleep(speed);
+			}
+>>>>>>> 2d42d2890df8e9622be572bf2b52654632053fb9
     }
+	if (arena->flags[F_VIS])
+		endwin();
 	ft_printf("циклов -> %d\n", arena->cur_cycle);
 }
+//space = 32
