@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_from_file.c                                   :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 14:54:49 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/03/27 11:11:31 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/02 12:28:02 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,21 @@ void	write_binary_name(char *str)
 
 int		main(int argc, char **argv)
 {
+	int		i;
+
+	i = -1;
 	if (argc > 1)
 	{
 		init();
 		write_binary_name(argv[argc - 1]);
 		parse_from_file(argc, argv);
+		while (++i < INDEX)
+		{
+			printf("# of index: %d\n", i);
+			printf("label: %s, name:%s, byte:%d\n\n", g_struct[i].label, g_struct[i].command, g_struct[i].byte);
+		}
+		g_asm->i = 0;
+		realise_algorithm();
 	}
 	else
 		usage();

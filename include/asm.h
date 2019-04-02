@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asm.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:08:27 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/01 16:10:57 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/02 13:30:20 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,10 @@ typedef struct s_parse
 	char		*arg3;
 	int			str_number;
 	int			id_in_tab;
+	int			byte;
+	char		octet;
+	
+	// unsigned int
 	//probably we will need to count number of bytes for command
 }				t_parse;
 
@@ -113,5 +117,6 @@ char	**split(char const *str, char c);
 void    check_if_command_has_arg(char **array);
 int		check_direct_or_indirect(char *array, int element, int flag);
 int		check_register(char *array, int element);
- int	find_flag(char *array);
+int	find_flag(char *array);
+void    realise_algorithm(void);
 #endif

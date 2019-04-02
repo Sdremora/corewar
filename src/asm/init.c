@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:52:31 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/01 12:03:14 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/02 13:31:04 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,7 @@ void		init_struct(void)
 		g_struct[i].arg3 = NULL;
 		g_struct[i].str_number = 0;
 		g_struct[i].id_in_tab = -1;
+		g_struct[i].byte = 0;
+		g_struct[i].octet = 0;
 	}
 }
