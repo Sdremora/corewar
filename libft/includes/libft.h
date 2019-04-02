@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 14:04:27 by hharvey           #+#    #+#             */
-/*   Updated: 2019/03/28 21:04:30 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/02 14:52:59 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct		s_mlx
 void				ft_arrstrprnt(char **arr);
 
 int					ft_atoi_base(char *str, int base);
-
+long long int		ft_atoi_long(const char *str);
 void				ft_arrnumdel(t_arrnum *a);
 void				ft_arrnumset(t_arrnum *arrnum, int *arr, int size);
 void				ft_arrnumprint(t_arrnum arrnum);
