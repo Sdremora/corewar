@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   oper_p1.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/01 17:50:10 by sdremora          #+#    #+#             */
+/*   Updated: 2019/04/01 17:55:09 by sdremora         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar.h"
 
 /*
@@ -9,11 +21,12 @@ void	op_live(t_carriage *carg, t_arena *arena)
 {
 	int	player_num;
 
-	carg->last_live_cycle = arena->cur_cycle;
 	carg->live = 1;
+	carg->last_live_cycle = arena->cur_cycle;
 	read_arg(&player_num, arena, carg, ARG_1);
 	if (arena->flags[F_V] & 4)
-		ft_printf("P %4d | %s %d\n", carg->carg_id, g_op_tab[LIVE].name, player_num);
+		ft_printf("P %4d | %s %d\n", carg->carg_id,
+			g_op_tab[LIVE].name, player_num);
 	player_num *= -1;
 	if (player_num >= 1 && player_num <= arena->players_count)
 	{
@@ -21,7 +34,7 @@ void	op_live(t_carriage *carg, t_arena *arena)
 		arena->player_live_in_cp[player_num - 1] += 1;
 		if (arena->flags[F_V] & 1)
 			ft_printf("Player %d (%s) is said to be alive\n", player_num,
-		arena->players[player_num - 1].name);
+				arena->players[player_num - 1].name);
 	}
 	arena->live_call_count++;
 }
@@ -39,7 +52,8 @@ void	op_ld_lld(t_carriage *carg, t_arena *arena)
 
 	offset = get_args_offset(carg, ARG_1);
 	if (carg->args[ARG_1] == T_DIR)
-		value = get_value(arena, carg->mem_pos + offset, g_op_tab[carg->op_id].dir_size);
+		value = get_value(arena, carg->mem_pos + offset,
+			g_op_tab[carg->op_id].dir_size);
 	else
 	{
 		offset = get_value(arena, carg->mem_pos + offset, IND_SIZE);
@@ -52,8 +66,8 @@ void	op_ld_lld(t_carriage *carg, t_arena *arena)
 	carg->reg[reg_num] = value;
 	carg->carry = (value == 0) ? 1 : 0;
 	if (arena->flags[F_V] & 4)
-		ft_printf("P %4d | %s %d r%d\n", carg->carg_id, g_op_tab[carg->op_id].name,
-			value, reg_num + 1);
+		ft_printf("P %4d | %s %d r%d\n", carg->carg_id,
+			g_op_tab[carg->op_id].name, value, reg_num + 1);
 }
 
 /*
@@ -69,27 +83,25 @@ void	op_st(t_carriage *carg, t_arena *arena)
 	int	offset;
 	int	temp;
 
-	if ((reg_num1 = get_reg_num(arena,
-			carg->mem_pos + get_args_offset(carg, ARG_1))) < 0)
+	if ((reg_num1 = get_reg_num(arena, get_pos(carg, ARG_1))) < 0)
 		return ;
 	value = carg->reg[reg_num1];
 	offset = get_args_offset(carg, ARG_2);
 	if (carg->args[ARG_2] == T_REG)
 	{
-		if ((reg_num2 = get_reg_num(arena,
-				carg->mem_pos + get_args_offset(carg, ARG_2))) < 0)
+		if ((reg_num2 = get_reg_num(arena, get_pos(carg, ARG_2))) < 0)
 			return ;
 		carg->reg[reg_num2] = value;
 	}
 	else
 	{
 		temp = get_value(arena, carg->mem_pos + offset, IND_SIZE);
-		offset = temp % IDX_MOD;
-		put_value(arena, carg->mem_pos + offset, value, carg->owner);
+		put_value(arena, carg->mem_pos + offset % IDX_MOD, value, carg->owner);
 	}
 	if (arena->flags[F_V] & 4)
-			ft_printf("P %4d | %s r%d %d\n", carg->carg_id, g_op_tab[carg->op_id].name,
-		reg_num1 + 1, carg->args[ARG_2] == T_REG ? reg_num2 + 1 : temp);
+		ft_printf("P %4d | %s r%d %d\n", carg->carg_id,
+			g_op_tab[carg->op_id].name, reg_num1 + 1,
+			carg->args[ARG_2] == T_REG ? reg_num2 + 1 : temp);
 }
 
 /*
@@ -114,7 +126,8 @@ void	op_add_sub(t_carriage *carg, t_arena *arena)
 		carg->reg[reg_num3] = carg->reg[reg_num1] - carg->reg[reg_num2];
 	carg->carry = (carg->reg[reg_num3]) == 0 ? 1 : 0;
 	if (arena->flags[F_V] & 4)
-		ft_printf("P %4d | %s r%d r%d r%d\n", carg->carg_id, g_op_tab[carg->op_id].name,
+		ft_printf("P %4d | %s r%d r%d r%d\n", carg->carg_id,
+			g_op_tab[carg->op_id].name,
 		reg_num1 + 1, reg_num2 + 1, reg_num3 + 1);
 }
 
@@ -145,6 +158,6 @@ void	op_and_or_xor(t_carriage *carg, t_arena *arena)
 	carg->reg[reg_num] = n3;
 	carg->carry = n3 == 0 ? 1 : 0;
 	if (arena->flags[F_V] & 4)
-		ft_printf("P %4d | %s %d %d r%d\n", carg->carg_id, g_op_tab[carg->op_id].name,
-		n1, n2, reg_num + 1);
+		ft_printf("P %4d | %s %d %d r%d\n", carg->carg_id,
+			g_op_tab[carg->op_id].name, n1, n2, reg_num + 1);
 }

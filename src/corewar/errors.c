@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   errors.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/01 18:09:36 by sdremora          #+#    #+#             */
+/*   Updated: 2019/04/01 18:11:15 by sdremora         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar.h"
 
 static char	*errorid_to_str(int error_id)
@@ -19,8 +31,11 @@ static char	*errorid_to_str(int error_id)
 	return (msg);
 }
 
-//	addition -> дополнение к сообщению по коду ошибки.
-//	если оно не нужно, то addition = NULL
+/*
+**	addition -> addition to the error code message.
+**	if it is not needed, then addition = NULL
+*/
+
 void		error_handle(int error_id, t_arena *arena, char *addition)
 {
 	char	*error_msg;
