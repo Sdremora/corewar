@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   oper_utils_p1.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/01 17:58:11 by sdremora          #+#    #+#             */
+/*   Updated: 2019/04/02 17:51:04 by hharvey          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar.h"
 
-int		get_arg_len(int oper_type, char arg_type)
+int			get_arg_len(int oper_type, char arg_type)
 {
 	if (arg_type == T_REG)
 		return (1);
@@ -22,7 +34,7 @@ static int	get_arg_value_len(int oper_type, char arg_type)
 	return (len);
 }
 
-int		get_value(t_arena *arena, int mem_pos, int	len)
+int			get_value(t_arena *arena, int mem_pos, int len)
 {
 	int			i;
 	int			k;
@@ -33,7 +45,7 @@ int		get_value(t_arena *arena, int mem_pos, int	len)
 	k = len - 1;
 	while (i < len)
 	{
-		converter.str[i] = arena->map[get_pos(mem_pos + k)];
+		converter.str[i] = arena->map[looping(mem_pos + k)];
 		i++;
 		k--;
 	}
@@ -42,44 +54,7 @@ int		get_value(t_arena *arena, int mem_pos, int	len)
 	return (converter.n);
 }
 
-void	put_value(t_arena *arena, int pos, int value, int pnb)
-{
-	int			i;
-	t_converter	converter;
-	int			new_pos;
-
-	i = 0;
-	converter.n = value;
-	while (i < REG_SIZE)
-	{
-		new_pos = get_pos(pos + REG_SIZE - 1 - i);
-		arena->map[new_pos] = converter.str[i];
-		if (arena->flags[F_VIS])
-		{
-			if (get_color_pair(new_pos, arena->shift) < 5)
-				draw_pos(arena, pnb, new_pos);
-			else
-				draw_pos(arena, pnb + 5, new_pos);
-		}
-		i++;
-	}
-}
-
-int		get_reg_num(t_arena *arena, int pos)
-{
-	char	reg_num;
-
-	reg_num = arena->map[get_pos(pos)];
-	if (reg_num >= 1 && reg_num <= REG_NUMBER)
-		return (reg_num - 1);
-	return (-1);
-}
-
-/*
-**	arg_num 0..2
-*/
-
-int		get_args_offset(t_carriage *carg, t_arg_num arg_num)
+int			get_args_offset(t_carriage *carg, t_arg_num arg_num)
 {
 	int	offset;
 
@@ -96,7 +71,8 @@ int		get_args_offset(t_carriage *carg, t_arg_num arg_num)
 	return (offset);
 }
 
-int		read_arg(int *value, t_arena *arena, t_carriage *carg, t_arg_num arg_num)
+int			read_arg(int *value, t_arena *arena, t_carriage *carg,
+						t_arg_num arg_num)
 {
 	int	arg_type;
 	int offset;
@@ -112,21 +88,12 @@ int		read_arg(int *value, t_arena *arena, t_carriage *carg, t_arg_num arg_num)
 		*value = carg->reg[reg_num];
 	}
 	else if (arg_type == T_DIR)
-		*value = get_value(arena, carg->mem_pos + offset, g_op_tab[carg->op_id].dir_size);
+		*value = get_value(arena, carg->mem_pos + offset,
+					g_op_tab[carg->op_id].dir_size);
 	else
 	{
 		offset = get_value(arena, carg->mem_pos + offset, IND_SIZE) % IDX_MOD;
 		*value = get_value(arena, carg->mem_pos + offset, REG_SIZE);
 	}
 	return (0);
-}
-
-int	get_pos(int index)
-{
-	int	pos;
-
-	pos = index % MEM_SIZE;
-	if (pos < 0)
-		pos += MEM_SIZE;
-	return (pos);
 }

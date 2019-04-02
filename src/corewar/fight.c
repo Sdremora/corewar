@@ -24,7 +24,7 @@ static void	operations_handle(t_carriage *carg, t_arena *arena)
 			carg->op_id = oper;
 	}
 	else
-		carg->mem_pos = get_pos(carg->mem_pos + 1);
+		carg->mem_pos = looping(carg->mem_pos + 1);
 }
 
 int			convert_args(unsigned char arg)
@@ -47,7 +47,7 @@ void		load_args(t_carriage *carg, t_arena *arena)
 	if (g_op_tab[carg->op_id].kod_tipov_argumenta)
 	{
 		i = 0;
-		arg = arena->map[get_pos(carg->mem_pos + 1)];
+		arg = arena->map[looping(carg->mem_pos + 1)];
 		while (i < 3 && g_op_tab[carg->op_id].args[i])
 		{
 			carg->args[i] = convert_args(arg >> (6 - 2 * i) & 3);
@@ -87,14 +87,14 @@ void		move_carriage(t_arena *arena, t_carriage *carg, int dir_size)
 		move += step_bites(carg->args[i], dir_size);
 		i++;
 	}
-	next_pos = get_pos(carg->mem_pos + move);
+	next_pos = looping(carg->mem_pos + move);
 	if (arena->flags[F_V] & 16)
 	{
 		ft_printf("ADV %d (%06p -> %06p) ", move, carg->mem_pos, next_pos);
 		i = 0;
 		while (i < move)
 		{
-			ft_printf("%02x ", arena->map[get_pos(carg->mem_pos + i)]);
+			ft_printf("%02x ", arena->map[looping(carg->mem_pos + i)]);
 			i++;
 		}
 		ft_putchar('\n');
@@ -172,7 +172,7 @@ static void	play_round(t_arena *arena)
 			clean_carg_op(carg);
 		}
 		if (arena->flags[F_VIS])
-			vis_move_carg(get_pos(cur_pos), get_pos(carg->mem_pos), arena);
+			vis_move_carg(looping(cur_pos), looping(carg->mem_pos), arena);
     	carg_node = carg_node->next;
     }
 }
@@ -213,6 +213,8 @@ void		check_cycle_to_die(t_arena *arena)
 		if (arena->flags[F_V] & 2)
 			ft_printf("Cycle to die is now %d\n", arena->cycle_to_die);
 		arena->checks = 1;
+//		if (arena->flags[F_VIS])
+//			print_nb(arena->cycle_to_die, 11 + 4 * arena->players_count + 6, POS_NB, 10);
 	}
 	else
 		arena->checks++;
@@ -245,20 +247,20 @@ void		set_color_pairs(void)
 	init_pair(3,  COLOR_RED, COLOR_BLACK);
     init_pair(4,  COLOR_CYAN, COLOR_BLACK);
 
-	init_pair(5,  COLOR_BLACK, COLOR_WHITE);
+	init_pair(5,  COLOR_BLACK, 8);
 	init_pair(6,  COLOR_BLACK, COLOR_GREEN);
 	init_pair(7,  COLOR_BLACK, COLOR_BLUE);
 	init_pair(8,  COLOR_BLACK, COLOR_RED);
     init_pair(9,  COLOR_BLACK, COLOR_CYAN);
 
-
+/*
     if (COLORS >= 16) {
         init_pair(10, 15, COLOR_BLACK);
     } else {
         init_pair(10, COLOR_WHITE, COLOR_BLACK);
     }
-
-//	init_pair(10,  15, COLOR_BLACK);
+*/
+	init_pair(10,  15, COLOR_BLACK);
 }
 
 void		draw_players(t_arena *arena)
@@ -323,7 +325,7 @@ int		draw_status(t_arena *arena)
 	mvaddstr(7,POS_TEXT,"Cycle :");
 	mvaddstr(7, POS_NB,"50");
 	mvaddstr(9,POS_TEXT,"Processes :");
-	print_nb(arena->max_carg_id, 9, POS_NB);
+	print_nb(arena->max_carg_id, 9, POS_NB, 10);
 	i = 0;
 	while (i < arena->max_carg_id)
 	{
@@ -340,9 +342,9 @@ int		draw_status(t_arena *arena)
 	mvaddstr(11 + 4 * i + 1 , POS_TEXT,"[--------------------------------------------------]");
 	mvaddstr(11 + 4 * i + 3 , POS_TEXT , "Live breakdown for last period :");
 	mvaddstr(11 + 4 * i + 6 , POS_TEXT , "Cycle to die :");
-	print_nb(arena->cycle_to_die, 11 + 4 * i + 6, POS_NB);
+	print_nb(arena->cycle_to_die, 11 + 4 * i + 6, POS_NB, 10);
 	mvaddstr(11 + 4 * i + 8 , POS_TEXT , "Number checks :");
-	print_nb(arena->checks, 11 + 4 * i + 8, POS_NB);
+	print_nb(arena->checks, 11 + 4 * i + 8, POS_NB, 10);
 	return (i);
 }
 
@@ -360,6 +362,7 @@ void		fight(t_arena *arena)
 
 		arena->shift = ft_pnt(x, y);
 		initscr();
+		assume_default_colors(8, COLOR_BLACK);
 		noecho();
 		set_color_pairs();
 		draw_map(arena->map, arena->shift);
@@ -373,6 +376,14 @@ void		fight(t_arena *arena)
 	}
     while (arena->carg_lst)
     {
+			if (arena->flags[F_VIS])
+			{
+				print_nb(arena->cur_cycle, 7, POS_NB, 10);
+				refresh();
+				vis_pause(&pause, &speed);
+				refresh();
+				usleep(speed);
+			}
 			if (arena->cur_cycle == arena->flags[F_D])
 				return print_map(arena->map, 64);
 			if (arena->cur_cycle == arena->flags[F_S])
@@ -392,17 +403,6 @@ void		fight(t_arena *arena)
 				check_live(arena);
 				check_cycle_to_die(arena);
 			}
-			if (arena->flags[F_VIS])
-			{
-//				mvaddstr(7, POS_NB,"50");
-				print_nb(arena->cur_cycle, 7, POS_NB);
-				refresh();
-				vis_pause(&pause, &speed);
-				print_nb(1000000 / speed, 5, POS_NB);
-				refresh();
-				usleep(speed);
-			}
+
     }
-	if (arena->flags[F_VIS])
-		endwin();
 }

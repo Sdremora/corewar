@@ -133,14 +133,17 @@ void		op_sti(t_carriage *carg, t_arena *arena);
 void		op_fork(t_carriage *carg, t_arena *arena);
 void		op_aff(t_carriage *carg, t_arena *arena);
 
-//	oper_utils.c
-int			get_value(t_arena *arena, int mem_pos, int	len);
-void		put_value(t_arena *arena, int pos, int value, int pnb);
-int			get_reg_num(t_arena *arena, int pos);
+//	oper_utils_p1.c
 int			get_arg_len(int oper_type, char arg_type);
+int			get_value(t_arena *arena, int mem_pos, int	len);
 int			get_args_offset(t_carriage *carg, t_arg_num arg_num);
 int			read_arg(int *value, t_arena *arena, t_carriage *carg, t_arg_num arg_num);
-int			get_pos(int index);
+
+//	oper_utils_p2.c
+int			get_reg_num(t_arena *arena, int pos);
+int			looping(int index);
+void		put_value(t_arena *arena, int pos, int value, int pnb);
+int			get_pos(t_carriage *carg, t_arg_num arg_num);
 
 //	support.c
 void		introducing(t_arena *arena);
@@ -150,9 +153,11 @@ int			get_color_pair(int pos, t_point p);
 void		draw_pos(t_arena *arena, int color, int pos);
 void		remove_carg(t_arena *arena, int pos);
 void		vis_pause(int *pause, int *speed);
+void		mvaddclrstr(int y, int x, int col_nb, char *str);
 
 //vis_utils
 int			nb_carg_pos(t_arena *arena, int pos);
-void		print_nb(int nb, int y, int x);
+void		print_nb(int nb, int y, int x, int clr_nb);
+int			plr_pos(int nb);
 
 #endif

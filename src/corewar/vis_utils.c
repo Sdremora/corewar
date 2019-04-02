@@ -6,7 +6,7 @@
 /*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 17:03:50 by hharvey           #+#    #+#             */
-/*   Updated: 2019/03/31 17:04:31 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/02 17:39:27 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,9 @@ int			nb_carg_pos(t_arena *arena, int pos)
 		carg_node = carg_node->next;
 	}
 	return (res);
+}
+
+int			plr_pos(int nb)
+{ 
+	return (11 + 4 * nb);
 }

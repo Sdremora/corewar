@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 09:47:29 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/01 16:18:01 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/02 13:21:48 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,13 +130,13 @@ void	syntax_error_instruction(char *instruction, int flag)
 	print_noll(i);
 	ft_putnbr(i);
 	ft_putstr("] ");
-	if (flag == 1)
+	if (flag == 4)
 		ft_putstr("INSTRUCTION \"");
-	else if (flag == 2)
-		ft_putstr("INDIRECT \"");
 	else if (flag == 3)
+		ft_putstr("INDIRECT \"");
+	else if (flag == 2)
 		ft_putstr("DIRECT \"");
-	else if (flag == 4)
+	else if (flag == 1)
 		ft_putstr("REGISTR \"");
 	ft_putstr(instruction);
 	ft_putstr("\"\n");

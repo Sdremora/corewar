@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   oper_p2.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/01 17:53:32 by sdremora          #+#    #+#             */
+/*   Updated: 2019/04/01 17:55:07 by sdremora         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar.h"
 
 /*
@@ -14,8 +26,8 @@ void	op_zjmp(t_carriage *carg, t_arena *arena)
 	read_arg(&value, arena, carg, ARG_1);
 	if (carg->carry)
 	{
-		offset =  value % IDX_MOD;
-		carg->mem_pos = get_pos(carg->mem_pos + offset);
+		offset = value % IDX_MOD;
+		carg->mem_pos = looping(carg->mem_pos + offset);
 		answer = "OK";
 	}
 	else
@@ -50,8 +62,8 @@ void	op_ldi_lldi(t_carriage *carg, t_arena *arena)
 	carg->reg[reg_num] = n3;
 	if (arena->flags[F_V] & 4)
 	{
-		ft_printf("P %4d | %s %d %d r%d\n", carg->carg_id, g_op_tab[carg->op_id].name,
-			n1, n2, reg_num + 1);
+		ft_printf("P %4d | %s %d %d r%d\n", carg->carg_id,
+			g_op_tab[carg->op_id].name, n1, n2, reg_num + 1);
 		ft_printf("%7.s| -> load from %d + %d = %d (with pc and mod %d)\n",
 			"", n1, n2, n1 + n2, offset + carg->mem_pos);
 	}
@@ -81,8 +93,8 @@ void	op_sti(t_carriage *carg, t_arena *arena)
 	put_value(arena, carg->mem_pos + offset, value, carg->owner);
 	if (arena->flags[F_V] & 4)
 	{
-		ft_printf("P %4d | %s r%d %d %d\n", carg->carg_id, g_op_tab[carg->op_id].name,
-			reg_num + 1, n2, n3);
+		ft_printf("P %4d | %s r%d %d %d\n", carg->carg_id,
+			g_op_tab[carg->op_id].name, reg_num + 1, n2, n3);
 		ft_printf("%7.s| -> store to %d + %d = %d (with pc and mod %d)\n",
 			"", n2, n3, n2 + n3, offset + carg->mem_pos);
 	}
@@ -112,12 +124,11 @@ void	op_fork(t_carriage *carg, t_arena *arena)
 	}
 	read_arg(&n1, arena, carg, ARG_1);
 	offset = carg->op_id == FORK ? n1 % IDX_MOD : n1;
-	new_carg->mem_pos = get_pos(carg->mem_pos + offset);
+	new_carg->mem_pos = looping(carg->mem_pos + offset);
 	ft_lstadd(&arena->carg_lst, node);
 	if (arena->flags[F_V] & 4)
-		ft_printf("P %4d | %s %d (%d)\n", carg->carg_id, g_op_tab[carg->op_id].name,
-		n1, carg->mem_pos + offset);
-
+		ft_printf("P %4d | %s %d (%d)\n", carg->carg_id,
+			g_op_tab[carg->op_id].name, n1, carg->mem_pos + offset);
 }
 
 /*
@@ -134,4 +145,3 @@ void	op_aff(t_carriage *carg, t_arena *arena)
 	if (arena->flags[F_A] > 0)
 		ft_printf("Aff: %c\n", (char)n1);
 }
-

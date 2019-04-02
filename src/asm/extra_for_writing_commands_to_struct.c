@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extra_for_writing_commands_to_struct.c             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:01:16 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/01 15:37:32 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/02 13:21:58 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,18 @@ int		check_if_label_exist(char *temp)
 	if (array[0] == 'r')
 	{
 		if (check_register(array, -1))
-			return (4);
+			return (1);
 	}		
 	else if (array[0] == DIRECT_CHAR)
 	{
 		if (check_direct_or_indirect(array, -1, 1))
-			return (3);
+			return (2);
 	}		
 	else if ((array[0] >= '0' && array[0] <= '9') ||
 			array[0] == '-' || array[0] == LABEL_CHAR)
 	{
 		if (check_direct_or_indirect(array, -1, 0))
-			return (2);
+			return (3);
 	}
 	return (1);
 }

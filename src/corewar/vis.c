@@ -6,7 +6,7 @@
 /*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/30 19:00:56 by hharvey           #+#    #+#             */
-/*   Updated: 2019/04/01 20:59:44 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/02 17:19:12 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,21 @@ void		remove_carg(t_arena *arena, int pos)
 	}
 }
 
-void		print_nb(int nb, int y, int x)
+void		print_nb(int nb, int y, int x, int col_nb)
 {
 	char *str;
 
 	str = ft_itoa(nb);
+	color_set(col_nb, NULL);
 	mvaddstr(y, x, "          ");
 	mvaddstr(y, x, str);
 	free(str);
+}
+
+void		mvaddclrstr(int y, int x, int col_nb, char *str)
+{
+	color_set(col_nb, NULL);
+	mvaddstr(y, x, str);
 }
 
 void		vis_pause(int *pause, int *speed)
@@ -62,40 +69,34 @@ void		vis_pause(int *pause, int *speed)
 	char temp;
 
 	temp = getch();
-	print_nb(temp, 1, 0);
+	print_nb(temp, 1, 0, 10);
 	if (temp == 32 && !(*pause))
 	{
 		timeout(-1);
-		mvaddstr(2,201,"** PAUSED ** ");
+		mvaddclrstr(2, POS_TEXT, 10, "** PAUSED ** ");
 		*pause = 1;
 	}
 	else if (temp == 32)
 	{
 		timeout(0);
-		mvaddstr(2,201,"** RUNNING **");
+		mvaddclrstr(2, POS_TEXT, 10, "** RUNNING **");
 		*pause = 0;
 	}
 	else if (temp == 'q' && *speed > 100)
-	{
 		*speed = 1000000 / (10 + 1000000 / (*speed));
-	}
 	else if (temp == 'w' && *speed < 100000)
-	{
 		*speed = 1000000 / (-10 + 1000000 / (*speed));
-	}
 	else if (temp == 'a' && *speed > 100)
-	{
 		*speed = 1000000 / (1 + 1000000 / (*speed));
-	}
 	else if (temp == 's' && *speed < 999999)
-	{
 		*speed = 1000000 / (-1 + 1000000 / (*speed));
-	}
 	else if (temp == 27)
 	{
 		endwin();
 		exit(1);
 	}
+	if (temp == 'q' || temp == 'w' || temp == 'a' || temp == 's')
+		print_nb(1000000 / *speed, 5, POS_NB, 10);
 	if (*pause)
 		vis_pause(pause, speed);
 }

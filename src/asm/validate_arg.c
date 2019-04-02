@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_arg.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:54:20 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/01 15:27:59 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/02 13:22:29 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ int		check_direct_or_indirect(char *array, int element, int flag)
 		while (array[++i] != '\0')
 		{
 			if (ft_strchr(LABEL_CHARS, array[i]) == 0)
-			{
-				//g_asm->i = g_asm->i - ft_strlen(array) + i;
 				return (0);
-			}	
 		}
 	}
 	else if ((array[flag] >= '0' && array[flag] <= '9') || array[flag] == '-')
@@ -92,20 +89,25 @@ void     check_if_command_has_arg(char **array)
         if (array[i][0] == 'r')
 		{
 			if (!(check_register(array[i], i)))
-				syntax_error_instruction(array[i], 1);
+				syntax_error_instruction(array[i], 4);
+			g_struct[INDEX].byte++;
 		}
         else if (array[i][0] == DIRECT_CHAR)
 		{
 			if (!(check_direct_or_indirect(array[i], i, 1)))
-				syntax_error_instruction(array[i], 1);
+				syntax_error_instruction(array[i], 4);
+			if (g_op_tab[g_struct[INDEX].id_in_tab].t_dir_size_eq_4 == 0)
+				g_struct[INDEX].byte += 2;
+			g_struct[INDEX].byte += 2;
 		}
 		else if ((array[i][0] >= '0' && array[i][0] <= '9') ||
 				array[i][0] == '-' || array[i][0] == LABEL_CHAR) 
 		{
 			if (!(check_direct_or_indirect(array[i], i, 0)))
-				syntax_error_instruction(array[i], 1);
+				syntax_error_instruction(array[i], 4);
+			g_struct[INDEX].byte += 2;
 		}
 		else
-			syntax_error_instruction(array[i], 1);
+			syntax_error_instruction(array[i], 4);
     }
 }
