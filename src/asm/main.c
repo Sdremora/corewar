@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 14:54:49 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/02 12:28:02 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/02 18:40:30 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int		main(int argc, char **argv)
 		while (++i < INDEX)
 		{
 			printf("# of index: %d\n", i);
-			printf("label: %s, name:%s, byte:%d\n\n", g_struct[i].label, g_struct[i].command, g_struct[i].byte);
+			printf("label: %s, name:%s, byte:%d\n", g_struct[i].label, g_struct[i].command, g_struct[i].byte);
+			printf("arg1: %s, arg2: %s, arg3: %s\n\n", g_struct[i].arg[0], g_struct[i].arg[1], g_struct[i].arg[2]);
 		}
 		g_asm->i = 0;
 		realise_algorithm();

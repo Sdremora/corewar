@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 14:04:27 by hharvey           #+#    #+#             */
-/*   Updated: 2019/04/02 14:52:59 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/02 16:50:30 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,5 +241,6 @@ int					ft_wchar_str_to_utf8(wchar_t *w_str, char **str);
 char				*ft_itoa_unsize_base(size_t dec_num, int base);
 void				ft_str_swap(char *str, int pos1, int pos2);
 void				ft_str_toupper(char *str);
+long long int		ft_atoi_long(const char *str);
 
 #endif

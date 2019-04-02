@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:52:31 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/02 13:31:04 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/02 18:35:47 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int			count_all_str(void)
 void		init_struct(void)
 {
 	int		i;
+	int 	j;
 	int		counter;
 
 	i = -1;
@@ -90,11 +91,15 @@ void		init_struct(void)
 		close_with_error("Error by malloc");
 	while(++i < counter)
 	{
+		j = -1;
 		g_struct[i].label = NULL;
 		g_struct[i].command = NULL;
-		g_struct[i].arg1 = NULL;
-		g_struct[i].arg2 = NULL;
-		g_struct[i].arg3 = NULL;
+		g_struct[i].arg = (char **)malloc(sizeof(char*) * 3);
+		while (++j < 3)
+			g_struct[i].arg[j] = NULL;
+		// g_struct[i].arg1 = NULL;
+		// g_struct[i].arg2 = NULL;
+		// g_struct[i].arg3 = NULL;
 		g_struct[i].str_number = 0;
 		g_struct[i].id_in_tab = -1;
 		g_struct[i].byte = 0;

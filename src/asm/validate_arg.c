@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   validate_arg.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:54:20 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/02 13:22:29 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/02 18:19:18 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
-// #9223372036854775807 - max value of T_IND or T_DIR,
-// if our value is more we use this one
 
 int check_arg_type(int element, int type)
 {
