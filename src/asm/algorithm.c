@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 11:47:42 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/03 09:27:03 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/03 10:55:09 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,17 @@ void		handle_arg(char *arg, int i, int *k, char *pre_matrix, int shift)
 	oct = counter;
 	oct = oct << shift; // can we merge 58 + 59 lines?
 	g_struct[i].octet = g_struct[i].octet | oct;
+	temp = NULL;
 	if (counter == 1)
 	{
 		counter = ft_atoi_long(&arg[1]);
 		temp = ft_itoa_base(counter, 16, 1);
+		//printf("temp[0}:%c, temp1:%c\n", temp[0], temp[1]);
 		if (ft_strlen(temp) == 1)
-			pre_matrix[*k + 1] = temp[0];
+		{
+			pre_matrix[(*k) + 1] = temp[0];
+			//printf("*k + 1 = %d; prematr[*k + 1] = %c\n", (*k) + 1,pre_matrix[(*k) + 1]); 
+		}
 		else
 		{
 			pre_matrix[*k] = temp[0];
@@ -77,10 +82,10 @@ void		handle_arg(char *arg, int i, int *k, char *pre_matrix, int shift)
 			counter = find_right_label(i, &arg[2]);
 		else
 			counter = ft_atoi_long(&arg[1]);
-		printf("counter: %lld\n", counter);
+		//printf("counter: %lld\n", counter);
 		if (counter < 0)
-			counter = (counter * (-1)) ^ 4294967295;
-		temp = ft_itoa_base(counter + 1, 16, 1);
+			counter = ((counter * (-1)) ^ 4294967295) + 1;
+		temp = ft_itoa_base(counter, 16, 1);
 		counter = (g_op_tab[g_struct[i].id_in_tab].t_dir_size_eq_4 ==
 				0) ? 8 : 4;
 		*k += counter - 1;
@@ -88,8 +93,8 @@ void		handle_arg(char *arg, int i, int *k, char *pre_matrix, int shift)
 		while (--ind >= 0 && counter-- > 0)
 			pre_matrix[(*k)--] = temp[ind];
 		if (counter > 0)
-			*k += counter - 1;
-		k += (g_op_tab[g_struct[i].id_in_tab].t_dir_size_eq_4 == 0) ?
+			*k -= counter - 1;
+		*k += (g_op_tab[g_struct[i].id_in_tab].t_dir_size_eq_4 == 0) ?
 			8 : 4;		
 	}
 	else if (counter == 3)
@@ -99,7 +104,7 @@ void		handle_arg(char *arg, int i, int *k, char *pre_matrix, int shift)
 		else
 			counter = ft_atoi_long(arg);
 		if (counter < 0)
-			counter = (counter * (-1)) ^ 4294967295 + 1;
+			counter = ((counter * (-1)) ^ 4294967295) + 1;
 		temp = ft_itoa_base(counter, 16, 1);
 		counter = 4;
 		*k += counter;\
@@ -107,9 +112,10 @@ void		handle_arg(char *arg, int i, int *k, char *pre_matrix, int shift)
 		while (--ind >= 0 && counter-- > 0)
 			pre_matrix[(*k)--] = temp[ind];
 		if (counter > 0)
-			*k -= counter;
-		k += 4;				
+			*k -= counter - 1;
+		*k += 4;				
 	}
+	//printf("temp:%s\n", temp);
 }
 
 void		write_arg_to_pre_matrix(int i, int j, int *k, char *pre_matrix)
@@ -152,6 +158,7 @@ void    realise_algorithm(void)
 				write_arg_to_pre_matrix(i, j, &k, pre_matrix);
 			}
 			printf("pre-matrix: %s\n", pre_matrix);
+			printf("octet:%d\n", g_struct[i].octet);
 		}
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
     }
