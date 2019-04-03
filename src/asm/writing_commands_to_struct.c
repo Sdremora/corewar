@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 14:35:56 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/03 13:14:40 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/03 18:20:28 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,33 +109,52 @@ void	check_args(void)
 	while (BUFFER[g_asm->i] != '\n' && BUFFER[g_asm->i] != '\0')
 		temp[++i] = BUFFER[g_asm->i++];
 	if (BUFFER[g_asm->i] == '\0' && ft_strlen(temp) <= 0)
+	{
+		ft_strdel(&temp);
 		return ;
+	}	
 	if (BUFFER[g_asm->i] == '\0')
 	{
+		ft_strdel(&temp);
 		ft_putstr("Syntax error - unexpected end of input ");
 		close_with_error("(Perhaps you forgot to end with a newline ?)");
 	}
 	array = split(temp, SEPARATOR_CHAR);
+	ft_strdel(&temp);
 	i = 0;
 	while (array[i] != NULL)
 		i++;
 	if (i < g_op_tab[g_struct[INDEX].id_in_tab].var_count)
 	{
-		//free(array);
+		i = -1;
+		if (array)
+		{
+			while(array[++i] != NULL)
+				ft_strdel(&array[i]);
+		}
 		ft_putstr("Invalid parameter count for instruction ");
 		close_with_error(g_struct[INDEX].command);
 	}
 	check_if_command_has_arg(array);
 	if (i > g_op_tab[g_struct[INDEX].id_in_tab].var_count)
 	{
-		printf("_____\n");
+		i = -1;
+		if (array)
+		{
+			while(array[++i] != NULL)
+				ft_strdel(&array[i]);
+		}
 		i = g_op_tab[g_struct[INDEX].id_in_tab].var_count + 1;
 		syntax_error_instruction(array[i], find_flag(array[i]));
 	}	
 	i = -1;
 	while (array[++i] != NULL)
-		g_struct[INDEX].arg[i] = ft_strdup(array[i]);
-	//free(array);
+	{
+		g_struct[INDEX].arg[i] = array[i];
+		//ft_strdel(&array[i]);
+	}	
+	if (array)
+		free(array);
 }
 
 void    write_labels_commands(void)
@@ -147,26 +166,20 @@ void    write_labels_commands(void)
 	init_struct();
     while (BUFFER[g_asm->i] != '\0')
     {
-		//printf("_____\n");
         skip_comment_and_spaces();
-		//printf("1_____\n");
 		i = -1;
 		temp = ft_strnew(count_chars());
-		//printf("2_____\n");
 		while(BUFFER[g_asm->i] != '\0' && BUFFER[g_asm->i] > 32 &&
 		BUFFER[g_asm->i] != LABEL_CHAR && BUFFER[g_asm->i] != '\n')
 			temp[++i] = BUFFER[g_asm->i++];
-		//printf("temp: %s\n", temp);
 		if (check_label(&temp) == 1)
 		{
 			INDEX++;
 			ft_strdel(&temp);
 			continue;
 		}
-		//printf("4_____\n");
 		check_command(&temp);
 		skip_whitespaces();
-		//printf("5_____\n");
 		check_args();
 		ft_strdel(&temp);
 		INDEX++;

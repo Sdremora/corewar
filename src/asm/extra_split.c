@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extra_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:20:54 by kkihn             #+#    #+#             */
-/*   Updated: 2019/04/01 15:21:26 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/03 16:51:17 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,12 @@ static int		ft_addworld(char **dest, char *str, int count_chars, char c)
 	}
 	while (str[i] != c && str[i] != '\0' && str[i] != '\n')
 		i++;
-	*dest = (char*)malloc(sizeof(char) * (i - count_chars + 1));
+	if (!(*dest = (char*)malloc(sizeof(char) * (i - count_chars + 1))))
+		return (-1);
 	while (count_chars < i)
 	{
 		if (str[count_chars] != ' ' && str[count_chars] != '\t')
-		{
-			(*dest)[j] = str[count_chars];
-			j++;
-		}	
+			(*dest)[j++] = str[count_chars];
 		count_chars++;
 	}
 	(*dest)[j] = '\0';
@@ -83,7 +81,8 @@ char			**split(char const *str, char c)
 		return (0);
 	while (i < word)
 	{
-		extra = ft_addworld(&array[i], (char *)str, count_chars, c);
+		if((extra = ft_addworld(&array[i], (char *)str, count_chars, c)) == -1)
+			close_with_error("Error by malloc");
 		count_chars = extra;
 		i++;
 	}

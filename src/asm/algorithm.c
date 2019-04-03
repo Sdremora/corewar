@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 11:47:42 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/03 16:12:25 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/03 17:52:36 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void		handle_arg(char *arg, int i, int *k, char *pre_matrix, int shift)
 		*k += 4;				
 	}
 	printf("temp:%s\n", temp);
+	ft_strdel(&temp);
 }
 
 void		write_arg_to_pre_matrix(int i, int j, int *k, char *pre_matrix)
@@ -175,17 +176,15 @@ void    realise_algorithm(void)
 						pre_matrix[2] = temp[0];
 						pre_matrix[3] = temp[1];
 					}
-					
+					ft_strdel(&temp);
 				}
 			}
 			ind = -1;
 			while (pre_matrix[++ind] != '\0')
-			{
 				CODE[g_asm->i++] = pre_matrix[ind];
-			}
 			//printf("pre-matrix: %s\n", pre_matrix);
 			// printf("octet:%d\n", g_struct[i].octet);
-		}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+			ft_strdel(&pre_matrix);
+		}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
     }
 }

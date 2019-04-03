@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 14:54:49 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/03 16:28:09 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/03 16:54:38 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int		main(int argc, char **argv)
 		// }
 		g_asm->i = 0;
 		realise_algorithm();
-		del_all_struct();
 		printf("%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n%s\n",HEADER,NAME,ZERO,COMMENT,ZERO,CODE);
+		del_all_struct();
 	}
 	else
 		usage();
