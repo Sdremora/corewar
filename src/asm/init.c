@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:52:31 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/02 18:35:47 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/03 16:23:26 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		init_matrix()
 	char	*temp;
 	if (!(g_asm->matrix = (char**)malloc(sizeof(char*) * 6)))
 		close_with_error("Error by malloc\n");
-	if (!(temp = ft_itoa_unsize_base(COREWAR_EXEC_MAGIC, 16)))
+	if (!(temp = ft_itoa_base(COREWAR_EXEC_MAGIC, 16, 1)))
 		close_with_error("Error by malloc\n");
 	HEADER = ft_strjoin("00", temp);
 	ft_strdel(&temp);
@@ -97,9 +97,6 @@ void		init_struct(void)
 		g_struct[i].arg = (char **)malloc(sizeof(char*) * 3);
 		while (++j < 3)
 			g_struct[i].arg[j] = NULL;
-		// g_struct[i].arg1 = NULL;
-		// g_struct[i].arg2 = NULL;
-		// g_struct[i].arg3 = NULL;
 		g_struct[i].str_number = 0;
 		g_struct[i].id_in_tab = -1;
 		g_struct[i].byte = 0;
