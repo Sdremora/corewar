@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asm.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:08:27 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/02 18:31:36 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/03 17:10:01 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 **	i is an iterator in buf
 **	flag_comment id the same as flag_name but for comment
 **	index is an index of current command in g_struct array of structs
+**	size_of_struct is a size of allocated memory of final struct
 **
 ** The struct g_parse we will use to write info about commands. In every element
 ** we will write label(if we have it), name of command, its args and str number in 
@@ -56,6 +57,7 @@ typedef struct s_asm
 	int			flag_comment;
 	int			i;
 	int			index;
+	int			size_of_struct;
 
 }				t_asm;
 
@@ -69,7 +71,7 @@ typedef struct s_parse
 	int			str_number;
 	int			id_in_tab;
 	int			byte;
-	char		octet;
+	unsigned char		octet;
 	
 	// unsigned int
 	//probably we will need to count number of bytes for command

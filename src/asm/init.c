@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:52:31 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/02 18:35:47 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/03 17:33:16 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		init_matrix()
 	char	*temp;
 	if (!(g_asm->matrix = (char**)malloc(sizeof(char*) * 6)))
 		close_with_error("Error by malloc\n");
-	if (!(temp = ft_itoa_unsize_base(COREWAR_EXEC_MAGIC, 16)))
+	if (!(temp = ft_itoa_base(COREWAR_EXEC_MAGIC, 16, 1)))
 		close_with_error("Error by malloc\n");
 	HEADER = ft_strjoin("00", temp);
 	ft_strdel(&temp);
@@ -60,6 +60,7 @@ void		init(void)
 	g_asm->flag_name = -1;
 	g_asm->flag_comment = -1;
 	g_asm->index = 0;
+	g_asm->size_of_struct = 0;
 	init_matrix();
 }
 
@@ -83,23 +84,19 @@ void		init_struct(void)
 {
 	int		i;
 	int 	j;
-	int		counter;
 
 	i = -1;
-	counter = count_all_str();
-	if (!(g_struct = (t_parse*)malloc(sizeof(t_parse) * counter)))
+	g_asm->size_of_struct = count_all_str();
+	if (!(g_struct = (t_parse*)malloc(sizeof(t_parse) * g_asm->size_of_struct)))
 		close_with_error("Error by malloc");
-	while(++i < counter)
+	while(++i < g_asm->size_of_struct)
 	{
 		j = -1;
 		g_struct[i].label = NULL;
 		g_struct[i].command = NULL;
-		g_struct[i].arg = (char **)malloc(sizeof(char*) * 3);
-		while (++j < 3)
+		g_struct[i].arg = (char **)malloc(sizeof(char*) * 4);
+		while (++j < 4)
 			g_struct[i].arg[j] = NULL;
-		// g_struct[i].arg1 = NULL;
-		// g_struct[i].arg2 = NULL;
-		// g_struct[i].arg3 = NULL;
 		g_struct[i].str_number = 0;
 		g_struct[i].id_in_tab = -1;
 		g_struct[i].byte = 0;

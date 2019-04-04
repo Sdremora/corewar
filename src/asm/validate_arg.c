@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_arg.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:54:20 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/02 18:19:18 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/03 14:53:00 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int		check_direct_or_indirect(char *array, int element, int flag)
 			if (ft_strchr(LABEL_CHARS, array[i]) == 0)
 				return (0);
 		}
+		if (element >= 0 && !(check_arg_type(element, 2)))
+			return (0);
 	}
 	else if ((array[flag] >= '0' && array[flag] <= '9') || array[flag] == '-')
 	{
@@ -71,9 +73,9 @@ int		check_direct_or_indirect(char *array, int element, int flag)
 				return (0);
 			i++;
 		}
+		if (element >= 0 && !(check_arg_type(element, 3)))
+			return (0);
 	}
-	if (element >= 0 && !(check_arg_type(element, 2)))
-		return (0);
 	return (1);
 }
 
@@ -102,7 +104,10 @@ void     check_if_command_has_arg(char **array)
 				array[i][0] == '-' || array[i][0] == LABEL_CHAR) 
 		{
 			if (!(check_direct_or_indirect(array[i], i, 0)))
+			{
+				//printf("%s\n", array[i]);
 				syntax_error_instruction(array[i], 4);
+			}	
 			g_struct[INDEX].byte += 2;
 		}
 		else
