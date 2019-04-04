@@ -6,7 +6,7 @@
 /*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/30 19:00:56 by hharvey           #+#    #+#             */
-/*   Updated: 2019/04/02 17:19:12 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/04 16:44:39 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void		mvaddclrstr(int y, int x, int col_nb, char *str)
 {
 	color_set(col_nb, NULL);
 	mvaddstr(y, x, str);
+	color_set(10, NULL);
 }
 
 void		vis_pause(int *pause, int *speed)
@@ -97,6 +98,7 @@ void		vis_pause(int *pause, int *speed)
 	}
 	if (temp == 'q' || temp == 'w' || temp == 'a' || temp == 's')
 		print_nb(1000000 / *speed, 5, POS_NB, 10);
+	refresh();
 	if (*pause)
 		vis_pause(pause, speed);
 }
