@@ -1,5 +1,82 @@
 #include "corewar.h"
 
+int		get_flag_nb(char *str)
+{
+	long long int	nb;
+
+	nb = 0;
+	if (*str == '+' || *str == '-')
+	{
+		if (*str == '-')
+			print_usage();
+		str++;
+	}
+	if (*str == 0)
+		print_usage();
+	while (*str >= '0' && *str <= '9')
+	{
+		nb *= 10;
+		nb += *str - '0';
+		if (nb > 2147483647)
+			print_usage();
+		str++;
+	}
+	if (*str != 0)
+		print_usage();
+	return (nb);
+}
+
+int			get_num_flag(char *str)
+{
+	if (ft_strequ(str, "-a"))
+		return (F_A);
+	if (ft_strequ(str, "-dump") || ft_strequ(str, "-d"))
+		return (F_D);
+	if (ft_strequ(str, "-s"))
+		return (F_S);
+	if (ft_strequ(str, "-v"))
+		return (F_V);
+	if (ft_strequ(str, "-b"))
+		return (F_B);
+	if (ft_strequ(str, "-n"))
+		return (F_N);
+	if (ft_strequ(str, "--stealth"))
+		return (F_STEALTH);
+	if (ft_strequ(str, "-vis"))
+		return (F_VIS);
+	return (-1);
+}
+
+int			handle_flag(char **argv, int *pos, int argc, t_arena *arena)
+{
+	int i;
+
+	if ((i = get_num_flag(argv[*pos])) >= 0)
+	{
+		if (i >= F_D) //флаги с числами
+		{
+			*pos += 1;
+			if (*pos < argc)
+			{
+				arena->flags[i] = get_flag_nb(argv[*pos]);
+			}
+			else
+				print_usage();
+		}
+		else
+			arena->flags[i] = 1;
+		return (1);
+	}
+// Написать обработку флагов и заполнение их значений в массив arena->flags
+// Изначально там все значения = -1.
+// Если флаг предполагает, что после него идет значение, например (d 100)
+// В таком, случае нужно прочитать значение и увеличить argc на 1
+// Если вместо цифр, там оказалась ерунда -> присвоить флагу дефолтное значение и всеравно увеличить argc на 1
+
+//Если функция вернет 0 -> стало быть это не флаг и дальше строка будет обработана, как путь к файлу.
+	return (0);
+}
+
 static void	locate_players(t_arena *arena)
 {
     int 		i;
@@ -80,10 +157,13 @@ int			get_pnb(t_arena *arena)
 			error_handle(E_PLAYER_NUMBER, arena, NULL);
 	}
 	i = 0;
-	while (arena->players[i].id != -1)
+	while (arena->players[i].id != -99)
 		i++;
 	return (i);
 }
+
+
+
 
 int			check_players(t_arena *arena)
 {
@@ -98,6 +178,7 @@ int			check_players(t_arena *arena)
 	}
 	return (1);
 }
+
 
 void		load_arena(int argc, char **argv, t_arena *arena)
 {
@@ -122,6 +203,5 @@ void		load_arena(int argc, char **argv, t_arena *arena)
 		error_handle(E_PLAYER_NUMBER, arena, NULL);
 	}
 	arena->last_live_player = arena->players_count - 1;
-	arena->flags[F_STEALTH] = arena->flags[F_S];
 	locate_players(arena);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   writing_commands_to_struct.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 14:35:56 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/03 18:20:28 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/04 16:53:35 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ int		check_label(char **temp)
 				lexical_error();
 			}	
 		}	
+	
         g_struct[INDEX].label = ft_strdup(*temp);
 		g_asm->i++;
-		printf("\n\nlabel: %s\n", g_struct[INDEX].label);
+		//printf("\n\nlabel: %s\n", g_struct[INDEX].label);
         return (1);
     }    
     else if (BUFFER[g_asm->i] != LABEL_CHAR && ft_strlen(*temp) > 0)
@@ -60,7 +61,7 @@ int		check_label(char **temp)
 				return (0);
 			i++;
 		}
-		printf("&&&&\n");
+		//printf("&&&&\n");
 		syntax_error(5);
 	}
     return (0);
@@ -70,24 +71,16 @@ void    check_command(char **temp)
 {
     if (BUFFER[g_asm->i] == ' ' || BUFFER[g_asm->i] == '\t')
     {
-		//printf("temp4: %s\n", *temp);
-        if (!(check_if_command_exist(*temp)))
+		if (!(check_if_command_exist(*temp)))
 			invalid_error_instruction(temp, 1);
-		//printf("temp5: %s\n", *temp);
-		g_struct[INDEX].command = ft_strdup(temp[0]);
+		g_struct[INDEX].command = ft_strdup(*temp);
 		g_struct[INDEX].id_in_tab = find_id_in_tab();
 		if (g_op_tab[g_struct[INDEX].id_in_tab].kod_tipov_argumenta == 1)
 			g_struct[INDEX].byte++;
 		g_struct[INDEX].byte++;
-        ft_strdel(temp);
-		printf("command: %s\n", g_struct[INDEX].command);
-		printf("id in tab = %d\n", g_struct[INDEX].id_in_tab);
     }
     else if (BUFFER[g_asm->i] != ' ' && BUFFER[g_asm->i] != '\t' && ft_strlen(*temp) > 0)
-	{
-		printf("__2___\n");
         syntax_error(5);
-	}	
 }        
 
 void	check_args(void)
@@ -150,8 +143,9 @@ void	check_args(void)
 	i = -1;
 	while (array[++i] != NULL)
 	{
-		g_struct[INDEX].arg[i] = array[i];
+		g_struct[INDEX].arg[i] = ft_strdup(array[i]);
 		//ft_strdel(&array[i]);
+		//printf("arg[i]: %s, command: %s\n", g_struct[INDEX].arg[i],  g_struct[INDEX].command);
 	}	
 	if (array)
 		free(array);
@@ -180,12 +174,19 @@ void    write_labels_commands(void)
 		}
 		check_command(&temp);
 		skip_whitespaces();
-		check_args();
 		ft_strdel(&temp);
+		check_args();
 		INDEX++;
-		if (g_asm->buf[g_asm->i] == '\n')
+	 	if (g_asm->buf[g_asm->i] == '\n')
 			g_asm->str_counter++;
 		g_asm->i++;
 		skip_comment_and_spaces();
     }
+	//i = -1;
+	//  while (++i < INDEX)
+	// {
+	// 	printf("# of index: %d\n", i);
+	// 	printf("label: %s, name:%s, byte:%d\n", g_struct[i].label, g_struct[i].command, g_struct[i].byte);
+	// 	printf("arg1: %s, arg2: %s, arg3: %s\n\n", g_struct[i].arg[0], g_struct[i].arg[1], g_struct[i].arg[2]);
+	// }
 }

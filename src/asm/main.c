@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 14:54:49 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/03 16:54:38 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/04 16:52:57 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,27 @@ void	write_binary_name(char *str)
 	g_asm->binary_name[++i] = '\0';
 }
 
+int		count_code_size(void)
+{
+	int		i;
+	int		j;
+	int		counter;
+	char	*temp;
+
+	i = -1;
+	counter = 0;
+	while (++i < INDEX)
+		counter += g_struct[i].byte;
+	temp = ft_itoa_base(counter, 16, 1);
+	i = ft_strlen(temp);
+	j = 7;
+	while(--i >= 0)
+		SIZE[j--] = temp[i];
+	ft_strdel(&temp);
+	printf("counter: %d, size:%s\n", counter, SIZE);
+	return(counter * 2);
+}
+
 int		main(int argc, char **argv)
 {
 	int		i;
@@ -53,9 +74,13 @@ int		main(int argc, char **argv)
 		// 	printf("arg1: %s, arg2: %s, arg3: %s\n\n", g_struct[i].arg[0], g_struct[i].arg[1], g_struct[i].arg[2]);
 		// }
 		g_asm->i = 0;
+		count_code_size();
+		init_matrix_element(&CODE, count_code_size());
 		realise_algorithm();
 		printf("%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n%s\n",HEADER,NAME,ZERO,COMMENT,ZERO,CODE);
 		del_all_struct();
+		int i = 5;
+		write (1, &i, 4);
 	}
 	else
 		usage();

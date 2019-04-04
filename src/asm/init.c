@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:52:31 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/03 17:33:16 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/04 16:06:42 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 ** can remalloc it
 */
 
-static void		fill_with_zerro(char *str, int len)
+void		fill_with_zerro(char *str, int len)
 {
 	int		i;
 	
@@ -27,7 +27,7 @@ static void		fill_with_zerro(char *str, int len)
 		str[i] = '0';
 }
 
-static void		init_matrix_element(char **element, int len)
+void		init_matrix_element(char **element, int len)
 {
 	if (!(*element = ft_strnew(len)))
 		close_with_error("Error by malloc\n");
@@ -47,7 +47,8 @@ void		init_matrix()
 	init_matrix_element(&ZERO, 8);
 	init_matrix_element(&SIZE, 8);
 	init_matrix_element(&COMMENT, COMMENT_LENGTH / 2);
-	init_matrix_element(&CODE, 500);
+	CODE = NULL;
+	// init_matrix_element(&CODE, 500);
 	//printf("header:%s\n\n\n name:%s\n\n\n, zero:%s\n\n\n size:%s\n\n\n comment:%s\n\n\n, code:%s\n\n\n", HEADER, NAME, ZERO, SIZE, COMMENT, CODE);
 }
 
@@ -87,13 +88,14 @@ void		init_struct(void)
 
 	i = -1;
 	g_asm->size_of_struct = count_all_str();
-	if (!(g_struct = (t_parse*)malloc(sizeof(t_parse) * g_asm->size_of_struct)))
+	if (!(g_struct = (t_parse*)malloc(sizeof(t_parse) * g_asm->size_of_struct + 1000)))
 		close_with_error("Error by malloc");
-	while(++i < g_asm->size_of_struct)
+	while(++i < g_asm->size_of_struct + 1000)
 	{
 		j = -1;
 		g_struct[i].label = NULL;
 		g_struct[i].command = NULL;
+		//g_struct[i].command = ft_strnew(5);
 		g_struct[i].arg = (char **)malloc(sizeof(char*) * 4);
 		while (++j < 4)
 			g_struct[i].arg[j] = NULL;

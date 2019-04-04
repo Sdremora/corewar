@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asm.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:08:27 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/03 17:10:01 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/04 16:05:55 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,4 +121,5 @@ int		check_direct_or_indirect(char *array, int element, int flag);
 int		check_register(char *array, int element);
 int	find_flag(char *array);
 void    realise_algorithm(void);
+void	init_matrix_element(char **element, int len);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_arg.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:54:20 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/03 14:53:00 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/04 15:55:27 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,7 @@ void     check_if_command_has_arg(char **array)
 				array[i][0] == '-' || array[i][0] == LABEL_CHAR) 
 		{
 			if (!(check_direct_or_indirect(array[i], i, 0)))
-			{
-				//printf("%s\n", array[i]);
 				syntax_error_instruction(array[i], 4);
-			}	
 			g_struct[INDEX].byte += 2;
 		}
 		else

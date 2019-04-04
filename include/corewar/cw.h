@@ -45,6 +45,7 @@ typedef struct	s_carriage
 typedef enum	e_flag
 {
 	F_A,
+	F_B,
 	F_STEALTH,
 	F_VIS,
 	F_D,
@@ -158,8 +159,5 @@ void		mvaddclrstr(int y, int x, int col_nb, char *str);
 int			nb_carg_pos(t_arena *arena, int pos);
 void		print_nb(int nb, int y, int x, int clr_nb);
 int			plr_pos(int nb);
-
-//	flags_handle.c
-int			handle_flag(char **argv, int *pos, int argc, t_arena *arena);
 
 #endif
