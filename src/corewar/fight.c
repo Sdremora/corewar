@@ -369,7 +369,7 @@ void		fight(t_arena *arena)
 			{	
 				print_map(arena->map, 64);
 				read(0, 0, 1);
-				arena->flags[F_S] += arena->flags[F_S];
+				arena->flags[F_S] += arena->flags[F_STEALTH];
 			}
 			arena->cur_cycle++;
 			if (arena->flags[F_V] & 2)

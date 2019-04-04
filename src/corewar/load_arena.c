@@ -157,7 +157,7 @@ int			get_pnb(t_arena *arena)
 			error_handle(E_PLAYER_NUMBER, arena, NULL);
 	}
 	i = 0;
-	while (arena->players[i].id != -99)
+	while (arena->players[i].id != -1)
 		i++;
 	return (i);
 }
@@ -203,5 +203,6 @@ void		load_arena(int argc, char **argv, t_arena *arena)
 		error_handle(E_PLAYER_NUMBER, arena, NULL);
 	}
 	arena->last_live_player = arena->players_count - 1;
+	arena->flags[F_STEALTH] = arena->flags[F_S];
 	locate_players(arena);
 }
