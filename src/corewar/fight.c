@@ -108,27 +108,6 @@ void		clean_carg_op(t_carriage *carg)
 	ft_bzero(carg->args, sizeof(int) * 3);
 }
 
-/*
-int			nb_carg_pos(t_arena *arena, int pos)
-{
-	t_list *carg_node;
-	t_carriage	*carg;
-	int			res;
-
-	res = 0;
-	carg_node = arena->carg_lst;
-	while (carg_node)
-	{
-		carg = (t_carriage *)carg_node->content;
-
-		if (carg->mem_pos == pos)
-			res++;
-		carg_node = carg_node->next;
-	}
-	return (res);
-}
-*/
-
 void		vis_move_carg(int old, int new, t_arena *arena)
 {
 	int color;
@@ -213,8 +192,8 @@ void		check_cycle_to_die(t_arena *arena)
 		if (arena->flags[F_V] & 2)
 			ft_printf("Cycle to die is now %d\n", arena->cycle_to_die);
 		arena->checks = 1;
-//		if (arena->flags[F_VIS])
-//			print_nb(arena->cycle_to_die, 11 + 4 * arena->players_count + 6, POS_NB, 10);
+		if (arena->flags[F_VIS])
+			print_nb(arena->cycle_to_die, 11 + 4 * arena->players_count + 6, POS_NB, 10);
 	}
 	else
 		arena->checks++;

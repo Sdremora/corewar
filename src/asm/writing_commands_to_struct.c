@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   writing_commands_to_struct.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 14:35:56 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/02 12:22:17 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/02 18:49:26 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,6 @@ void	check_args(void)
 		g_asm->i++;
 	}
 	temp = ft_strnew(i);
-	// if (g_asm->buf[g_asm->i] == '\n')
-	// {
-	// 	g_asm->str_counter++;
-	// 	//g_asm->i++;
-	// }
 	g_asm->i -= i;
 	i = -1;
 	while (BUFFER[g_asm->i] != '\n' && BUFFER[g_asm->i] != '\0')
@@ -132,11 +127,10 @@ void	check_args(void)
 		i = g_op_tab[g_struct[INDEX].id_in_tab].var_count + 1;
 		syntax_error_instruction(array[i], find_flag(array[i]));
 	}	
+	i = -1;
+	while (array[++i] != NULL)
+		g_struct[INDEX].arg[i] = ft_strdup(array[i]);
 	//free(array);
-	//i = -1;
-	// while (array[++i] != NULL)
-	// 	printf("arg: %s\n", array[i]);
-	// printf("\n");
 }
 
 void    write_labels_commands(void)
