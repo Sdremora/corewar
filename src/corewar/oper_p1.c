@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   oper_p1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 17:50:10 by sdremora          #+#    #+#             */
-/*   Updated: 2019/04/01 17:55:09 by sdremora         ###   ########.fr       */
+/*   Updated: 2019/04/02 17:56:47 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ void	op_live(t_carriage *carg, t_arena *arena)
 		if (arena->flags[F_V] & 1)
 			ft_printf("Player %d (%s) is said to be alive\n", player_num,
 				arena->players[player_num - 1].name);
+		if (arena->flags[F_VIS])
+		{
+			print_nb(arena->cur_cycle, plr_pos(player_num + 1), POS_NB, 10);
+			print_nb(arena->player_live_in_cp[player_num - 1], plr_pos(player_num + 2), POS_NB, 10);
+		}
 	}
 	arena->live_call_count++;
 }

@@ -16,6 +16,9 @@
 #define E_PLAYER_NUMBER -6
 #define E_INV_ALGO -99
 
+#define POS_NB 235
+#define POS_TEXT 201
+
 typedef struct	s_player
 {
 	char	name[PROG_NAME_LENGTH + 1];
@@ -149,9 +152,12 @@ void		introducing(t_arena *arena);
 int			get_color_pair(int pos, t_point p);
 void		draw_pos(t_arena *arena, int color, int pos);
 void		remove_carg(t_arena *arena, int pos);
+void		vis_pause(int *pause, int *speed);
+void		mvaddclrstr(int y, int x, int col_nb, char *str);
 
 //vis_utils
 int			nb_carg_pos(t_arena *arena, int pos);
-void		print_nb(int nb, int y, int x);
+void		print_nb(int nb, int y, int x, int clr_nb);
+int			plr_pos(int nb);
 
 #endif

@@ -142,5 +142,6 @@ void	op_aff(t_carriage *carg, t_arena *arena)
 
 	if (read_arg(&n1, arena, carg, ARG_1))
 		return ;
-	ft_printf("Aff: %c\n", (char)n1);
+	if (arena->flags[F_A] > 0)
+		ft_printf("Aff: %c\n", (char)n1);
 }

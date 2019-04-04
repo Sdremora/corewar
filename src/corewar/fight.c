@@ -213,6 +213,8 @@ void		check_cycle_to_die(t_arena *arena)
 		if (arena->flags[F_V] & 2)
 			ft_printf("Cycle to die is now %d\n", arena->cycle_to_die);
 		arena->checks = 1;
+//		if (arena->flags[F_VIS])
+//			print_nb(arena->cycle_to_die, 11 + 4 * arena->players_count + 6, POS_NB, 10);
 	}
 	else
 		arena->checks++;
@@ -225,6 +227,7 @@ void		draw_map(unsigned char *str, t_point p)
 	int j;
 	static char base[17] = "0123456789abcdef";
 
+	color_set(0, NULL);
 	i = 0;
 	while (i < MEM_SIZE)
 	{
@@ -244,11 +247,20 @@ void		set_color_pairs(void)
 	init_pair(3,  COLOR_RED, COLOR_BLACK);
     init_pair(4,  COLOR_CYAN, COLOR_BLACK);
 
-	init_pair(5,  COLOR_BLACK, COLOR_WHITE);
+	init_pair(5,  COLOR_BLACK, 8);
 	init_pair(6,  COLOR_BLACK, COLOR_GREEN);
 	init_pair(7,  COLOR_BLACK, COLOR_BLUE);
 	init_pair(8,  COLOR_BLACK, COLOR_RED);
     init_pair(9,  COLOR_BLACK, COLOR_CYAN);
+
+/*
+    if (COLORS >= 16) {
+        init_pair(10, 15, COLOR_BLACK);
+    } else {
+        init_pair(10, COLOR_WHITE, COLOR_BLACK);
+    }
+*/
+	init_pair(10,  15, COLOR_BLACK);
 }
 
 void		draw_players(t_arena *arena)
@@ -277,6 +289,65 @@ void		draw_players(t_arena *arena)
 
 }
 
+void		draw_box(void)
+{
+	int i;
+
+	i = 0;
+	color_set(5, NULL);
+	while (i < 250)
+	{
+		mvaddch(0, i, ' ');
+		mvaddch(67, i, ' ');
+		i++;
+	}
+	i = 0;
+	while (i < 67)
+	{
+		mvaddch(i, 0, ' ');
+		mvaddch(i, 1, ' ');
+		mvaddch(i, 197, ' ');
+		mvaddch(i, 198, ' ');
+		mvaddch(i, 248, ' ');
+		mvaddch(i, 249, ' ');
+		i++;
+	}
+}
+
+int		draw_status(t_arena *arena)
+{
+	int i;
+
+	color_set(10, NULL);
+	mvaddstr(2,POS_TEXT,"** PAUSED **");
+	mvaddstr(5,POS_TEXT,"Cycles/second limit :");
+	mvaddstr(5, POS_NB,"50");
+	mvaddstr(7,POS_TEXT,"Cycle :");
+	mvaddstr(7, POS_NB,"50");
+	mvaddstr(9,POS_TEXT,"Processes :");
+	print_nb(arena->max_carg_id, 9, POS_NB, 10);
+	i = 0;
+	while (i < arena->max_carg_id)
+	{
+		mvaddstr(11 + 4 * i,POS_TEXT,"Player -1 :");
+		mvaddch(11 + 4 * i, 209, '0' + i + 1);
+		mvaddstr(11 + 4 * i,213,arena->players[i].name);
+		mvaddstr(11 + 4 * i + 1, 203,"Last live :");
+		mvaddstr(11 + 4 * i + 1, POS_NB,"0");
+		mvaddstr(11 + 4 * i + 2, 203, "Current lives :");
+		mvaddstr(11 + 4 * i + 2, POS_NB,"0");
+		i++;
+	}
+	mvaddstr(11 + 4 * i , POS_TEXT , "Live breakdown for current period :");
+	mvaddstr(11 + 4 * i + 1 , POS_TEXT,"[--------------------------------------------------]");
+	mvaddstr(11 + 4 * i + 3 , POS_TEXT , "Live breakdown for last period :");
+	mvaddstr(11 + 4 * i + 6 , POS_TEXT , "Cycle to die :");
+	print_nb(arena->cycle_to_die, 11 + 4 * i + 6, POS_NB, 10);
+	mvaddstr(11 + 4 * i + 8 , POS_TEXT , "Number checks :");
+	print_nb(arena->checks, 11 + 4 * i + 8, POS_NB, 10);
+	return (i);
+}
+
 void		fight(t_arena *arena)
 {
 	introducing(arena);
@@ -286,28 +357,41 @@ void		fight(t_arena *arena)
 
 	if (arena->flags[F_VIS] == 1)
 	{
-		int x = 5;
-		int y = 5;
+		int x = 4;
+		int y = 2;
 
 		arena->shift = ft_pnt(x, y);
 		initscr();
+		assume_default_colors(8, COLOR_BLACK);
 		noecho();
 		set_color_pairs();
 		draw_map(arena->map, arena->shift);
+		draw_box();
+		draw_status(arena);
 		draw_players(arena);
 		curs_set(0);
 		refresh();
-//		mvaddstr(0, 5 +  3 * (44 % 64),"1");
-//		getch();
-		timeout(0);
 		speed = 20000;
-		pause = 0;
+		pause = 1;
 	}
     while (arena->carg_lst)
     {
-			print_nb(arena->cur_cycle, 0, 0);
+			if (arena->flags[F_VIS])
+			{
+				print_nb(arena->cur_cycle, 7, POS_NB, 10);
+				refresh();
+				vis_pause(&pause, &speed);
+				refresh();
+				usleep(speed);
+			}
 			if (arena->cur_cycle == arena->flags[F_D])
 				return print_map(arena->map, 64);
+			if (arena->cur_cycle == arena->flags[F_S])
+			{	
+				print_map(arena->map, 64);
+				read(0, 0, 1);
+				arena->flags[F_S] += arena->flags[F_S];
+			}
 			arena->cur_cycle++;
 			if (arena->flags[F_V] & 2)
 				ft_printf("It is now cycle %d\n", arena->cur_cycle);
@@ -319,39 +403,6 @@ void		fight(t_arena *arena)
 				check_live(arena);
 				check_cycle_to_die(arena);
 			}
-			if (arena->flags[F_VIS])
-			{
-				refresh();
-				temp = getch();
-				print_nb(temp, 1, 0);
-				if (temp == 32 && !pause)
-				{
-					timeout(-1);
-					mvaddstr(2,0,"pause");
-					pause = 1;
-				}
-				else if (temp == 32)
-				{
-					timeout(0);
-					mvaddstr(2,0,"     ");
-					pause = 0;
-				}
-				else if (temp == 'q' && speed < 1000000 - 10000)
-				{
-					speed += 10000;
-				}
-				else if (temp == 'w' && speed > 10000)
-				{
-					speed -= 10000;
-				}
-				print_nb(speed, 1, 20);
-				mvaddstr(3,0,"cycles max per seconds");
-				mvaddstr(4,0,"       ");
-				print_nb(1000000 / speed, 4, 0);
-				refresh();
-				usleep(speed);
-			}
+
     }
-	if (arena->flags[F_VIS])
-		endwin();
 }

@@ -18,6 +18,12 @@ int	main(int argc, char **argv)
 		print_usage();
 	load_arena(argc, argv, &arena);
 	fight(&arena);
+	if (arena.flags[F_VIS])
+	{
+		timeout(-1);
+		getch();
+		endwin();
+	}
 	ft_printf("Contestant %d, \"%s\", has won !\n", arena.last_live_player + 1, arena.players[arena.last_live_player].name);
 	return (0);
 }
