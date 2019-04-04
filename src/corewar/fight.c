@@ -365,7 +365,7 @@ void		fight(t_arena *arena)
 			}
 			if (arena->cur_cycle == arena->flags[F_D])
 				return print_map(arena->map, 64);
-			if (arena->cur_cycle == arena->flags[F_S])
+			if (arena->cur_cycle == arena->flags[F_S] && arena->flags[F_S] > 0)
 			{	
 				print_map(arena->map, 64);
 				read(0, 0, 1);
