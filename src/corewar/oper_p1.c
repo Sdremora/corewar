@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   oper_p1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 17:50:10 by sdremora          #+#    #+#             */
-/*   Updated: 2019/04/02 17:56:47 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/04 09:56:50 by sdremora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	op_st(t_carriage *carg, t_arena *arena)
 	else
 	{
 		temp = get_value(arena, carg->mem_pos + offset, IND_SIZE);
-		put_value(arena, carg->mem_pos + offset % IDX_MOD, value, carg->owner);
+		put_value(arena, carg->mem_pos + temp % IDX_MOD, value, carg->owner);
 	}
 	if (arena->flags[F_V] & 4)
 		ft_printf("P %4d | %s r%d %d\n", carg->carg_id,
