@@ -6,7 +6,7 @@
 /*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:07:56 by sdremora          #+#    #+#             */
-/*   Updated: 2019/04/01 18:09:17 by sdremora         ###   ########.fr       */
+/*   Updated: 2019/04/04 15:39:26 by sdremora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	arena_ini(t_arena *arena)
 	ft_bzero(arena->map, sizeof(unsigned char) * MEM_SIZE);
 	i = 0;
 	while (i < MAX_PLAYERS)
-		arena->players[i++].id = -99;
+		arena->players[i++].id = -1;
 	ft_bzero(arena->player_live_in_cp, sizeof(int) * MAX_PLAYERS);
 	arena->players_count = 0;
 	arena->cycle_to_die = CYCLE_TO_DIE;

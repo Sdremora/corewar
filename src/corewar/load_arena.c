@@ -150,7 +150,7 @@ int			get_pnb(t_arena *arena)
 			error_handle(E_PLAYER_NUMBER, arena, NULL);
 	}
 	i = 0;
-	while (arena->players[i].id != -99)
+	while (arena->players[i].id != -1)
 		i++;
 	return (i);
 }
