@@ -370,7 +370,7 @@ void		fight(t_arena *arena)
 			{
 				print_nb(arena->cur_cycle, 7, POS_NB, 10);
 				vis_pause(&pause, &speed);
-				usleep(speed);
+				//usleep(speed);
 			}
 			if (arena->cur_cycle == arena->flags[F_D])
 				return print_map(arena->map, 64);
