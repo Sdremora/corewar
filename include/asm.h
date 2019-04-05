@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:08:27 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/05 15:33:53 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/05 16:40:03 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_asm
 	int			flag_comment;
 	int			i;
 	int			index;
+	int			shift;
 	int			size_of_struct;
 
 }				t_asm;
@@ -123,7 +124,7 @@ void			init_matrix_element(char **element, int len);
 int				count_args_size(void);
 void			check_invalid_args_end_of_file(char **temp);
 void			check_invalid_number_of_args(char ***array, int i, int flag);
-void			handle_arg(char *arg, int i, int *k, char *pre_matrix, int shift);
+void			handle_arg(char *arg, int i, int *k, char *pre_matrix);
 int				find_right_label(int i, char *label);
 void 			make_binary(void);
 void			print_hexdump(void);
