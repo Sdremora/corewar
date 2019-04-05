@@ -41,10 +41,6 @@ int	main(int argc, char **argv)
 		mvaddstr(plr_pos(arena.players_count) + 10, POS_TEXT, "The winner is :");
 		mvaddclrstr(plr_pos(arena.players_count) + 10, POS_TEXT + 16, arena.last_live_player + 1, arena.players[arena.last_live_player].name);
 		mvaddstr(plr_pos(arena.players_count) + 12, POS_TEXT, "Press any key to finish");
-//		print_nb(arena->checks, plr_pos(arena->players_count) + 8, POS_NB, 10);
-//		the winner is 
-
-//		Press any key to finish
 		getch();
 		endwin();
 	}

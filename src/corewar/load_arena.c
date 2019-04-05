@@ -179,6 +179,22 @@ int			check_players(t_arena *arena)
 	return (1);
 }
 
+void		flag_format(int *arr)
+{
+	
+	int i;
+
+	i = 0;
+	arr[F_STEALTH] = arr[F_S];
+	
+	if (arr[F_VIS])
+	{
+		while (i < FLAGS_COUNT)
+			arr[i++] = -1;
+		arr[F_V] = 0;
+		arr[F_VIS] = 1;
+	}
+}
 
 void		load_arena(int argc, char **argv, t_arena *arena)
 {
@@ -203,6 +219,7 @@ void		load_arena(int argc, char **argv, t_arena *arena)
 		error_handle(E_PLAYER_NUMBER, arena, NULL);
 	}
 	arena->last_live_player = arena->players_count - 1;
-	arena->flags[F_STEALTH] = arena->flags[F_S];
+	//arena->flags[F_STEALTH] = arena->flags[F_S];
+	flag_format(arena->flags);
 	locate_players(arena);
 }

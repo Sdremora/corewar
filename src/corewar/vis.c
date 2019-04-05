@@ -6,7 +6,7 @@
 /*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/30 19:00:56 by hharvey           #+#    #+#             */
-/*   Updated: 2019/04/04 16:44:39 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/05 15:49:39 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void		vis_pause(int *pause, int *speed)
 	char temp;
 
 	temp = getch();
-	print_nb(temp, 1, 0, 10);
+//	print_nb(temp, 1, 0, 10);
 	if (temp == 32 && !(*pause))
 	{
 		timeout(-1);
@@ -101,4 +101,49 @@ void		vis_pause(int *pause, int *speed)
 	refresh();
 	if (*pause)
 		vis_pause(pause, speed);
+}
+
+void		draw_term_bd(int arr[MAX_PLAYERS])
+{
+	int i;
+	int pos;
+	int j;
+
+	pos = POS_NB + 1;
+	while (i < MAX_PLAYERS)
+	{
+		while (j < arr[i])
+		{
+//			mvaddclrstr(plr_pos())
+			j++;
+		}
+		pos += arr[i];
+		i++;
+	}
+}
+
+void		draw_breakdown(int lnb[MAX_PLAYERS], int nb)
+{
+	int wght[MAX_PLAYERS];
+	int fract[MAX_PLAYERS];
+	int s;
+	int i;
+
+	s = ft_arrsum(lnb, MAX_PLAYERS);
+	i = 0;
+	while (i < MAX_PLAYERS)
+	{
+		wght[i] = lnb[i] * nb / s;
+		fract[i] = lnb[i] * nb * 10 / s % 10;
+		i++;
+	}
+	s -= ft_arrsum(wght, MAX_PLAYERS);
+	while (s > 0)
+	{
+		i = ft_arrposmax(fract, 4);
+		wght[i] += 1;
+		fract[i] = -1;
+		s--;
+	}
+	draw_term_bd(wght);
 }

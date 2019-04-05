@@ -320,7 +320,6 @@ int		draw_status(t_arena *arena)
 		mvaddstr(11 + 4 * i,POS_TEXT,"Player -1 :");
 		mvaddch(11 + 4 * i, 209, '0' + i + 1);
 		mvaddclrstr(11 + 4 * i, POS_TEXT + 12, i + 1, arena->players[i].name);
-//		mvaddstr(11 + 4 * i, POS_TEXT + 12,arena->players[i].name);
 		mvaddstr(11 + 4 * i + 1, 203,"Last live :");
 		mvaddstr(11 + 4 * i + 1, POS_NB,"0");
 		mvaddstr(11 + 4 * i + 2, 203, "Current lives :");
@@ -328,7 +327,7 @@ int		draw_status(t_arena *arena)
 		i++;
 	}
 	mvaddstr(11 + 4 * i , POS_TEXT , "Live breakdown for current period :");
-	mvaddstr(11 + 4 * i + 1 , POS_TEXT,"[--------------------------------------------------]");
+	mvaddstr(11 + 4 * i + 1 , POS_TEXT,"[------------------------------------------]");
 	mvaddstr(11 + 4 * i + 3 , POS_TEXT , "Live breakdown for last period :");
 	mvaddstr(11 + 4 * i + 6 , POS_TEXT , "Cycle to die :");
 	print_nb(arena->cycle_to_die, plr_pos(arena->players_count) + 6, POS_NB, 10);
@@ -370,7 +369,7 @@ void		fight(t_arena *arena)
 			{
 				print_nb(arena->cur_cycle, 7, POS_NB, 10);
 				vis_pause(&pause, &speed);
-				//usleep(speed);
+				usleep(speed);
 			}
 			if (arena->cur_cycle == arena->flags[F_D])
 				return print_map(arena->map, 64);
