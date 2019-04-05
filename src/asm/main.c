@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 14:54:49 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/05 12:39:33 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/05 15:16:28 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,11 @@ int		main(int argc, char **argv)
 		count_code_size();
 		init_matrix_element(&CODE, count_code_size());
 		realise_algorithm();
-		// printf("%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n%s\n",HEADER,NAME,ZERO,COMMENT,ZERO,CODE);
+		// printf("%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n%s\n",HEADER,NAME,ZERO1,COMMENT,ZERO2,CODE);
+		
+		if (argc == 3 && ft_strequ(argv[1], "-hex") == 1)
+			print_hexdump();
 		make_binary();
-
 		del_all_struct();
 		// int i = 5;
 		// write (1, &i, 4);

@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:08:27 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/05 12:31:14 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/05 14:13:39 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # include "libft.h"
 # include <stdio.h> 
 # include <fcntl.h>
-# include <sys/types.h>
-# include <sys/stat.h>
 
 # define HEADER		g_asm->matrix[0] 
 # define NAME		g_asm->matrix[1] 
@@ -121,4 +119,5 @@ int		find_flag(char *array);
 void    realise_algorithm(void);
 void	init_matrix_element(char **element, int len);
 void 	make_binary(void);
+void	print_hexdump(void);
 #endif

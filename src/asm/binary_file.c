@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 11:11:06 by kkihn             #+#    #+#             */
-/*   Updated: 2019/04/05 12:57:43 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/05 14:57:04 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void make_binary(void)
     if ((fd = open(g_asm->binary_name, O_CREAT|O_TRUNC|O_WRONLY, S_IREAD|S_IWRITE)) == -1)
         close_with_error("Error with file");
     while (++i < 7)
-        write_binary_code(fd, g_asm->matrix[i], ft_strlen(g_asm->matrix[i])); 
+        write_binary_code(fd, g_asm->matrix[i], ft_strlen(g_asm->matrix[i]));
     close(fd);
-    
 }
