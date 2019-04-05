@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:52:31 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/05 12:38:38 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/05 15:00:39 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ void		init_matrix()
 		close_with_error("Error by malloc\n");
 	HEADER = ft_strjoin("00", temp);
 	ft_strdel(&temp);
-	init_matrix_element(&NAME, PROG_NAME_LENGTH / 2);
+	init_matrix_element(&NAME, PROG_NAME_LENGTH * 2);
 	init_matrix_element(&ZERO1, 8);
 	init_matrix_element(&SIZE, 8);
 	init_matrix_element(&ZERO2, 8);
-	init_matrix_element(&COMMENT, COMMENT_LENGTH / 2);
+	init_matrix_element(&COMMENT, COMMENT_LENGTH * 2);
 	CODE = NULL;
 	// init_matrix_element(&CODE, 500);
 	//printf("header:%s\n\n\n name:%s\n\n\n, zero:%s\n\n\n size:%s\n\n\n comment:%s\n\n\n, code:%s\n\n\n", HEADER, NAME, ZERO, SIZE, COMMENT, CODE);
