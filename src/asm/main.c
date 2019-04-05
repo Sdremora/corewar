@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 14:54:49 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/04 16:52:57 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/05 11:57:20 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int		count_code_size(void)
 	while(--i >= 0)
 		SIZE[j--] = temp[i];
 	ft_strdel(&temp);
-	printf("counter: %d, size:%s\n", counter, SIZE);
 	return(counter * 2);
 }
 
@@ -77,7 +76,7 @@ int		main(int argc, char **argv)
 		count_code_size();
 		init_matrix_element(&CODE, count_code_size());
 		realise_algorithm();
-		printf("%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n%s\n",HEADER,NAME,ZERO,COMMENT,ZERO,CODE);
+		printf("%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n%s\n",HEADER,NAME,ZERO, SIZE,COMMENT,ZERO,  CODE);
 		del_all_struct();
 		int i = 5;
 		write (1, &i, 4);

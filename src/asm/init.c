@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:52:31 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/04 16:06:42 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/05 11:41:35 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void		init_struct(void)
 		j = -1;
 		g_struct[i].label = NULL;
 		g_struct[i].command = NULL;
-		//g_struct[i].command = ft_strnew(5);
 		g_struct[i].arg = (char **)malloc(sizeof(char*) * 4);
 		while (++j < 4)
 			g_struct[i].arg[j] = NULL;
