@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:52:31 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/04 16:06:42 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/05 12:38:38 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,16 @@ void		init_matrix_element(char **element, int len)
 void		init_matrix()
 {
 	char	*temp;
-	if (!(g_asm->matrix = (char**)malloc(sizeof(char*) * 6)))
+	if (!(g_asm->matrix = (char**)malloc(sizeof(char*) * 7)))
 		close_with_error("Error by malloc\n");
 	if (!(temp = ft_itoa_base(COREWAR_EXEC_MAGIC, 16, 1)))
 		close_with_error("Error by malloc\n");
 	HEADER = ft_strjoin("00", temp);
 	ft_strdel(&temp);
 	init_matrix_element(&NAME, PROG_NAME_LENGTH / 2);
-	init_matrix_element(&ZERO, 8);
+	init_matrix_element(&ZERO1, 8);
 	init_matrix_element(&SIZE, 8);
+	init_matrix_element(&ZERO2, 8);
 	init_matrix_element(&COMMENT, COMMENT_LENGTH / 2);
 	CODE = NULL;
 	// init_matrix_element(&CODE, 500);
