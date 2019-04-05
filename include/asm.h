@@ -3,27 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   asm.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:08:27 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/03 17:10:01 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/05 12:31:14 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ASM_H
 #define ASM_H
 
-#include "general/op.h"
-#include "libft.h"
-#include <stdio.h>
-
+# include "general/op.h"
+# include "libft.h"
+# include <stdio.h> 
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 
 # define HEADER		g_asm->matrix[0] 
 # define NAME		g_asm->matrix[1] 
-# define ZERO		g_asm->matrix[2] 
+# define ZERO1		g_asm->matrix[2] 
 # define SIZE		g_asm->matrix[3] 
-# define COMMENT	g_asm->matrix[4] 
-# define CODE 		g_asm->matrix[5]
+# define COMMENT	g_asm->matrix[4]
+# define ZERO2		g_asm->matrix[5] 
+# define CODE 		g_asm->matrix[6]
 # define BUFF		3000
 # define BUFFER		g_asm->buf
 # define INDEX		g_asm->index
@@ -66,15 +69,10 @@ typedef struct s_parse
 	char		*label;
 	char		*command;
 	char		**arg;
-	// char		*arg2;
-	// char		*arg3;
 	int			str_number;
 	int			id_in_tab;
 	int			byte;
 	unsigned char		octet;
-	
-	// unsigned int
-	//probably we will need to count number of bytes for command
 }				t_parse;
 
 typedef struct 	s_op
@@ -119,6 +117,8 @@ char	**split(char const *str, char c);
 void    check_if_command_has_arg(char **array);
 int		check_direct_or_indirect(char *array, int element, int flag);
 int		check_register(char *array, int element);
-int	find_flag(char *array);
+int		find_flag(char *array);
 void    realise_algorithm(void);
+void	init_matrix_element(char **element, int len);
+void 	make_binary(void);
 #endif

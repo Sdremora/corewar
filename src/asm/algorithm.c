@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algorithm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 11:47:42 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/03 17:52:36 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/04 16:53:57 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,10 @@ void		handle_arg(char *arg, int i, int *k, char *pre_matrix, int shift)
 		temp = ft_itoa_base(counter, 16, 1);
 		counter = (g_op_tab[g_struct[i].id_in_tab].t_dir_size_eq_4 ==
 				0) ? 8 : 4;
-		printf("k: %d\n\n", *k);
 		*k += counter - 1;
 		ind = ft_strlen(temp);
 		while (--ind >= 0 && counter-- > 0)
 			pre_matrix[(*k)--] = temp[ind];
-		printf("k: %d\n\n", *k);
 		if (counter > 0)
 			*k -= counter - 1;
 		else
@@ -122,7 +120,6 @@ void		handle_arg(char *arg, int i, int *k, char *pre_matrix, int shift)
 			(*k)++;
 		*k += 4;				
 	}
-	printf("temp:%s\n", temp);
 	ft_strdel(&temp);
 }
 
