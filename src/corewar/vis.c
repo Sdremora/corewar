@@ -6,7 +6,7 @@
 /*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/30 19:00:56 by hharvey           #+#    #+#             */
-/*   Updated: 2019/04/05 15:49:39 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/05 17:40:14 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,47 +103,58 @@ void		vis_pause(int *pause, int *speed)
 		vis_pause(pause, speed);
 }
 
-void		draw_term_bd(int arr[MAX_PLAYERS])
+void		draw_term_bd(int arr[MAX_PLAYERS], int pnb, int step)
 {
 	int i;
 	int pos;
 	int j;
 
-	pos = POS_NB + 1;
-	while (i < MAX_PLAYERS)
+	pos = POS_TEXT + 1;
+	i = 0;
+
+	while (i < pnb)
 	{
+		j = 0;
+		color_set(i + 1, NULL);
 		while (j < arr[i])
 		{
-//			mvaddclrstr(plr_pos())
+			mvaddch(plr_pos(pnb) + 1 + step, pos, '-');
 			j++;
+			pos++;
 		}
-		pos += arr[i];
 		i++;
 	}
 }
 
-void		draw_breakdown(int lnb[MAX_PLAYERS], int nb)
+void		draw_empty_bd(int step, int pnb)
+{
+	mvaddstr(plr_pos(pnb) + 1 + step, POS_TEXT,"[------------------------------------------]");
+}
+
+void		draw_breakdown(int lnb[MAX_PLAYERS], int nb, int pnb, int step)
 {
 	int wght[MAX_PLAYERS];
 	int fract[MAX_PLAYERS];
 	int s;
 	int i;
 
-	s = ft_arrsum(lnb, MAX_PLAYERS);
+	s = ft_arrsum(lnb, pnb);
+	if (!s)
+		return draw_empty_bd(step, pnb);
 	i = 0;
-	while (i < MAX_PLAYERS)
+	while (i < pnb)
 	{
 		wght[i] = lnb[i] * nb / s;
 		fract[i] = lnb[i] * nb * 10 / s % 10;
 		i++;
 	}
-	s -= ft_arrsum(wght, MAX_PLAYERS);
+	s = nb - ft_arrsum(wght, pnb);
 	while (s > 0)
 	{
-		i = ft_arrposmax(fract, 4);
+		i = ft_arrposmax(fract, pnb);
 		wght[i] += 1;
-		fract[i] = -1;
+		fract[i] = 1;
 		s--;
 	}
-	draw_term_bd(wght);
+	draw_term_bd(wght, pnb, step);
 }

@@ -19,6 +19,8 @@
 #define POS_NB 235
 #define POS_TEXT 201
 
+#define BD_LEN 42
+
 typedef struct	s_player
 {
 	char	name[PROG_NAME_LENGTH + 1];
@@ -154,6 +156,7 @@ void		draw_pos(t_arena *arena, int color, int pos);
 void		remove_carg(t_arena *arena, int pos);
 void		vis_pause(int *pause, int *speed);
 void		mvaddclrstr(int y, int x, int col_nb, char *str);
+void		draw_breakdown(int lnb[MAX_PLAYERS], int nb, int pnb, int step);
 
 //vis_utils
 int			nb_carg_pos(t_arena *arena, int pos);

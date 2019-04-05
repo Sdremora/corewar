@@ -329,6 +329,7 @@ int		draw_status(t_arena *arena)
 	mvaddstr(11 + 4 * i , POS_TEXT , "Live breakdown for current period :");
 	mvaddstr(11 + 4 * i + 1 , POS_TEXT,"[------------------------------------------]");
 	mvaddstr(11 + 4 * i + 3 , POS_TEXT , "Live breakdown for last period :");
+	mvaddstr(11 + 4 * i + 4 , POS_TEXT,"[------------------------------------------]");
 	mvaddstr(11 + 4 * i + 6 , POS_TEXT , "Cycle to die :");
 	print_nb(arena->cycle_to_die, plr_pos(arena->players_count) + 6, POS_NB, 10);
 //	print_nb(arena->cycle_to_die, 11 + 4 * i + 6, POS_NB, 10);
@@ -386,9 +387,11 @@ void		fight(t_arena *arena)
 			play_round(arena);
 			if (arena->cycle_past_check == arena->cycle_to_die || arena->cycle_to_die <= 0)
 			{
+				draw_breakdown(arena->player_live_in_cp, 42, arena->players_count, 3);
 				arena->cycle_past_check -= arena->cycle_to_die;
 				check_live(arena);
 				check_cycle_to_die(arena);
+				draw_breakdown(arena->player_live_in_cp, 42, arena->players_count, 0);
 			}
 
     }
