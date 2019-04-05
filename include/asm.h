@@ -6,24 +6,25 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:08:27 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/05 15:19:55 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/05 15:33:53 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ASM_H
 #define ASM_H
 
-#include "general/op.h"
-#include "libft.h"
-#include <stdio.h>
-
+# include "general/op.h"
+# include "libft.h"
+# include <stdio.h> 
+# include <fcntl.h>
 
 # define HEADER		g_asm->matrix[0] 
 # define NAME		g_asm->matrix[1] 
-# define ZERO		g_asm->matrix[2] 
+# define ZERO1		g_asm->matrix[2] 
 # define SIZE		g_asm->matrix[3] 
-# define COMMENT	g_asm->matrix[4] 
-# define CODE 		g_asm->matrix[5]
+# define COMMENT	g_asm->matrix[4]
+# define ZERO2		g_asm->matrix[5] 
+# define CODE 		g_asm->matrix[6]
 # define BUFF		3000
 # define BUFFER		g_asm->buf
 # define INDEX		g_asm->index
@@ -66,15 +67,10 @@ typedef struct s_parse
 	char		*label;
 	char		*command;
 	char		**arg;
-	// char		*arg2;
-	// char		*arg3;
 	int			str_number;
 	int			id_in_tab;
 	int			byte;
 	unsigned char		octet;
-	
-	// unsigned int
-	//probably we will need to count number of bytes for command
 }				t_parse;
 
 typedef struct 	s_op
@@ -128,5 +124,7 @@ int				count_args_size(void);
 void			check_invalid_args_end_of_file(char **temp);
 void			check_invalid_number_of_args(char ***array, int i, int flag);
 void			handle_arg(char *arg, int i, int *k, char *pre_matrix, int shift);
-int			find_right_label(int i, char *label);
+int				find_right_label(int i, char *label);
+void 			make_binary(void);
+void			print_hexdump(void);
 #endif

@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 15:11:55 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/05 15:26:50 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/05 15:34:23 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,42 +69,9 @@ void		handle_arg(char *arg, int i, int *k, char *pre_matrix, int shift)
 	g_struct[i].octet = g_struct[i].octet | oct;
 	temp = NULL;
 	if (counter == 1)
-	{
         handle_first_arg(arg, k, pre_matrix);
-		// counter = ft_atoi_long(&arg[1]);
-		// temp = ft_itoa_base(counter, 16, 1);
-		// if (ft_strlen(temp) == 1)
-		// 	pre_matrix[*k + 1] = temp[0];
-		// else
-		// {
-		// 	pre_matrix[*k] = temp[0];
-		// 	pre_matrix[*k + 1] = temp[1];
-		// }
-		// *k += 2;
-	}
 	else if (counter == 2)
-	{
-		// if (arg[1] == LABEL_CHAR)
-		// 	counter = find_right_label(i, &arg[2]);
-		// else
-		// 	counter = ft_atoi_long(&arg[1]);
-		// if (counter < 0)
-		// 	counter = ((counter * (-1)) ^ 4294967295) + 1;
         handle_second_arg(pre_matrix, i, arg, k);
-		// temp = ft_itoa_base(counter, 16, 1);
-		// counter = (g_op_tab[g_struct[i].id_in_tab].t_dir_size_eq_4 ==
-		// 		0) ? 8 : 4;
-		// *k += counter - 1;
-		// ind = ft_strlen(temp);
-		// while (--ind >= 0 && counter-- > 0)
-		// 	pre_matrix[(*k)--] = temp[ind];
-		// if (counter > 0)
-		// 	*k -= counter - 1;
-		// else
-		// 	(*k)++;
-		// *k += (g_op_tab[g_struct[i].id_in_tab].t_dir_size_eq_4 == 0) ?
-		// 	8 : 4;
-	}
 	else if (counter == 3)
 	{
 		if (arg[0] == LABEL_CHAR)
