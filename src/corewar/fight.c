@@ -108,27 +108,6 @@ void		clean_carg_op(t_carriage *carg)
 	ft_bzero(carg->args, sizeof(int) * 3);
 }
 
-/*
-int			nb_carg_pos(t_arena *arena, int pos)
-{
-	t_list *carg_node;
-	t_carriage	*carg;
-	int			res;
-
-	res = 0;
-	carg_node = arena->carg_lst;
-	while (carg_node)
-	{
-		carg = (t_carriage *)carg_node->content;
-
-		if (carg->mem_pos == pos)
-			res++;
-		carg_node = carg_node->next;
-	}
-	return (res);
-}
-*/
-
 void		vis_move_carg(int old, int new, t_arena *arena)
 {
 	int color;
@@ -207,18 +186,27 @@ void		check_live(t_arena *arena)
 
 void		check_cycle_to_die(t_arena *arena)
 {
+	int i;
 	if (arena->live_call_count >= NBR_LIVE || arena->checks >= MAX_CHECKS)
 	{
 		arena->cycle_to_die -= CYCLE_DELTA;
 		if (arena->flags[F_V] & 2)
 			ft_printf("Cycle to die is now %d\n", arena->cycle_to_die);
 		arena->checks = 1;
-//		if (arena->flags[F_VIS])
-//			print_nb(arena->cycle_to_die, 11 + 4 * arena->players_count + 6, POS_NB, 10);
+		if (arena->flags[F_VIS])
+			print_nb(arena->cycle_to_die, plr_pos(arena->players_count) + 6, POS_NB, 10);
 	}
 	else
 		arena->checks++;
+	print_nb(arena->checks, plr_pos(arena->players_count) + 8, POS_NB, 10);
 	arena->live_call_count = 0;
+	i = 0;
+	while (i < arena->players_count)
+	{
+		print_nb(arena->player_live_in_cp[i], plr_pos(i) + 2, POS_NB, 10);
+		i++;
+	}
+	print_nb(ft_lstlen(arena->carg_lst), 9, POS_NB, 10);
 }
 
 void		draw_map(unsigned char *str, t_point p)
@@ -331,7 +319,8 @@ int		draw_status(t_arena *arena)
 	{
 		mvaddstr(11 + 4 * i,POS_TEXT,"Player -1 :");
 		mvaddch(11 + 4 * i, 209, '0' + i + 1);
-		mvaddstr(11 + 4 * i,213,arena->players[i].name);
+		mvaddclrstr(11 + 4 * i, POS_TEXT + 12, i + 1, arena->players[i].name);
+//		mvaddstr(11 + 4 * i, POS_TEXT + 12,arena->players[i].name);
 		mvaddstr(11 + 4 * i + 1, 203,"Last live :");
 		mvaddstr(11 + 4 * i + 1, POS_NB,"0");
 		mvaddstr(11 + 4 * i + 2, 203, "Current lives :");
@@ -342,7 +331,8 @@ int		draw_status(t_arena *arena)
 	mvaddstr(11 + 4 * i + 1 , POS_TEXT,"[--------------------------------------------------]");
 	mvaddstr(11 + 4 * i + 3 , POS_TEXT , "Live breakdown for last period :");
 	mvaddstr(11 + 4 * i + 6 , POS_TEXT , "Cycle to die :");
-	print_nb(arena->cycle_to_die, 11 + 4 * i + 6, POS_NB, 10);
+	print_nb(arena->cycle_to_die, plr_pos(arena->players_count) + 6, POS_NB, 10);
+//	print_nb(arena->cycle_to_die, 11 + 4 * i + 6, POS_NB, 10);
 	mvaddstr(11 + 4 * i + 8 , POS_TEXT , "Number checks :");
 	print_nb(arena->checks, 11 + 4 * i + 8, POS_NB, 10);
 	return (i);
@@ -379,18 +369,16 @@ void		fight(t_arena *arena)
 			if (arena->flags[F_VIS])
 			{
 				print_nb(arena->cur_cycle, 7, POS_NB, 10);
-				refresh();
 				vis_pause(&pause, &speed);
-				refresh();
 				usleep(speed);
 			}
 			if (arena->cur_cycle == arena->flags[F_D])
 				return print_map(arena->map, 64);
-			if (arena->cur_cycle == arena->flags[F_S])
-			{	
+			if (arena->cur_cycle == arena->flags[F_S] && arena->flags[F_S] > 0)
+			{
 				print_map(arena->map, 64);
 				read(0, 0, 1);
-				arena->flags[F_S] += arena->flags[F_S];
+				arena->flags[F_S] += arena->flags[F_STEALTH];
 			}
 			arena->cur_cycle++;
 			if (arena->flags[F_V] & 2)

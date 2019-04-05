@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:52:31 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/05 15:00:39 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/05 16:37:06 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void		init(void)
 	g_asm->flag_name = -1;
 	g_asm->flag_comment = -1;
 	g_asm->index = 0;
+	g_asm->shift = 0;
 	g_asm->size_of_struct = 0;
 	init_matrix();
 }
@@ -96,7 +97,6 @@ void		init_struct(void)
 		j = -1;
 		g_struct[i].label = NULL;
 		g_struct[i].command = NULL;
-		//g_struct[i].command = ft_strnew(5);
 		g_struct[i].arg = (char **)malloc(sizeof(char*) * 4);
 		while (++j < 4)
 			g_struct[i].arg[j] = NULL;

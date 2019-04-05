@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   oper_p2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 17:53:32 by sdremora          #+#    #+#             */
-/*   Updated: 2019/04/01 17:55:07 by sdremora         ###   ########.fr       */
+/*   Updated: 2019/04/04 16:39:42 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,8 @@ void	op_fork(t_carriage *carg, t_arena *arena)
 	if (arena->flags[F_V] & 4)
 		ft_printf("P %4d | %s %d (%d)\n", carg->carg_id,
 			g_op_tab[carg->op_id].name, n1, carg->mem_pos + offset);
+	if (arena->flags[F_VIS])
+		print_nb(ft_lstlen(arena->carg_lst), 9, POS_NB, 10);
 }
 
 /*

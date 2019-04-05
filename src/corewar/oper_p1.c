@@ -6,7 +6,7 @@
 /*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 17:50:10 by sdremora          #+#    #+#             */
-/*   Updated: 2019/04/02 17:56:47 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/04 16:26:48 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	op_live(t_carriage *carg, t_arena *arena)
 				arena->players[player_num - 1].name);
 		if (arena->flags[F_VIS])
 		{
-			print_nb(arena->cur_cycle, plr_pos(player_num + 1), POS_NB, 10);
-			print_nb(arena->player_live_in_cp[player_num - 1], plr_pos(player_num + 2), POS_NB, 10);
+			print_nb(arena->cur_cycle, plr_pos(player_num - 1) + 1, POS_NB, 10);
+			print_nb(arena->player_live_in_cp[player_num - 1], plr_pos(player_num - 1) + 2, POS_NB, 10);
 		}
 	}
 	arena->live_call_count++;
@@ -101,7 +101,7 @@ void	op_st(t_carriage *carg, t_arena *arena)
 	else
 	{
 		temp = get_value(arena, carg->mem_pos + offset, IND_SIZE);
-		put_value(arena, carg->mem_pos + offset % IDX_MOD, value, carg->owner);
+		put_value(arena, carg->mem_pos + temp % IDX_MOD, value, carg->owner);
 	}
 	if (arena->flags[F_V] & 4)
 		ft_printf("P %4d | %s r%d %d\n", carg->carg_id,

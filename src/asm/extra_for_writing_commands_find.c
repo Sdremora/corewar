@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   extra_for_writing_commands_to_struct.c             :+:      :+:    :+:   */
+/*   extra_for_writing_commands_find.c                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:01:16 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/03 13:11:40 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/05 12:32:13 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,32 +30,7 @@ int     count_chars(void)
     return (counter);
 }
 
-int		check_if_command_exist(char *temp)
-{
-	int		i;
-
-	i = -1;
-	while (++i < 16)
-	{
-		if (ft_strequ(temp, g_op_tab[i].name) == 1)
-			return (1);
-	}
-	return (0);
-}
-
-int		check_if_label_exist(char *temp)
-{
-	int		i;
-	i = -1;
-	while (++i < INDEX)
-	{
-		if (ft_strequ(temp, g_struct[i].label) == 1)
-			return (0);
-	}
-	return (1);
-}
-
- int	find_flag(char *array)
+int	find_flag(char *array)
  {
 	if (array[0] == 'r')
 	{
@@ -75,3 +50,32 @@ int		check_if_label_exist(char *temp)
 	}
 	return (1);
 }
+
+int		find_id_in_tab(void)
+{
+	int i;
+
+	i = -1;
+	while (++i < 16)
+	{
+		if (ft_strequ(g_struct[INDEX].command, g_op_tab[i].name) == 1)
+			return (i);
+	}
+	return (-1);
+}
+
+int		count_args_size(void)
+{
+	int		counter;
+	int		i;
+
+	i = g_asm->i;
+	counter = 0;
+	while (BUFFER[i] != '\n' && BUFFER[i] != '\0')
+	{
+		i++;
+		counter++;
+	}
+	return (counter);
+}
+
