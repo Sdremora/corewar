@@ -6,5 +6,5 @@
 #include "libft.h"
 #include "corewar/cw.h"
 #include "corewar/operations.h"
-#include <locale.h>
+#include "locale.h"
 #endif

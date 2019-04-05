@@ -163,4 +163,6 @@ int			nb_carg_pos(t_arena *arena, int pos);
 void		print_nb(int nb, int y, int x, int clr_nb);
 int			plr_pos(int nb);
 
+//flags_handle.c
+int			handle_flag(char **argv, int *pos, int argc, t_arena *arena);
 #endif

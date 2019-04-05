@@ -26,6 +26,15 @@ deaths\n", "");
 	exit(0);
 }
 
+void	print_winner(t_arena *arena)
+{
+	if (arena->flags[F_D] > 0 && arena->carg_lst != NULL)
+		return ;
+	ft_printf("🚨  Contestant %d, \"%s\", has won ! 🚨\n",
+		arena->last_live_player + 1,
+		arena->players[arena->last_live_player].name);
+}
+
 int	main(int argc, char **argv)
 {
 	t_arena		arena;
@@ -44,7 +53,6 @@ int	main(int argc, char **argv)
 		getch();
 		endwin();
 	}
-	ft_printf("🚨  Contestant %d, \"%s\", has won ! 🚨\n",
-		arena.last_live_player + 1, arena.players[arena.last_live_player].name);
+	print_winner(&arena);
 	return (0);
 }

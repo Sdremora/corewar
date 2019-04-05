@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:52:31 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/03 17:33:16 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/05 16:37:06 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 ** can remalloc it
 */
 
-static void		fill_with_zerro(char *str, int len)
+void		fill_with_zerro(char *str, int len)
 {
 	int		i;
 	
@@ -27,7 +27,7 @@ static void		fill_with_zerro(char *str, int len)
 		str[i] = '0';
 }
 
-static void		init_matrix_element(char **element, int len)
+void		init_matrix_element(char **element, int len)
 {
 	if (!(*element = ft_strnew(len)))
 		close_with_error("Error by malloc\n");
@@ -37,17 +37,19 @@ static void		init_matrix_element(char **element, int len)
 void		init_matrix()
 {
 	char	*temp;
-	if (!(g_asm->matrix = (char**)malloc(sizeof(char*) * 6)))
+	if (!(g_asm->matrix = (char**)malloc(sizeof(char*) * 7)))
 		close_with_error("Error by malloc\n");
 	if (!(temp = ft_itoa_base(COREWAR_EXEC_MAGIC, 16, 1)))
 		close_with_error("Error by malloc\n");
 	HEADER = ft_strjoin("00", temp);
 	ft_strdel(&temp);
-	init_matrix_element(&NAME, PROG_NAME_LENGTH / 2);
-	init_matrix_element(&ZERO, 8);
+	init_matrix_element(&NAME, PROG_NAME_LENGTH * 2);
+	init_matrix_element(&ZERO1, 8);
 	init_matrix_element(&SIZE, 8);
-	init_matrix_element(&COMMENT, COMMENT_LENGTH / 2);
-	init_matrix_element(&CODE, 500);
+	init_matrix_element(&ZERO2, 8);
+	init_matrix_element(&COMMENT, COMMENT_LENGTH * 2);
+	CODE = NULL;
+	// init_matrix_element(&CODE, 500);
 	//printf("header:%s\n\n\n name:%s\n\n\n, zero:%s\n\n\n size:%s\n\n\n comment:%s\n\n\n, code:%s\n\n\n", HEADER, NAME, ZERO, SIZE, COMMENT, CODE);
 }
 
@@ -60,6 +62,7 @@ void		init(void)
 	g_asm->flag_name = -1;
 	g_asm->flag_comment = -1;
 	g_asm->index = 0;
+	g_asm->shift = 0;
 	g_asm->size_of_struct = 0;
 	init_matrix();
 }
@@ -87,9 +90,9 @@ void		init_struct(void)
 
 	i = -1;
 	g_asm->size_of_struct = count_all_str();
-	if (!(g_struct = (t_parse*)malloc(sizeof(t_parse) * g_asm->size_of_struct)))
+	if (!(g_struct = (t_parse*)malloc(sizeof(t_parse) * g_asm->size_of_struct + 1000)))
 		close_with_error("Error by malloc");
-	while(++i < g_asm->size_of_struct)
+	while(++i < g_asm->size_of_struct + 1000)
 	{
 		j = -1;
 		g_struct[i].label = NULL;

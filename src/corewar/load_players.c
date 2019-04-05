@@ -43,8 +43,6 @@ void     read_code_size(int fd, int *p, t_arena *arena)
     if (read (fd, &size, 4) != 4)
         error_handle(E_INV_CHAMP, arena, "invalid size");
     *p = swap_int_bytes(size);
-    if (*p > (MEM_SIZE / 6))
-        error_handle(E_INV_CHAMP, arena, "invalid size");
     return ;
 }
 
@@ -56,8 +54,16 @@ void	read_comment(int fd, t_player *player, t_arena *arena)
 
 void    read_code(int fd, int size, char *code, t_arena *arena)
 {
-    if (read(fd, code, size) != size)
-        error_handle(E_INV_CHAMP, arena, "the program code of the player is too short");
+	char	temp[10];
+	int		len;
+
+	len = read(fd, code, COMMENT_LENGTH);
+	if (len < 0)
+		error_handle(E_INV_CHAMP, arena, "the program code of the player is too short");
+    if (len != size)
+        error_handle(E_INV_CHAMP, arena, "program size is not equal to the specified value");
+	if (read(fd, code, 10) > 0 || len > CHAMP_MAX_SIZE)
+		error_handle(E_INV_CHAMP, arena, "the program code of the player is too long");
     return ;
 }
 
