@@ -6,7 +6,7 @@
 /*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 17:50:10 by sdremora          #+#    #+#             */
-/*   Updated: 2019/04/05 17:25:59 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/06 20:27:02 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ void	op_live(t_carriage *carg, t_arena *arena)
 		if (arena->flags[F_VIS])
 		{
 			print_nb(arena->cur_cycle, plr_pos(player_num - 1) + 1, POS_NB, 10);
-			print_nb(arena->player_live_in_cp[player_num - 1], plr_pos(player_num - 1) + 2, POS_NB, 10);
-			draw_breakdown(arena->player_live_in_cp, 42, arena->players_count, 0);
+			print_nb(arena->player_live_in_cp[player_num - 1],
+				plr_pos(player_num - 1) + 2, POS_NB, 10);
+			draw_breakdown(arena->player_live_in_cp, arena->players_count, 0);
 		}
 	}
 	arena->live_call_count++;
