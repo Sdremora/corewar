@@ -63,5 +63,5 @@ echo:
 	@echo $(OBJ_ASM)
 
 run:
-	./42asm test.s
-	./corewar -vis test.cor
+	./42asm super_champ.s
+	./corewar -vis super_champ.cor
