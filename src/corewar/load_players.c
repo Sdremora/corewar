@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   load_players.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/07 18:09:03 by sdremora          #+#    #+#             */
+/*   Updated: 2019/04/07 18:43:05 by sdremora         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar.h"
 
 void	check_magic(int fd, t_arena *arena)
@@ -22,7 +34,6 @@ void	load_player(char *path, t_arena *arena)
 {
 	t_player	*player;
 	int			fd;
-	int			id;
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)

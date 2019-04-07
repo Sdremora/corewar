@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   load_player_reader.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/07 18:08:47 by sdremora          #+#    #+#             */
+/*   Updated: 2019/04/07 18:42:56 by sdremora         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar.h"
 
 void	read_name(int fd, t_player *player, t_arena *arena)
@@ -38,7 +50,6 @@ void	read_comment(int fd, t_player *player, t_arena *arena)
 
 void	read_code(int fd, int size, char *code, t_arena *arena)
 {
-	char	temp[10];
 	int		len;
 
 	len = read(fd, code, COMMENT_LENGTH);

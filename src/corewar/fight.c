@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fight.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/07 18:08:26 by sdremora          #+#    #+#             */
+/*   Updated: 2019/04/07 18:39:40 by sdremora         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar.h"
 
 void		fight_vis(t_arena *arena)
 {
-	char	temp;
 	int		speed;
 	int		pause;
 
@@ -28,8 +39,6 @@ void		fight_vis(t_arena *arena)
 
 void		fight(t_arena *arena)
 {
-	char	temp;
-
 	introducing(arena);
 	while (arena->carg_lst)
 	{

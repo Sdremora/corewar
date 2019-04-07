@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vis_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 19:25:28 by hharvey           #+#    #+#             */
-/*   Updated: 2019/04/06 19:25:31 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/07 18:43:58 by sdremora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void		set_color_pairs(void)
 void		draw_map(unsigned char *str, t_point p)
 {
 	int			i;
-	int			j;
 	static char	base[17] = "0123456789abcdef";
 
 	color_set(0, NULL);

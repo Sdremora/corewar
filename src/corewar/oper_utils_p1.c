@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   oper_utils_p1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 17:58:11 by sdremora          #+#    #+#             */
-/*   Updated: 2019/04/02 17:51:04 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/07 18:43:50 by sdremora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,6 @@ int			get_arg_len(int oper_type, char arg_type)
 	if (arg_type == T_IND)
 		return (IND_SIZE);
 	return (g_op_tab[oper_type].dir_size);
-}
-
-static int	get_arg_value_len(int oper_type, char arg_type)
-{
-	int len;
-
-	if (arg_type == T_REG)
-		len = REG_SIZE;
-	else if (arg_type == T_IND)
-		len = IND_SIZE;
-	else
-		len = g_op_tab[oper_type].dir_size;
-	return (len);
 }
 
 int			get_value(t_arena *arena, int mem_pos, int len)

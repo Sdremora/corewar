@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fight_args_mvcrg.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/07 18:08:30 by sdremora          #+#    #+#             */
+/*   Updated: 2019/04/07 18:51:02 by sdremora         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "corewar.h"
 
@@ -42,7 +53,6 @@ int			convert_args(unsigned char arg)
 void		load_args(t_carriage *carg, t_arena *arena)
 {
 	unsigned char	arg;
-	unsigned char	temp;
 	int				i;
 
 	if (g_op_tab[carg->op_id].kod_tipov_argumenta)
