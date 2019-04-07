@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 14:04:27 by hharvey           #+#    #+#             */
-/*   Updated: 2019/04/02 16:50:30 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/04 18:03:39 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,11 @@ void				*ft_memrealloc(void *src, size_t src_size, size_t new_size);
 
 int					ft_strwrdcnt(char const *s, char c);
 int					ft_lstgetnb(t_list *a);
+
 int					ft_arrposmin(int *a, int size);
 int					ft_arrposmax(int *a, int size);
+int					ft_arrsum(int *arr, int nb);
+
 int					ft_lstlen(t_list *lst);
 void				ft_lstprintnb(t_list *lst);
 int					ft_wcharlen(wchar_t c);

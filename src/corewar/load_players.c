@@ -2,23 +2,23 @@
 
 void	check_magic(int fd, t_arena *arena)
 {
-    unsigned int magic;
+	unsigned int magic;
 
+<<<<<<< HEAD
     magic = 0;
     if (read(fd, &magic, 4) != 4)
 		error_handle(E_INV_CHAMP, arena, "the program code of the player is too short");
 	if (magic != 4085508608)
+=======
+	magic = 0;
+	if (read(fd, &magic, 4) != 4 || magic != 4085508608)
+>>>>>>> c42174362bf1cb915edd45fdaca9950f975ecf30
 		error_handle(E_INV_CHAMP, arena, "bad magic");
-}
-
-void	read_name(int fd, t_player *player, t_arena *arena)
-{
-    if (read(fd, player->name, PROG_NAME_LENGTH) != PROG_NAME_LENGTH)
-        error_handle(E_INV_CHAMP, arena, "the program code of the player is too short");
 }
 
 void	check_null(int fd, t_arena *arena)
 {
+<<<<<<< HEAD
     unsigned int nulls;
 
     nulls = 0;
@@ -69,27 +69,33 @@ void    read_code(int fd, int size, char *code, t_arena *arena)
 	if (read(fd, code, 10) > 0 || len > CHAMP_MAX_SIZE)
 		error_handle(E_INV_CHAMP, arena, "the program code of the player is too long");
     return ;
+=======
+	unsigned int nulls;
+
+	nulls = 0;
+	if (read(fd, &nulls, 4) != 4 || nulls != 0)
+		error_handle(E_INV_CHAMP, arena, "zero section is not empty");
+>>>>>>> c42174362bf1cb915edd45fdaca9950f975ecf30
 }
 
 void	load_player(char *path, t_arena *arena)
 {
 	t_player	*player;
-    int			fd;
-    int         id;
+	int			fd;
+	int			id;
 
-    fd = open(path, O_RDONLY);
+	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		error_handle(E_INV_PATH, arena, path);
 	player = &(arena->players[get_pnb(arena)]);
 	player_ini(player, &arena->flags[F_N]);
-    check_magic(fd, arena);
+	check_magic(fd, arena);
 	read_name(fd, player, arena);
 	check_null(fd, arena);
-    read_code_size(fd, &(player->code_size), arena);
+	read_code_size(fd, &(player->code_size), arena);
 	read_comment(fd, player, arena);
-    check_null(fd, arena);
-    read_code(fd, player->code_size, player->code, arena);
-//    arena->last_live_player = i;
+	check_null(fd, arena);
+	read_code(fd, player->code_size, player->code, arena);
 	arena->players_count++;
-    close(fd);
+	close(fd);
 }

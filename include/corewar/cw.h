@@ -19,6 +19,8 @@
 #define POS_NB 235
 #define POS_TEXT 201
 
+#define BD_LEN 42
+
 typedef struct	s_player
 {
 	char	name[PROG_NAME_LENGTH + 1];
@@ -90,6 +92,7 @@ void		print_usage(void);
 
 //	fight.c
 void		fight(t_arena *arena);
+void		fight_vis(t_arena *arena);
 
 //	print_map.c
 void		print_mem(unsigned int n);
@@ -101,6 +104,8 @@ void		load_player(char *path, t_arena *arena);
 
 //	load_arena.c
 void		load_arena(int argc, char **argv, t_arena *arena);
+
+//flag_n.c
 int			get_pnb(t_arena *arena);
 
 //	arena_utils.c
@@ -152,14 +157,39 @@ void		introducing(t_arena *arena);
 int			get_color_pair(int pos, t_point p);
 void		draw_pos(t_arena *arena, int color, int pos);
 void		remove_carg(t_arena *arena, int pos);
-void		vis_pause(int *pause, int *speed);
 void		mvaddclrstr(int y, int x, int col_nb, char *str);
+void		draw_breakdown(int lnb[MAX_PLAYERS], int pnb, int step);
 
 //vis_utils
 int			nb_carg_pos(t_arena *arena, int pos);
 void		print_nb(int nb, int y, int x, int clr_nb);
 int			plr_pos(int nb);
+void		vis_pause(int *pause, int *speed);
 
 //flags_handle.c
 int			handle_flag(char **argv, int *pos, int argc, t_arena *arena);
+
+//load_player_reader.c
+void	read_name(int fd, t_player *player, t_arena *arena);
+void	read_code_size(int fd, int *p, t_arena *arena);
+void	read_comment(int fd, t_player *player, t_arena *arena);
+void	read_code(int fd, int size, char *code, t_arena *arena);
+
+//vis_init
+void		arena_vis_init(t_arena *arena, int *speed, int *pause);
+
+//fight_args_mvcrg.c
+void		move_carriage(t_arena *arena, t_carriage *carg, int dir_size);
+void		load_args(t_carriage *carg, t_arena *arena);
+int			check_code_args(int args[3], unsigned char op_id);
+
+//play_round
+void	play_round(t_arena *arena);
+
+//vis_init_status
+void	draw_status(t_arena *arena);
+
+//fight_ctd
+void	fight_ctd(t_arena *arena);
+
 #endif
