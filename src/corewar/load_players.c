@@ -5,7 +5,9 @@ void	check_magic(int fd, t_arena *arena)
     unsigned int magic;
 
     magic = 0;
-    if (read(fd, &magic, 4) != 4 || magic != 4085508608)
+    if (read(fd, &magic, 4) != 4)
+		error_handle(E_INV_CHAMP, arena, "the program code of the player is too short");
+	if (magic != 4085508608)
 		error_handle(E_INV_CHAMP, arena, "bad magic");
 }
 
@@ -20,7 +22,9 @@ void	check_null(int fd, t_arena *arena)
     unsigned int nulls;
 
     nulls = 0;
-    if (read (fd, &nulls, 4) != 4 || nulls != 0)
+    if (read (fd, &nulls, 4) != 4)
+        error_handle(E_INV_CHAMP, arena, "the program code of the player is too short");
+	if (nulls != 0)
         error_handle(E_INV_CHAMP, arena, "zero section is not empty");
 }
 
@@ -41,7 +45,7 @@ void     read_code_size(int fd, int *p, t_arena *arena)
 
     size = 0;
     if (read (fd, &size, 4) != 4)
-        error_handle(E_INV_CHAMP, arena, "invalid size");
+        error_handle(E_INV_CHAMP, arena, "the program code of the player is too short");
     *p = swap_int_bytes(size);
     return ;
 }
