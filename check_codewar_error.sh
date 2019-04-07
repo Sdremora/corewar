@@ -42,3 +42,21 @@ printf "./corewar $MAP\n %s\n\n" "$(./corewar $MAP)"
 
 MAP=other/inv_input/inv_size_greater.cor
 printf "./corewar $MAP\n %s\n\n" "$(./corewar $MAP)"
+
+MAP="-dump 100 -a"
+printf "./corewar $MAP\n %s\n\n" "$(./corewar $MAP)"
+
+MAP="other/valid_champs/Explosive_Kitty.cor other/valid_champs/helltrain.cor other/valid_champs/Hidden.cor other/valid_champs/lapsang.cor other/valid_champs/O-Maley_Miaou.cor"
+printf "./corewar $MAP\n %s\n\n" "$(./corewar $MAP)"
+
+MAP="other/valid_champs/opachki_nevalidnui_path.cor"
+printf "./corewar $MAP\n %s\n\n" "$(./corewar $MAP)"
+
+MAP="other/valid_champs/Explosive_Kitty.cor other/valid_champs/helltrain.cor -n -1 other/valid_champs/Hidden.cor other/valid_champs/lapsang.cor"
+printf "./corewar $MAP\n %s\n\n" "$(./corewar $MAP)"
+
+MAP="other/valid_champs/Explosive_Kitty.cor -n 2 other/valid_champs/helltrain.cor -n 0 other/valid_champs/Hidden.cor other/valid_champs/lapsang.cor"
+printf "./corewar $MAP\n %s\n\n" "$(./corewar $MAP)"
+
+MAP="other/valid_champs/Explosive_Kitty.cor -n 2 other/valid_champs/helltrain.cor -n 2 other/valid_champs/Hidden.cor -n 99999999999999999999999999 other/valid_champs/lapsang.cor"
+printf "./corewar $MAP\n %s\n\n" "$(./corewar $MAP)"
