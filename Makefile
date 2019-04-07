@@ -61,3 +61,7 @@ re: fclean all
 echo:
 	@echo $(SRC_ASM)
 	@echo $(OBJ_ASM)
+
+run:
+	./42asm test.s
+	./corewar -vis test.cor

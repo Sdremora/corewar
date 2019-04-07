@@ -6,7 +6,7 @@
 /*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 18:16:07 by hharvey           #+#    #+#             */
-/*   Updated: 2019/04/06 20:02:13 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/07 18:03:15 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void		draw_term_bd(int arr[MAX_PLAYERS], int pnb, int step)
 
 void		draw_empty_bd(int step, int pnb)
 {
+	color_set(10, NULL);
 	mvaddstr(plr_pos(pnb) + 1 + step, POS_TEXT,
 	"[------------------------------------------]");
 }

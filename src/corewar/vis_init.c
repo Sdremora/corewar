@@ -6,7 +6,7 @@
 /*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 19:25:28 by hharvey           #+#    #+#             */
-/*   Updated: 2019/04/06 19:25:31 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/07 18:10:24 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ void		draw_players(t_arena *arena)
 		color_set(i + 1 + 5, NULL);
 		pos = i * MEM_SIZE / arena->players_count;
 		max_pos = pos + arena->players[i].code_size;
+		if (pos == max_pos)
+			draw_pos(arena, 5, pos);
 		while (pos < max_pos)
 		{
 			mvaddch(arena->shift.y + pos / 64,
