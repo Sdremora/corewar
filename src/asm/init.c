@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:52:31 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/05 16:37:06 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/08 12:21:39 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,19 +90,20 @@ void		init_struct(void)
 
 	i = -1;
 	g_asm->size_of_struct = count_all_str();
-	if (!(g_struct = (t_parse*)malloc(sizeof(t_parse) * g_asm->size_of_struct + 1000)))
+	if (!(g_struct = (t_parse**)malloc(sizeof(t_parse *) * (g_asm->size_of_struct * 2))))
 		close_with_error("Error by malloc");
-	while(++i < g_asm->size_of_struct + 1000)
+	while(++i < g_asm->size_of_struct * 2)
 	{
 		j = -1;
-		g_struct[i].label = NULL;
-		g_struct[i].command = NULL;
-		g_struct[i].arg = (char **)malloc(sizeof(char*) * 4);
+		g_struct[i] = (t_parse*)malloc(sizeof(t_parse));
+		g_struct[i]->label = NULL;
+		g_struct[i]->command = NULL;
+		g_struct[i]->arg = (char **)malloc(sizeof(char*) * 4);
 		while (++j < 4)
-			g_struct[i].arg[j] = NULL;
-		g_struct[i].str_number = 0;
-		g_struct[i].id_in_tab = -1;
-		g_struct[i].byte = 0;
-		g_struct[i].octet = 0;
+			g_struct[i]->arg[j] = NULL;
+		g_struct[i]->str_number = 0;
+		g_struct[i]->id_in_tab = -1;
+		g_struct[i]->byte = 0;
+		g_struct[i]->octet = 0;
 	}
 }

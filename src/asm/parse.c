@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 17:16:12 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/02 11:46:47 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/08 12:16:41 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ void    parse_from_file(int argc, char **argv)
 		close_with_error("Can't read source file\n");
 	// else if (ret == 0 && (g_asm->buf || g_asm->buf[i] != '\n'))
 	// 	error_by_parsing(); NO \n!
+	close(fd);
 	return ;
 }

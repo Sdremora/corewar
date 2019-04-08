@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:54:20 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/04 15:55:27 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/08 12:14:46 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int check_arg_type(int element, int type)
 	i = -1;
 	while (++i < 16)
 	{
-		if (ft_strequ(g_struct[INDEX].command, g_op_tab[i].name) == 1)
+		if (ft_strequ(g_struct[INDEX]->command, g_op_tab[i].name) == 1)
 		{
 			if ((type & g_op_tab[i].args[element]) == 0)
 				return (0);
@@ -84,28 +84,28 @@ void     check_if_command_has_arg(char **array)
     int i;
 
     i = -1;
-    while (++i < g_op_tab[g_struct[INDEX].id_in_tab].var_count)
+    while (++i < g_op_tab[g_struct[INDEX]->id_in_tab].var_count)
     {
         if (array[i][0] == 'r')
 		{
 			if (!(check_register(array[i], i)))
 				syntax_error_instruction(array[i], 4);
-			g_struct[INDEX].byte++;
+			g_struct[INDEX]->byte++;
 		}
         else if (array[i][0] == DIRECT_CHAR)
 		{
 			if (!(check_direct_or_indirect(array[i], i, 1)))
 				syntax_error_instruction(array[i], 4);
-			if (g_op_tab[g_struct[INDEX].id_in_tab].t_dir_size_eq_4 == 0)
-				g_struct[INDEX].byte += 2;
-			g_struct[INDEX].byte += 2;
+			if (g_op_tab[g_struct[INDEX]->id_in_tab].t_dir_size_eq_4 == 0)
+				g_struct[INDEX]->byte += 2;
+			g_struct[INDEX]->byte += 2;
 		}
 		else if ((array[i][0] >= '0' && array[i][0] <= '9') ||
 				array[i][0] == '-' || array[i][0] == LABEL_CHAR) 
 		{
 			if (!(check_direct_or_indirect(array[i], i, 0)))
 				syntax_error_instruction(array[i], 4);
-			g_struct[INDEX].byte += 2;
+			g_struct[INDEX]->byte += 2;
 		}
 		else
 			syntax_error_instruction(array[i], 4);

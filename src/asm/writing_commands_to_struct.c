@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   writing_commands_to_struct.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 14:35:56 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/05 13:52:51 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/08 12:12:35 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		check_label(char **temp)
 	if (BUFFER[g_asm->i] == LABEL_CHAR)
 	{
 		check_labels_validity(temp);
-		g_struct[INDEX].label = ft_strdup(*temp);
+		g_struct[INDEX]->label = ft_strdup(*temp);
 		g_asm->i++;
 		INDEX++;
 		ft_strdel(temp);
@@ -45,11 +45,11 @@ void	check_command(char **temp)
 	{
 		if (!(check_if_command_exist(*temp)))
 			invalid_error_instruction(temp, 1);
-		g_struct[INDEX].command = ft_strdup(*temp);
-		g_struct[INDEX].id_in_tab = find_id_in_tab();
-		if (g_op_tab[g_struct[INDEX].id_in_tab].kod_tipov_argumenta == 1)
-			g_struct[INDEX].byte++;
-		g_struct[INDEX].byte++;
+		g_struct[INDEX]->command = ft_strdup(*temp);
+		g_struct[INDEX]->id_in_tab = find_id_in_tab();
+		if (g_op_tab[g_struct[INDEX]->id_in_tab].kod_tipov_argumenta == 1)
+			g_struct[INDEX]->byte++;
+		g_struct[INDEX]->byte++;
 	}
 	else if (BUFFER[g_asm->i] != ' ' && BUFFER[g_asm->i] != '\t' &&
 													ft_strlen(*temp) > 0)
@@ -78,7 +78,7 @@ void	check_args(void)
 	i = -1;
 	while (array[++i] != NULL)
 	{
-		g_struct[INDEX].arg[i] = ft_strdup(array[i]);
+		g_struct[INDEX]->arg[i] = ft_strdup(array[i]);
 		ft_strdel(&array[i]);
 	}
 	if (array)
@@ -116,7 +116,7 @@ void	write_labels_commands(void)
 	//  while (++i < INDEX)
 	// {
 	// 	printf("# of index: %d\n", i);
-	// 	printf("label: %s, name:%s, byte:%d\n", g_struct[i].label, g_struct[i].command, g_struct[i].byte);
-	// 	printf("arg1: %s, arg2: %s, arg3: %s\n\n", g_struct[i].arg[0], g_struct[i].arg[1], g_struct[i].arg[2]);
+	// 	printf("label: %s, name:%s, byte:%d\n", g_struct[i]->label, g_struct[i]->command, g_struct[i]->byte);
+	// 	printf("arg1: %s, arg2: %s, arg3: %s\n\n", g_struct[i]->arg[0], g_struct[i]->arg[1], g_struct[i]->arg[2]);
 	// }
 }

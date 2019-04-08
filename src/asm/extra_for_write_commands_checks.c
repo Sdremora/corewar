@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extra_for_write_commands_checks.c                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 12:00:06 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/05 14:20:21 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/08 12:11:34 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		check_if_label_exist(char *temp)
 	i = -1;
 	while (++i < INDEX)
 	{
-		if (ft_strequ(temp, g_struct[i].label) == 1)
+		if (ft_strequ(temp, g_struct[i]->label) == 1)
 			return (0);
 	}
 	return (1);
@@ -86,7 +86,7 @@ void	check_invalid_args_end_of_file(char **temp)
 
 void	check_invalid_number_of_args(char ***array, int i, int flag)
 {
-	if (flag == 1 && i < g_op_tab[g_struct[INDEX].id_in_tab].var_count)
+	if (flag == 1 && i < g_op_tab[g_struct[INDEX]->id_in_tab].var_count)
 	{
 		i = -1;
 		if (array && *array)
@@ -96,11 +96,11 @@ void	check_invalid_number_of_args(char ***array, int i, int flag)
 			free(*array);
 		}
 		ft_putstr("Invalid parameter count for instruction ");
-		close_with_error(g_struct[INDEX].command);
+		close_with_error(g_struct[INDEX]->command);
 	}
-	if (flag == 2 && i > g_op_tab[g_struct[INDEX].id_in_tab].var_count)
+	if (flag == 2 && i > g_op_tab[g_struct[INDEX]->id_in_tab].var_count)
 	{
-		i = g_op_tab[g_struct[INDEX].id_in_tab].var_count + 1;
+		i = g_op_tab[g_struct[INDEX]->id_in_tab].var_count + 1;
 		syntax_error_instruction(array[0][i - 1], find_flag(array[0][i - 1]));
 	}
 }

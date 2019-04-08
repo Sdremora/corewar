@@ -6,11 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:08:27 by mnarbert          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/04/05 18:33:35 by kkihn            ###   ########.fr       */
-=======
-/*   Updated: 2019/04/05 17:32:29 by mnarbert         ###   ########.fr       */
->>>>>>> 086c45f6155a08314cfa18e3d18a2c859e73a7a3
+/*   Updated: 2019/04/08 12:11:25 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +89,7 @@ typedef struct 	s_op
 }				t_op;
 
 t_asm			*g_asm;
-t_parse			*g_struct;
+t_parse			**g_struct;
 t_op   			g_op_tab[17];
 
 void    		usage(void);

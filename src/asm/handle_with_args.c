@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_with_args.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 15:11:55 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/05 16:40:45 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/08 12:13:41 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void		handle_second_arg(char *pre_matrix, int i, char *arg, int *k)
 	if (counter < 0)
 		counter = ((counter * (-1)) ^ 4294967295) + 1;
 	temp = ft_itoa_base(counter, 16, 1);
-	counter = (g_op_tab[g_struct[i].id_in_tab].t_dir_size_eq_4 ==
+	counter = (g_op_tab[g_struct[i]->id_in_tab].t_dir_size_eq_4 ==
 			0) ? 8 : 4;
 	*k += counter - 1;
 	ind = ft_strlen(temp);
@@ -53,7 +53,7 @@ void		handle_second_arg(char *pre_matrix, int i, char *arg, int *k)
 		*k -= counter - 1;
 	else
 		(*k)++;
-	*k += (g_op_tab[g_struct[i].id_in_tab].t_dir_size_eq_4 == 0) ?
+	*k += (g_op_tab[g_struct[i]->id_in_tab].t_dir_size_eq_4 == 0) ?
 		8 : 4;
 	ft_strdel(&temp);
 }
@@ -92,7 +92,7 @@ void		handle_arg(char *arg, int i, int *k, char *pre_matrix)
 	counter = find_flag(arg);
 	oct = counter;
 	oct = oct << g_asm->shift; // can we merge 58 + 59 lines?
-	g_struct[i].octet = g_struct[i].octet | oct;
+	g_struct[i]->octet = g_struct[i]->octet | oct;
 	if (counter == 1)
 		handle_first_arg(arg, k, pre_matrix);
 	else if (counter == 2)

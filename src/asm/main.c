@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 14:54:49 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/05 17:32:38 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/08 12:38:56 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ int		count_code_size(void)
 	i = -1;
 	counter = 0;
 	while (++i < INDEX)
-		counter += g_struct[i].byte;
-	printf("counter: %d\n", counter);
+		counter += g_struct[i]->byte;
+	// printf("counter: %d\n", counter);
 	temp = ft_itoa_base(counter, 16, 1);
 	i = ft_strlen(temp);
 	j = 7;
@@ -75,10 +75,10 @@ int		main(int argc, char **argv)
 		// 	printf("arg1: %s, arg2: %s, arg3: %s\n\n", g_struct[i].arg[0], g_struct[i].arg[1], g_struct[i].arg[2]);
 		// }
 		g_asm->i = 0;
-		printf("_____\n");
+		// printf("_____\n");
 		fflush(stdout);
 		count_code_size();
-			printf("1_____\n");
+		// printf("1_____\n");
 		fflush(stdout);
 		init_matrix_element(&CODE, count_code_size());
 		realise_algorithm();

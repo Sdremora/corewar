@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extra_for_writing_commands_find.c                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 15:01:16 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/05 12:32:13 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/08 12:12:16 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		find_id_in_tab(void)
 	i = -1;
 	while (++i < 16)
 	{
-		if (ft_strequ(g_struct[INDEX].command, g_op_tab[i].name) == 1)
+		if (ft_strequ(g_struct[INDEX]->command, g_op_tab[i].name) == 1)
 			return (i);
 	}
 	return (-1);

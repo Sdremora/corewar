@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:52:48 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/03 17:34:34 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/08 12:31:43 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,19 @@ void	del_all_struct(void)
 	if (g_struct)
 	{
 		i = -1;
-		while (++i < g_asm->size_of_struct)
+		while (++i < g_asm->size_of_struct * 2)
 		{
-			ft_strdel(&g_struct[i].label);
-			if (g_struct[i].command != NULL)
+			ft_strdel(&g_struct[i]->label);
+			if (g_struct[i]->arg != NULL)
 			{
-				if (g_struct[i].arg != NULL)
-				{
-					j = -1;
-					// while(g_struct[i].arg[++j] != NULL)
-					// 	ft_strdel(&g_struct[i].arg[j]);
-					free(g_struct[i].arg);
-				}
-				ft_strdel(&g_struct[i].command);
+				j = -1;
+				while (g_struct[i]->arg[++j] != NULL)
+					free(g_struct[i]->arg[j]);
+				free(g_struct[i]->arg);
 			}
+			if (g_struct[i]->command != NULL)
+				ft_strdel(&g_struct[i]->command);
+			free(g_struct[i]);
 		}
 		free(g_struct);
 	}
@@ -51,7 +50,7 @@ void	del_all_struct(void)
 		if (g_asm->matrix)
 		{
 			i = -1;
-			while (++i < 6)
+			while (++i < 7)
 				ft_strdel(&g_asm->matrix[i]);
 			free(g_asm->matrix);
 		}
