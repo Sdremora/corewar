@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   play_round.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 19:26:08 by hharvey           #+#    #+#             */
-/*   Updated: 2019/04/06 19:50:52 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/08 10:09:24 by sdremora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	do_op(t_arena *arena, t_carriage *carg)
 	|| check_code_args(carg->args, carg->op_id))
 		g_op_tab[carg->op_id].op_handler(carg, arena);
 	move_carriage(arena, carg, g_op_tab[carg->op_id].dir_size);
-	carg->op_id = -1;
+	carg->op_id = FALSE_OP;
 	ft_bzero(carg->args, sizeof(int) * 3);
 }
 
@@ -63,11 +63,11 @@ void	play_round(t_arena *arena)
 	{
 		carg = (t_carriage *)carg_node->content;
 		cur_pos = carg->mem_pos;
-		if (carg->op_id == -1)
+		if (carg->op_id == FALSE_OP)
 			operations_handle(carg, arena);
 		if (carg->pause_count > 0)
 			carg->pause_count--;
-		if (carg->op_id > -1 && carg->pause_count == 0)
+		if (carg->op_id != FALSE_OP && carg->pause_count == 0)
 			do_op(arena, carg);
 		if (arena->flags[F_VIS])
 			vis_move_carg(looping(cur_pos), looping(carg->mem_pos), arena);

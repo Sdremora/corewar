@@ -6,7 +6,7 @@
 /*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 17:55:36 by sdremora          #+#    #+#             */
-/*   Updated: 2019/04/01 18:04:30 by sdremora         ###   ########.fr       */
+/*   Updated: 2019/04/08 10:07:18 by sdremora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_carriage	*carg_new(int pos, int owner, int cycle, int carg_id)
 	res->mem_pos = looping(pos);
 	res->owner = owner;
 	res->carry = 0;
-	res->op_id = -1;
+	res->op_id = FALSE_OP;
 	res->live = 0;
 	res->last_live_cycle = cycle;
 	ft_bzero(res->args, 3 * sizeof(int));

@@ -6,7 +6,7 @@
 /*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 18:14:41 by sdremora          #+#    #+#             */
-/*   Updated: 2019/04/07 18:55:00 by sdremora         ###   ########.fr       */
+/*   Updated: 2019/04/08 10:04:21 by sdremora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 
 # define BD_LEN 42
 
+# define FALSE_OP 255
+
 typedef struct	s_player
 {
 	char	name[PROG_NAME_LENGTH + 1];
@@ -48,7 +50,7 @@ typedef struct	s_carriage
 	int				mem_pos;
 	int				owner;
 	int				carry;
-	char			op_id;
+	unsigned char	op_id;
 	int				live;
 	int				last_live_cycle;
 	int				args[3];
