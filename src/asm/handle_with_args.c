@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 15:11:55 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/08 12:13:41 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/08 16:03:51 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void		handle_arg(char *arg, int i, int *k, char *pre_matrix)
 
 	counter = find_flag(arg);
 	oct = counter;
-	oct = oct << g_asm->shift; // can we merge 58 + 59 lines?
+	oct = oct << g_asm->shift;
 	g_struct[i]->octet = g_struct[i]->octet | oct;
 	if (counter == 1)
 		handle_first_arg(arg, k, pre_matrix);

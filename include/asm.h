@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:08:27 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/08 14:13:01 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/08 17:38:29 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,16 @@
 
 typedef struct s_asm
 {
-	char		*binary_name;
-	char		**matrix;
-	char		buf[BUFF];
-	int			str_counter;
-	int			flag_name;
-	int			flag_comment;
-	int			i;
-	int			index;
-	int			shift;
-	int			size_of_struct;
+	char			*binary_name;
+	char			**matrix;
+	unsigned char	buf[BUFF];
+	int				str_counter;
+	int				flag_name;
+	int				flag_comment;
+	int				i;
+	int				index;
+	int				shift;
+	int				size_of_struct;
 
 }				t_asm;
 
