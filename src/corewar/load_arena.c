@@ -1,17 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   load_arena.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/07 18:08:59 by sdremora          #+#    #+#             */
+/*   Updated: 2019/04/07 18:09:00 by sdremora         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar.h"
 
 static void	locate_players(t_arena *arena)
 {
-    int 		i;
-    int 		pos;
+	int			i;
+	int			pos;
 	t_carriage	*carriage;
 	t_list		*node;
 
-    i = 0;
-    while (i < arena->players_count)
-    {
+	i = 0;
+	while (i < arena->players_count)
+	{
 		pos = i * MEM_SIZE / arena->players_count;
-        ft_memcpy(arena->map + pos, arena->players[i].code, arena->players[i].code_size);
+		ft_memcpy(arena->map + pos,
+		arena->players[i].code, arena->players[i].code_size);
 		arena->max_carg_id++;
 		carriage = carg_new(pos, i + 1, 0, arena->max_carg_id);
 		if (carriage == NULL)
@@ -20,69 +33,24 @@ static void	locate_players(t_arena *arena)
 		if (node == NULL)
 			error_handle(E_NO_MEM, arena, NULL);
 		ft_lstadd(&arena->carg_lst, node);
-        i++;
-    }
-    return ;
-}
-
-void		add_swap_players(t_arena *arena, int pos)
-{
-	int			i;
-	t_player	temp;
-
-	i = 0;
-	while (i < pos && arena->players[i].id > arena->players[pos].id)
 		i++;
-	if (i == pos)
-		return ;
-	else
-	{
-		temp = arena->players[pos];
-		arena->players[pos] = arena->players[i];
-		arena->players[i] = temp;
 	}
-	add_swap_players(arena, i);
+	return ;
 }
 
-void		swap_players(t_arena *arena, int pos)
-{
-	int			i;
-	t_player	temp;
-
-	i = 0;
-	while (i < MAX_PLAYERS && arena->players[i].id != -1)
-		i++;
-	if (i == MAX_PLAYERS)
-		error_handle(E_PLAYER_NUMBER, arena, NULL);
-	temp = arena->players[pos];
-	arena->players[pos] = arena->players[i];
-	arena->players[i] = temp;
-	add_swap_players(arena, i);
-}
-
-int			get_pnb(t_arena *arena)
+void		flag_format(int *arr)
 {
 	int i;
-	int res;
-	static int nb = MAX_PLAYERS;
 
-	if ((i = arena->flags[F_N]) != -1)
-	{
-		i--;
-		if (i >= 0 && i < MAX_PLAYERS && arena->players[i].id < 0)
-		{
-			res = arena->flags[F_N];
-			if (arena->players[i].id < -1)
-				swap_players(arena, i);
-			return (i);
-		}
-		else
-			error_handle(E_PLAYER_NUMBER, arena, NULL);
-	}
 	i = 0;
-	while (arena->players[i].id != -1)
-		i++;
-	return (i);
+	arr[F_STEALTH] = arr[F_S];
+	if (arr[F_VIS])
+	{
+		while (i < FLAGS_COUNT)
+			arr[i++] = -1;
+		arr[F_V] = 0;
+		arr[F_VIS] = 1;
+	}
 }
 
 int			check_players(t_arena *arena)
@@ -92,7 +60,8 @@ int			check_players(t_arena *arena)
 	i = 0;
 	while (i < arena->players_count)
 	{
-		if (arena->players[i].id == -1 || arena->players[i].id >= arena->players_count)
+		if (arena->players[i].id == -1
+			|| arena->players[i].id >= arena->players_count)
 			return (0);
 		i++;
 	}
@@ -122,6 +91,6 @@ void		load_arena(int argc, char **argv, t_arena *arena)
 		error_handle(E_PLAYER_NUMBER, arena, NULL);
 	}
 	arena->last_live_player = arena->players_count - 1;
-	arena->flags[F_STEALTH] = arena->flags[F_S];
+	flag_format(arena->flags);
 	locate_players(arena);
 }

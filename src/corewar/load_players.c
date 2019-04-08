@@ -1,91 +1,52 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   load_players.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/07 18:09:03 by sdremora          #+#    #+#             */
+/*   Updated: 2019/04/07 18:43:05 by sdremora         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar.h"
 
 void	check_magic(int fd, t_arena *arena)
 {
-    unsigned int magic;
+	unsigned int magic;
 
-    magic = 0;
-    if (read(fd, &magic, 4) != 4 || magic != 4085508608)
+	magic = 0;
+	if (read(fd, &magic, 4) != 4 || magic != 4085508608)
 		error_handle(E_INV_CHAMP, arena, "bad magic");
-}
-
-void	read_name(int fd, t_player *player, t_arena *arena)
-{
-    if (read(fd, player->name, PROG_NAME_LENGTH) != PROG_NAME_LENGTH)
-        error_handle(E_INV_CHAMP, arena, "the program code of the player is too short");
 }
 
 void	check_null(int fd, t_arena *arena)
 {
-    unsigned int nulls;
+	unsigned int nulls;
 
-    nulls = 0;
-    if (read (fd, &nulls, 4) != 4 || nulls != 0)
-        error_handle(E_INV_CHAMP, arena, "zero section is not empty");
-}
-
-int    swap_int_bytes(unsigned int nb)
-{
-    int res;
-
-    res = nb >> 24;
-    res |= (nb >> 8) & 0xff00;
-    res |= (nb << 8) & 0xff0000;
-    res |= (nb << 24);
-    return(res);
-}
-
-void     read_code_size(int fd, int *p, t_arena *arena)
-{
-    int size;
-
-    size = 0;
-    if (read (fd, &size, 4) != 4)
-        error_handle(E_INV_CHAMP, arena, "invalid size");
-    *p = swap_int_bytes(size);
-    return ;
-}
-
-void	read_comment(int fd, t_player *player, t_arena *arena)
-{
-    if (read(fd, player->comment, COMMENT_LENGTH) != COMMENT_LENGTH)
-        error_handle(E_INV_CHAMP, arena, "the program code of the player is too short");
-}
-
-void    read_code(int fd, int size, char *code, t_arena *arena)
-{
-	char	temp[10];
-	int		len;
-
-	len = read(fd, code, COMMENT_LENGTH);
-	if (len < 0)
-		error_handle(E_INV_CHAMP, arena, "the program code of the player is too short");
-    if (len != size)
-        error_handle(E_INV_CHAMP, arena, "program size is not equal to the specified value");
-	if (read(fd, code, 10) > 0 || len > CHAMP_MAX_SIZE)
-		error_handle(E_INV_CHAMP, arena, "the program code of the player is too long");
-    return ;
+	nulls = 0;
+	if (read(fd, &nulls, 4) != 4 || nulls != 0)
+		error_handle(E_INV_CHAMP, arena, "zero section is not empty");
 }
 
 void	load_player(char *path, t_arena *arena)
 {
 	t_player	*player;
-    int			fd;
-    int         id;
+	int			fd;
 
-    fd = open(path, O_RDONLY);
+	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		error_handle(E_INV_PATH, arena, path);
 	player = &(arena->players[get_pnb(arena)]);
 	player_ini(player, &arena->flags[F_N]);
-    check_magic(fd, arena);
+	check_magic(fd, arena);
 	read_name(fd, player, arena);
 	check_null(fd, arena);
-    read_code_size(fd, &(player->code_size), arena);
+	read_code_size(fd, &(player->code_size), arena);
 	read_comment(fd, player, arena);
-    check_null(fd, arena);
-    read_code(fd, player->code_size, player->code, arena);
-//    arena->last_live_player = i;
+	check_null(fd, arena);
+	read_code(fd, player->code_size, player->code, arena);
 	arena->players_count++;
-    close(fd);
+	close(fd);
 }

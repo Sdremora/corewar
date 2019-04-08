@@ -22,7 +22,7 @@ NC=\033[0m # No Color
 
 .PHONY: all run debug add_dflags clean fclean re echo
 
-all: asm
+all: corewar asm
 
 asm: $(LIB) $(OBJ_ASM)
 	@gcc $(OBJ_ASM) $(LIB) $(addprefix -I,$(INCLUDES)) -o $@
@@ -61,3 +61,7 @@ re: fclean all
 echo:
 	@echo $(SRC_ASM)
 	@echo $(OBJ_ASM)
+
+run:
+	./42asm super_champ.s
+	./corewar -vis super_champ.cor

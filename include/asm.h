@@ -6,7 +6,11 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:08:27 by mnarbert          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/04/05 18:33:35 by kkihn            ###   ########.fr       */
+=======
+/*   Updated: 2019/04/05 17:32:29 by mnarbert         ###   ########.fr       */
+>>>>>>> 086c45f6155a08314cfa18e3d18a2c859e73a7a3
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,4 +132,7 @@ void			handle_arg(char *arg, int i, int *k, char *pre_matrix);
 int				find_right_label(int i, char *label);
 void 			make_binary(void);
 void			print_hexdump(void);
+void	print_noll(int nb);
+int		find_position_in_str(void);
+int		find_position_in_str_for_instruction(char *instruction);
 #endif
