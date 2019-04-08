@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arena_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 18:08:19 by sdremora          #+#    #+#             */
-/*   Updated: 2019/04/07 18:08:20 by sdremora         ###   ########.fr       */
+/*   Updated: 2019/04/08 18:08:38 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	arena_ini(t_arena *arena)
 	arena->flags[F_V] = 0;
 	arena->flags[F_VIS] = 0;
 	arena->max_carg_id = 0;
+	arena->debug = 0;
 }
 
 void	arena_clear(t_arena *arena)

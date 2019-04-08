@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cw.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 18:14:41 by sdremora          #+#    #+#             */
-/*   Updated: 2019/04/08 10:04:21 by sdremora         ###   ########.fr       */
+/*   Updated: 2019/04/08 18:08:15 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct	s_arena
 	int				flags[FLAGS_COUNT];
 	int				max_carg_id;
 	t_point			shift;
+	int				debug;
 }				t_arena;
 
 typedef union	u_converter
