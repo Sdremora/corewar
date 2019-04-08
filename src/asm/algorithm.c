@@ -6,11 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 11:47:42 by mnarbert          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/04/08 13:21:21 by mnarbert         ###   ########.fr       */
-=======
-/*   Updated: 2019/04/08 12:52:08 by kkihn            ###   ########.fr       */
->>>>>>> eb1ab1216256a27f4d0046611a48e66abafaebe4
+/*   Updated: 2019/04/08 18:01:52 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +32,7 @@ int		find_right_label(int i, char *label)
 			return (counter);
 		}
 	}
-<<<<<<< HEAD
 	error_no_label(label, i);
-=======
-	// error_no_label(label);
->>>>>>> eb1ab1216256a27f4d0046611a48e66abafaebe4
 	return (0);
 }
 

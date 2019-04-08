@@ -6,11 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 09:47:29 by mnarbert          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/04/08 16:12:22 by mnarbert         ###   ########.fr       */
-=======
-/*   Updated: 2019/04/08 13:03:19 by kkihn            ###   ########.fr       */
->>>>>>> eb1ab1216256a27f4d0046611a48e66abafaebe4
+/*   Updated: 2019/04/08 18:02:13 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +83,6 @@ void	invalid_error_instruction(char **instruction, int flag)
 	exit(0);
 }
 
-<<<<<<< HEAD
 void	error_no_label(char *label, int index)
 {
 	int		i;
@@ -118,9 +113,3 @@ void	error_no_label(char *label, int index)
 	del_all_struct();
 	exit(0);
 }
-=======
-// void	error_no_label(void)
-// {
-
-// }
->>>>>>> eb1ab1216256a27f4d0046611a48e66abafaebe4
