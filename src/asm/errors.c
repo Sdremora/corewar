@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 09:47:29 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/05 17:15:56 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/08 12:45:55 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,49 +26,6 @@
  ** 3 - for DIRECT
  ** 4 - for REGISTR
  */
-
-int		find_position_in_str(void)
-{
-	int		i;
-
-	i = 0;
-	if (BUFFER[g_asm->i] == '\n' && g_asm->i != 0)
-	{
-		g_asm->i--;
-		i += 2;
-	}
-	while (BUFFER[g_asm->i] != '\n' && g_asm->i != 0)
-	{
-		g_asm->i--;
-		i++;
-	}
-	return (i);
-}
-
-int		find_position_in_str_for_instruction(char *instruction)
-{
-	int		i;
-	int		counter;
-	char	*temp;
-
-	if (BUFFER[g_asm->i] == '\n' && g_asm->i != 0)
-		g_asm->i--;
-	while (g_asm->buf[g_asm->i] != '\n' && g_asm->i != 0)
-		g_asm->i--;
-	i = 0;
-	g_asm->i++;
-	counter = g_asm->i;
-	while (BUFFER[g_asm->i] != '\n' && BUFFER[g_asm->i] != '\0')
-	{
-		i++;
-		g_asm->i++;
-	}	
-	temp = ft_strnstr(&BUFFER[counter], instruction, i);
-	counter = 0;
-	while (temp[counter] != '\n' && temp[counter] != '\0')
-		counter++;
-	return(i - counter + 1);
-}
 
 void    lexical_error(void)
 {
@@ -124,4 +81,9 @@ void	invalid_error_instruction(char **instruction, int flag)
 	ft_strdel(instruction);
 	del_all_struct();
 	exit(0);
+}
+
+void	error_no_label(void)
+{
+
 }
