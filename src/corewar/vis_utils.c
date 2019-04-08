@@ -6,7 +6,7 @@
 /*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 17:03:50 by hharvey           #+#    #+#             */
-/*   Updated: 2019/04/08 17:26:53 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/08 18:01:25 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,33 +70,7 @@ void		speed_n_exit(int *speed, char temp)
 		print_nb(1000000 / *speed, 5, POS_NB, 10);
 }
 
-void		carg_info(t_arena *arena, int nb)
-{
-	t_list *clist;
-	t_carriage *cg;
-	int i;
-	int pos;
-
-	clist = arena->carg_lst;
-	while (nb && clist)
-	{
-		clist = clist->next;
-		nb--;
-	}
-	if (clist)
-	{
-		cg = (t_carriage*)clist->content;
-		pos = plr_pos(arena->players_count) + 14; 	
-		color_set(10, NULL);
-		mvprintw(pos, POS_TEXT, "                   ");
-		mvprintw(pos++, POS_TEXT, arena->players[cg->owner - 1].name);
-		i = -1;
-		while (++i < 16)
-			print_nb(cg->reg[i], pos + i, POS_TEXT,10);
-	}
-}
-
-void		vis_pause(t_arena *arena, int *pause, int *speed, int nb)
+void		vis_pause(t_arena *arena, int *pause, int *speed, int *nb)
 {
 	char temp;
 
@@ -114,7 +88,10 @@ void		vis_pause(t_arena *arena, int *pause, int *speed, int nb)
 		*pause = 0;
 	}
 	else if (temp == 9)
-		carg_info(arena, nb++);
+	{
+		*nb = (*nb + 1) % ft_lstlen(arena->carg_lst);
+		carg_info(arena, *nb);
+	}
 	speed_n_exit(speed, temp);
 	refresh();
 	if (*pause)

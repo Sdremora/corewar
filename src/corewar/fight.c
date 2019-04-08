@@ -6,7 +6,7 @@
 /*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 18:08:26 by sdremora          #+#    #+#             */
-/*   Updated: 2019/04/08 17:01:57 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/08 17:57:30 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@ void		fight_vis(t_arena *arena)
 {
 	int		speed;
 	int		pause;
+	int		nb;
 
+	nb = 0;
 	introducing(arena);
 	arena_vis_init(arena, &speed, &pause);
 	while (arena->carg_lst)
 	{
 		print_nb(arena->cur_cycle, 7, POS_NB, 10);
-		vis_pause(arena, &pause, &speed, 0);
+		carg_info(arena, nb);
+		vis_pause(arena, &pause, &speed, &nb);
 		usleep(speed);
 		arena->cur_cycle++;
 		arena->cycle_past_check++;
