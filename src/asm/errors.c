@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 09:47:29 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/08 13:03:19 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/08 17:59:28 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,33 @@ void	invalid_error_instruction(char **instruction, int flag)
 	exit(0);
 }
 
-// void	error_no_label(void)
-// {
+void	error_no_label(char *label, int index)
+{
+	int		i;
+	char 	*temp;
+	int		flag;
 
-// }
+	flag = 0;
+	ft_putstr("No such label ");
+	ft_putstr(label);
+	ft_putstr(" while attempting to dereference token [TOKEN][");
+	print_noll(g_struct[index]->str_number);
+	ft_putnbr(g_struct[index]->str_number);
+	temp = ft_strjoin(":", label);
+	label = ft_strjoin(label, ",");
+	i = find_label_index(label, &flag);
+	ft_putchar(':');
+	if (BUFFER[flag + i - 2] == '%')
+		i--;
+	print_noll(i);
+	ft_putnbr(i - 1);
+	ft_putstr("] ");
+	if (BUFFER[flag + i - 1] == '%')
+		ft_putstr("] DIRECT_LABEL \"%");
+	else
+		ft_putstr("] INDIRECT_LABEL \"");
+	ft_putstr(temp);
+	ft_putstr("\"\n");
+	del_all_struct();
+	exit(0);
+}

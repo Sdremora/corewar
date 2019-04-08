@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 17:16:12 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/08 13:50:12 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/08 17:59:02 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@ void	skip_whitespaces(void)
 {
 	while (g_asm->buf[g_asm->i] == ' ' || g_asm->buf[g_asm->i] == '\t')
 		g_asm->i++;
+}
+
+void	skip_whitespaces_com(void)
+{
+	while (g_asm->buf[g_asm->i] == ' ' || g_asm->buf[g_asm->i] == '\t')
+		g_asm->i++;
+	if (g_asm->buf[g_asm->i] == COMMENT_CHAR)
+		while (g_asm->buf[g_asm->i] != '\n' && g_asm->buf[g_asm->i] != '\0')
+			g_asm->i++;
 }
 
 void	skip_comment_and_spaces(void)
