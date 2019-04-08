@@ -6,7 +6,11 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 17:16:12 by mnarbert          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/04/08 13:35:37 by mnarbert         ###   ########.fr       */
+=======
+/*   Updated: 2019/04/08 13:50:12 by kkihn            ###   ########.fr       */
+>>>>>>> eb1ab1216256a27f4d0046611a48e66abafaebe4
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +69,8 @@ void    parse_from_file(int argc, char **argv)
 			{
 				if (g_asm->buf[g_asm->i] == '\0')
 					syntax_error(6);
+				// if (g_asm->flag_comment == 0)
+				// 	length_error(2);
 				if (g_asm->flag_name == 0)
 					length_error(1);
 				else if (g_asm->flag_comment == 0)

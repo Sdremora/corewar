@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:08:27 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/08 15:44:38 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/08 16:54:46 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define COMMENT	g_asm->matrix[4]
 # define ZERO2		g_asm->matrix[5] 
 # define CODE 		g_asm->matrix[6]
-# define BUFF		3000
+# define BUFF		30000
 # define BUFFER		g_asm->buf
 # define INDEX		g_asm->index
 /*struct g_asm is for different things:
