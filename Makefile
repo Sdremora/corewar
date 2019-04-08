@@ -61,3 +61,7 @@ re: fclean all
 echo:
 	@echo $(SRC_ASM)
 	@echo $(OBJ_ASM)
+
+run:
+	./42asm super_champ.s
+	./corewar -vis super_champ.cor
