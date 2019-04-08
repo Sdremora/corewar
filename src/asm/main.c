@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 14:54:49 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/08 12:38:56 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/08 14:25:29 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,8 @@ int		main(int argc, char **argv)
 		// 	printf("arg1: %s, arg2: %s, arg3: %s\n\n", g_struct[i].arg[0], g_struct[i].arg[1], g_struct[i].arg[2]);
 		// }
 		g_asm->i = 0;
-		// printf("_____\n");
 		fflush(stdout);
 		count_code_size();
-		// printf("1_____\n");
 		fflush(stdout);
 		init_matrix_element(&CODE, count_code_size());
 		realise_algorithm();
@@ -87,6 +85,7 @@ int		main(int argc, char **argv)
 		if (argc == 3 && ft_strequ(argv[1], "-hex") == 1)
 			print_hexdump();
 		make_binary();
+		ft_printf("Writing output program to %s\n", g_asm->binary_name);
 		del_all_struct();
 		// int i = 5;
 		// write (1, &i, 4);

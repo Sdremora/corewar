@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 09:47:29 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/08 12:45:55 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/08 13:03:19 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	invalid_error_instruction(char **instruction, int flag)
 	exit(0);
 }
 
-void	error_no_label(void)
-{
+// void	error_no_label(void)
+// {
 
-}
+// }

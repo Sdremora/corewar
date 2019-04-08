@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 17:16:12 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/08 12:16:41 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/08 13:50:12 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void    parse_from_file(int argc, char **argv)
 			{
 				if (g_asm->buf[g_asm->i] == '\0')
 					syntax_error(6);
+				// if (g_asm->flag_comment == 0)
+				// 	length_error(2);
 				if (g_asm->flag_name == 0)
 					length_error(1);
 				else if (g_asm->flag_comment == 0)

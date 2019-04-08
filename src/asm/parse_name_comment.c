@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_name_comment.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 11:58:45 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/05 11:54:33 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/08 14:37:43 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	write_name_comment_to_matrix(char i, char *matrix_element, int j)
 int		going_throw_two_quotes(int limit, char *matrix_element)
 {
 	int		counter;
+	int		tmp;
 
 	skip_whitespaces();
 	if (g_asm->buf[g_asm->i] == '\n' || g_asm->buf[g_asm->i] == COMMENT_CHAR)
@@ -42,7 +43,11 @@ int		going_throw_two_quotes(int limit, char *matrix_element)
 	{
 		counter += 2;
 		if (g_asm->buf[g_asm->i] == '\n')
+		{
+			tmp = g_asm->str_counter;
 			skip_comment_and_spaces();
+			counter += g_asm->str_counter - tmp;
+		}
 		if (counter > limit)
 			return (-1);
 		write_name_comment_to_matrix(g_asm->buf[g_asm->i],
@@ -57,8 +62,16 @@ void	find(int counter, int length, char *matrix_element)
 	g_asm->i += counter;
 	if (going_throw_two_quotes(length, matrix_element) == -1)
 	{
-		g_asm->flag_comment = 1;
-		g_asm->flag_name = 0;
+		if (counter == 5)
+		{
+			g_asm->flag_comment = 1;
+			g_asm->flag_name = 0;
+		}
+		else if (counter == 8)
+		{
+			g_asm->flag_comment = 0;
+			g_asm->flag_name = 1;
+		}
 	}
 	if (g_asm->buf[g_asm->i] == '"')
 		g_asm->i++;
@@ -70,9 +83,10 @@ void	find_name_comment(void)
 	{
 		if (g_asm->flag_name == -1)
 			g_asm->flag_name = 1;
+		
 		else if (g_asm->flag_name == 1)
 			syntax_error(2);
-		find(5, PROG_NAME_LENGTH, NAME);
+		find(5, PROG_NAME_LENGTH * 2, NAME);
 	}
 	else if (ft_strnequ(".comment", &g_asm->buf[g_asm->i], 8) != 0)
 	{
@@ -80,7 +94,7 @@ void	find_name_comment(void)
 			g_asm->flag_comment = 1;
 		else if (g_asm->flag_comment == 1)
 			syntax_error(1);
-		find(8, COMMENT_LENGTH, COMMENT);
+		find(8, COMMENT_LENGTH * 2, COMMENT);
 	}
 	else if (g_asm->buf[g_asm->i] == '\0')
 	{
