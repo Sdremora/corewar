@@ -6,7 +6,7 @@
 /*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 18:08:52 by sdremora          #+#    #+#             */
-/*   Updated: 2019/04/07 18:08:52 by sdremora         ###   ########.fr       */
+/*   Updated: 2019/04/08 10:22:11 by sdremora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 
 void	print_usage(void)
 {
-	ft_printf("./corewar [-d N -v N | -vis] -a -n N <champion1.cor> <...>\n");
-	ft_printf("  %-16s: Prints output from \"aff\" (Default is to hide it)\n",
-				"-a");
+	ft_printf("./corewar [-d N -v N -a | -s N -v N -a | -vis] \
+-n N <champion1.cor> <...>\n");
 	ft_printf("  %-16s: Precise indication of the player number (from 1 to \
 max champions)\n", "-n N");
 	ft_printf("{green}Text output mode{def}\n");
+	ft_printf("  %-16s: Prints output from \"aff\" (Default is to hide it)\n",
+				"-a");
 	ft_printf("  %-16s: Dumps memory after N cycles then exits\n",
 				"-d (or -dump) N");
+	ft_printf("  %-16s: Runs N cycles, dumps memory, pauses, then repeats\n",
+				"-s N");
 	ft_printf("  %-16s: Verbosity levels, can be added together to enable \
 several\n", "-v N");
 	ft_printf("  %-17s - 0 : Show only essentials\n", "");
