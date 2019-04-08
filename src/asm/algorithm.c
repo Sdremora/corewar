@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algorithm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 11:47:42 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/08 12:45:36 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/08 13:21:21 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		find_right_label(int i, char *label)
 			return (counter);
 		}
 	}
-	error_no_label(label);
+	error_no_label(label, i);
 	return (0);
 }
 

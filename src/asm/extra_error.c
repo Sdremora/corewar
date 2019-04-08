@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extra_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 12:40:56 by kkihn             #+#    #+#             */
-/*   Updated: 2019/04/08 12:44:57 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/08 16:05:17 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,3 +54,34 @@ int		find_position_in_str_for_instruction(char *instruction)
 		counter++;
 	return(i - counter + 1);
 }
+
+int		find_label_index(char *label, int *flag)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (BUFFER[i])
+	{
+		j = 0;
+		if (BUFFER[i] == label[j] || !label[j])
+		{
+			while (label[j] == BUFFER[i + j] && BUFFER[i + j])
+				j++;
+			if (label[j] == '\0')
+			{
+				j = 0;
+				while (BUFFER[i] != '\n' && i != 0)
+				{
+					i--;
+					j++;
+				}
+				*flag = i;
+				return (j);
+			}	
+		}
+		i++;
+	}
+	return (0);
+}
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   writing_commands_to_struct.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 14:35:56 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/08 12:12:35 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/08 16:46:46 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int		check_label(char **temp)
 		g_asm->i++;
 		INDEX++;
 		ft_strdel(temp);
+		g_struct[INDEX]->str_number = g_asm->str_counter;
 		return (1);
 	}
 	else if (BUFFER[g_asm->i] != LABEL_CHAR && ft_strlen(*temp) > 0)
@@ -64,7 +65,7 @@ void	check_args(void)
 
 	temp = ft_strnew(count_args_size());
 	i = -1;
-	while (BUFFER[g_asm->i] != '\n' && BUFFER[g_asm->i] != '\0')
+	while (BUFFER[g_asm->i] != '\n' && BUFFER[g_asm->i] != '\0' && BUFFER[g_asm->i] != COMMENT_CHAR)
 		temp[++i] = BUFFER[g_asm->i++];
 	check_invalid_args_end_of_file(&temp);
 	array = split(temp, SEPARATOR_CHAR);
@@ -107,8 +108,10 @@ void	write_labels_commands(void)
 		ft_strdel(&temp);
 		check_args();
 		INDEX++;
+		skip_whitespaces_com();
 		if (g_asm->buf[g_asm->i] == '\n')
 			g_asm->str_counter++;
+		g_struct[INDEX]->str_number = g_asm->str_counter;
 		g_asm->i++;
 		skip_comment_and_spaces();
 	}
