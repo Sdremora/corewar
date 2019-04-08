@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cw_func.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 18:37:38 by sdremora          #+#    #+#             */
-/*   Updated: 2019/04/07 18:38:44 by sdremora         ###   ########.fr       */
+/*   Updated: 2019/04/08 17:01:28 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void		draw_breakdown(int lnb[MAX_PLAYERS], int pnb, int step);
 int			nb_carg_pos(t_arena *arena, int pos);
 void		print_nb(int nb, int y, int x, int clr_nb);
 int			plr_pos(int nb);
-void		vis_pause(int *pause, int *speed);
+void		vis_pause(t_arena *arena, int *pause, int *speed, int nb);
 
 /*
 **	flags_handle.c
