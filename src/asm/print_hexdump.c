@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 14:05:06 by kkihn             #+#    #+#             */
-/*   Updated: 2019/04/05 17:11:00 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/08 17:51:54 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,6 @@ void print_hexdump(void)
 	ft_printf(""); 
 	ft_printf(BC_BOLD);
 	print_line(CODE, &i, &line_nbr);
-	  
+	ft_printf(BC_DEFAULT);  
 	ft_printf("\n");
 }

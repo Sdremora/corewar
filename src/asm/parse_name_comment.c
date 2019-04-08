@@ -6,13 +6,13 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 11:58:45 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/08 14:37:43 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/08 17:48:13 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-void	write_name_comment_to_matrix(char i, char *matrix_element, int j)
+void	write_name_comment_to_matrix(unsigned char i, char *matrix_element, int j)
 {
 	char	*temp;
 
@@ -51,7 +51,8 @@ int		going_throw_two_quotes(int limit, char *matrix_element)
 		if (counter > limit)
 			return (-1);
 		write_name_comment_to_matrix(g_asm->buf[g_asm->i],
-									matrix_element, counter - 2);
+						matrix_element, counter - 2);
+		
 		g_asm->i++;
 	}
 	return (1);
@@ -79,7 +80,7 @@ void	find(int counter, int length, char *matrix_element)
 
 void	find_name_comment(void)
 {
-	if (ft_strnequ(".name", &g_asm->buf[g_asm->i], 5) != 0)
+	if (ft_strnequ(".name", (char *)&g_asm->buf[g_asm->i], 5) != 0)
 	{
 		if (g_asm->flag_name == -1)
 			g_asm->flag_name = 1;
@@ -88,7 +89,7 @@ void	find_name_comment(void)
 			syntax_error(2);
 		find(5, PROG_NAME_LENGTH * 2, NAME);
 	}
-	else if (ft_strnequ(".comment", &g_asm->buf[g_asm->i], 8) != 0)
+	else if (ft_strnequ(".comment",  (char *)&g_asm->buf[g_asm->i], 8) != 0)
 	{
 		if (g_asm->flag_comment == -1)
 			g_asm->flag_comment = 1;

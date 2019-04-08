@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extra_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 12:40:56 by kkihn             #+#    #+#             */
-/*   Updated: 2019/04/08 16:05:17 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/08 17:59:20 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		find_position_in_str_for_instruction(char *instruction)
 		i++;
 		g_asm->i++;
 	}	
-	temp = ft_strnstr(&BUFFER[counter], instruction, i);
+	temp = ft_strnstr((char *)&BUFFER[counter], instruction, i);
 	counter = 0;
 	while (temp[counter] != '\n' && temp[counter] != '\0')
 		counter++;

@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 14:54:49 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/08 14:25:29 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/08 17:51:17 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ int		main(int argc, char **argv)
 			print_hexdump();
 		make_binary();
 		ft_printf("Writing output program to %s\n", g_asm->binary_name);
+
+		// printf("%llu\n", (int)'杯');
 		del_all_struct();
 		// int i = 5;
 		// write (1, &i, 4);
