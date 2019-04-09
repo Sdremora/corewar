@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 14:35:56 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/09 12:13:01 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/09 14:05:15 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ void	check_args(void)
 
 	temp = ft_strnew(count_args_size());
 	i = -1;
-	while (BUFFER[g_asm->i] != '\n' && BUFFER[g_asm->i] != '\0' && BUFFER[g_asm->i] != COMMENT_CHAR)
+	while (BUFFER[g_asm->i] != '\n' && BUFFER[g_asm->i] != '\0' &&
+	BUFFER[g_asm->i] != COMMENT_CHAR)
 		temp[++i] = BUFFER[g_asm->i++];
 	check_invalid_args_end_of_file(&temp);
 	array = split(temp, SEPARATOR_CHAR);
@@ -83,8 +84,7 @@ void	check_args(void)
 		g_struct[INDEX]->arg[i] = ft_strdup(array[i]);
 		ft_strdel(&array[i]);
 	}
-	if (array)
-		free(array);
+	(array) ? free(array) : 0;
 }
 
 void	write_labels_commands(void)
@@ -100,8 +100,7 @@ void	write_labels_commands(void)
 		i = -1;
 		temp = ft_strnew(count_chars());
 		while (BUFFER[g_asm->i] != '\0' && BUFFER[g_asm->i] > 32 &&
-		BUFFER[g_asm->i] != LABEL_CHAR && BUFFER[g_asm->i] != '\n' &&
-		BUFFER[g_asm->i] != DIRECT_CHAR)
+		BUFFER[g_asm->i] != LABEL_CHAR && BUFFER[g_asm->i] != DIRECT_CHAR)
 			temp[++i] = BUFFER[g_asm->i++];
 		if (check_label(&temp) == 1)
 			continue;
@@ -111,17 +110,9 @@ void	write_labels_commands(void)
 		check_args();
 		INDEX++;
 		skip_whitespaces_com();
-		if (g_asm->buf[g_asm->i] == '\n')
-			g_asm->str_counter++;
+		(g_asm->buf[g_asm->i] == '\n') ? g_asm->str_counter++ : 0;
 		g_struct[INDEX]->str_number = g_asm->str_counter;
 		g_asm->i++;
 		skip_comment_and_spaces();
 	}
-	//i = -1;
-	//  while (++i < INDEX)
-	// {
-	// 	printf("# of index: %d\n", i);
-	// 	printf("label: %s, name:%s, byte:%d\n", g_struct[i]->label, g_struct[i]->command, g_struct[i]->byte);
-	// 	printf("arg1: %s, arg2: %s, arg3: %s\n\n", g_struct[i]->arg[0], g_struct[i]->arg[1], g_struct[i]->arg[2]);
-	// }
 }

@@ -10,8 +10,6 @@ diff $DIR1/$OUTPUT $OUTPUT > $RES
 rm $DIR1/$OUTPUT $OUTPUT 
 cat $RES
 
-echo "\n"
-read -p "Клац  >> " wait
 
 INPUT=NoIdea.s
 OUTPUT=NoIdea.cor
@@ -22,8 +20,6 @@ cmp $DIR1/$OUTPUT $OUTPUT > $RES
 rm $DIR1/$OUTPUT $OUTPUT 
 cat $RES
 
-echo "\n"
-read -p "Клац  >> " wait
 
 INPUT=tchupka.s
 OUTPUT=tchupka.cor
@@ -34,10 +30,8 @@ cmp $DIR1/$OUTPUT $OUTPUT> $RES
 rm $DIR1/$OUTPUT $OUTPUT 
 cat $RES
 
-echo "\n"
-read -p "Клац  >> " wait
 
-INPUT= run_Kitty_RUN.s
+INPUT=run_Kitty_RUN.s
 OUTPUT=run_Kitty_RUN.cor
 printf "\n\t$YELLOW$INPUT$NC\n"
 ./asm $DIR1/$INPUT
@@ -46,11 +40,9 @@ cmp $DIR1/$OUTPUT $OUTPUT > $RES
 rm $DIR1/$OUTPUT $OUTPUT 
 cat $RES
 
-echo "\n"
-read -p "Клац  >> " wait
 
-INPUT= Explosive_Kitty.s
-OUTPUT = Explosive_Kitty.cor
+INPUT=Explosive_Kitty.s
+OUTPUT=Explosive_Kitty.cor
 printf "\n\t$YELLOW$INPUT$NC\n"
 ./asm $DIR1/$INPUT
 ./42asm $DIR1/$INPUT
@@ -58,10 +50,8 @@ cmp $DIR1/$OUTPUT $OUTPUT > $RES
 rm $DIR1/$OUTPUT $OUTPUT 
 cat $RES
 
-echo "\n"
-read -p "Клац  >> " wait
 
-INPUT= O-Maley_Miaou.s
+INPUT=O-Maley_Miaou.s
 OUTPUT=O-Maley_Miaou.cor
 printf "\n\t$YELLOW$INPUT$NC\n"
 ./asm $DIR1/$INPUT
@@ -70,10 +60,8 @@ cmp $DIR1/$OUTPUT $OUTPUT > $RES
 rm $DIR1/$OUTPUT $OUTPUT 
 cat $RES
 
-echo "\n"
-read -p "Клац  >> " wait
 
-INPUT= Stargate0_1.s
+INPUT=Stargate0_1.s
 OUTPUT=Stargate0_1.cor
 printf "\n\t$YELLOW$INPUT$NC\n"
 ./asm $DIR1/$INPUT
@@ -82,10 +70,8 @@ cmp $DIR1/$OUTPUT $OUTPUT > $RES
 rm $DIR1/$OUTPUT $OUTPUT 
 cat $RES
 
-echo "\n"
-read -p "Клац  >> " wait
 
-INPUT= zork.s
+INPUT=zork.s
 OUTPUT=zork.cor
 printf "\n\t$YELLOW$INPUT$NC\n"
 ./asm $DIR1/$INPUT
@@ -94,10 +80,8 @@ cmp $DIR1/$OUTPUT $OUTPUT > $RES
 rm $DIR1/$OUTPUT $OUTPUT 
 cat $RES
 
-echo "\n"
-read -p "Клац  >> " wait
 
-INPUT= Hidden.s
+INPUT=Hidden.s
 OUTPUT=Hidden.cor
 printf "\n\t$YELLOW$INPUT$NC\n"
 ./asm $DIR1/$INPUT
@@ -105,19 +89,6 @@ printf "\n\t$YELLOW$INPUT$NC\n"
 cmp $DIR1/$OUTPUT $OUTPUT > $RES
 rm $DIR1/$OUTPUT $OUTPUT 
 cat $RES
-
-echo "\n"
-read -p "Клац  >> " wait
-
-INPUT= NoIdea.s
-printf "\n\t$YELLOW$INPUT$NC\n"
-./asm $DIR1/$INPUT 
-./42asm $DIR1/$INPUT
-cmp $DIR1/$OUTPUT $OUTPUT > $RES
-rm $DIR1/$OUTPUT $OUTPUT 
-cat $RES
-
-
 
 echo "\n"
 read -p "Клац  >> " wait
