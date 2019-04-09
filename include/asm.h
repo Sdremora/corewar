@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:08:27 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/08 17:57:18 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/09 10:45:47 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void				syntax_error(int flag);
 void				syntax_error_instruction(char *instruction, int flag);
 void				invalid_error_instruction(char **instruction, int flag);
 void				length_error(int nb);
+void	error_no_label(char *label, int index);
 void				del_all_struct(void);
 void				init(void);
 void				init_struct(void);
@@ -129,4 +130,6 @@ void				print_hexdump(void);
 void				print_noll(int nb);
 int					find_position_in_str(void);
 int					find_position_in_str_for_instruction(char *instruction);
+int		find_label_index(char *label, int *flag);
+void	skip_whitespaces_com(void);
 #endif
