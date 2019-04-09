@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 09:47:29 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/09 13:12:40 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/09 14:41:18 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,12 @@ void	error_no_label(char *label, int index)
 	temp = ft_strjoin(":", label);
 	label = ft_strjoin(label, ",");
 	i = find_label_index(label, &flag);
+	printf("\n\ni:%d, labe;:%s\n\n\n", i, label);
 	ft_putchar(':');
 	if (BUFFER[flag + i - 2] == '%')
 		i--;
 	print_noll(i);
 	ft_putnbr(i - 1);
-	ft_putstr("] ");
 	ft_putstr((BUFFER[flag + i - 1] == '%') ?
 		"] DIRECT_LABEL \"%" : "] INDIRECT_LABEL \"");
 	ft_putstr(temp);
