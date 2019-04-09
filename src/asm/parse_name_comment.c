@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 11:58:45 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/09 11:54:50 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/09 12:20:42 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,5 @@ void	find_name_comment(void)
 		g_asm->flag_name = 0;
 	}
 	else
-		close_with_error("Syntax error at token [TOKEN][003:001] LABEL \"l2:\" || INSTRUCTION \"sti\" || REGISTER \"r1\"....");
+		lexical_error();
 }
