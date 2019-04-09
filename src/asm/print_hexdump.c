@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 14:05:06 by kkihn             #+#    #+#             */
-/*   Updated: 2019/04/08 17:51:54 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/09 12:18:25 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,35 +39,25 @@ void print_hexdump(void)
 	i = 0;
 	line_nbr = 0;
 	ft_printf(BC_MAGENTA);
-	ft_printf("");
 	ft_printf(BC_BOLD);
 	print_line(HEADER, &i, &line_nbr);
 	ft_printf(BC_DEFAULT);
-	
 	ft_printf(BC_YELLOW);
 	print_line(NAME, &i, &line_nbr);
 	ft_printf(BC_DEFAULT);
-	
 	ft_printf(BC_BOLD);
 	print_line(ZERO1, &i, &line_nbr);
 	ft_printf(BC_DEFAULT);
-	
 	ft_printf(BC_BG_MAGENTA);
-	ft_printf("");
 	ft_printf(BC_BOLD);
 	print_line(SIZE, &i, &line_nbr);
 	ft_printf(BC_BG_DEFAULT);
-	 
 	ft_printf(BC_GREEN);
 	print_line(COMMENT, &i, &line_nbr);
-	
 	ft_printf(BC_DEFAULT);
-	ft_printf("");
 	ft_printf(BC_BOLD);
 	print_line(ZERO2, &i, &line_nbr);
-	  
 	ft_printf(BC_MAGENTA);
-	ft_printf(""); 
 	ft_printf(BC_BOLD);
 	print_line(CODE, &i, &line_nbr);
 	ft_printf(BC_DEFAULT);  
