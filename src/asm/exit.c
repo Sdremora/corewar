@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:52:48 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/09 13:30:39 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/09 18:19:30 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 void	usage(void)
 {
-	ft_putstr("Usage: ./asm [-a] <sourcefile.s>\n");
-	ft_putstr("    -a : Instead of creating a .cor file, outputs a stripped and\
-				annotated version of the code to the standard output\n");
+	ft_putstr("Usage: ./asm [-hex] <sourcefile.s>\n");
+	ft_putstr("  -hex :  trasform code to hexdump output\n");
 	exit(0);
 }
 
