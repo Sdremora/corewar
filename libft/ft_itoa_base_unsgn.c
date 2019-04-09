@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa_base_unsgn.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hharvey <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 15:25:27 by hharvey           #+#    #+#             */
-/*   Updated: 2018/12/23 14:57:11 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/09 11:45:32 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int		ft_get_itoa_len_uns(unsigned long long int nb, int base)
 	return (res);
 }
 
-char	*ft_itoa_base_unsgn(unsigned long long int nb, int base, int isbig)
+unsigned char	*ft_itoa_base_unsgn(unsigned long long int nb, int base, int isbig)
 {
 	int			len;
-	char		*res;
+	unsigned char		*res;
 	int			i;
 	static char	base_ar[33] = "";
 

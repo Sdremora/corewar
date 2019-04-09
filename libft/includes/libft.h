@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 14:04:27 by hharvey           #+#    #+#             */
-/*   Updated: 2019/04/04 18:03:39 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/09 11:46:16 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int					ft_putwchar(wchar_t c);
 char				*ft_strjdelsnd(const char *str, char *str2);
 char				*ft_strnewchr(size_t size, int c);
 int					ft_strchrpos(char *str, int c);
-char				*ft_itoa_base_unsgn(unsigned long long int nb,
+unsigned char				*ft_itoa_base_unsgn(unsigned long long int nb,
 					int base, int isbig);
 char				*ft_strdelchr(char *str);
 char				*ft_strjdelfst(char *str, const char *str2);

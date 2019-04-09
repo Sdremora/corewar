@@ -1,15 +1,15 @@
 .name "run Kitty RUN"
-.comment "Jan-ken-pon (じゃんけんぽん)
-Ce qui reste éternellement incompréhensible dans la nature, c’est qu’on puisse la comprendre.
-Celui qui ne peut plus éprouver ni étonnement ni surprise, est pour ainsi dire mort : ses yeux sont éteints. – Albert Einstein
-Si vous voulez trouver les secrets de l'univers pensez en termes de fréquences, d'énergies et de vibrations. - Nikola Tesla
+.comment "Jan-ken-pon
+Ce qui reste ternellement incomprhensible dans la nature, cest quon puisse la comprendre.
+Celui qui ne peut plus prouver ni tonnement ni surprise, est pour ainsi dire mort : ses yeux sont teints. – Albert Einstein
+Si vous voulez trouver les secrets de lunivers pensez en termes de frquences, dnergies et de vibrations. - Nikola Tesla
 Pas la pour etre ici. - Silicon Val[list]
 Dieu est la plus belle invention.
-Tapis dans l'ombre je veille. - Minou
-J'te KHABBAR"
+Tapis dans lombre je veille. - Minou
+Jte KHABBAR"
 
 gomugomu:
-	fork%:gear_second
+	fork 	%:gear_second
 	live %252645135
 	fork %:gear_fourth
 	ld %190056971, r9
@@ -17,9 +17,9 @@ gomugomu:
 	ld %506, r11
 	ld %139725068, r13
 	ld %505, r16
-	ld %252645135, r2
+	ld%252645135, r2
 	ld %511, r15
-	st r2, r5
+	str2, r5
 	st r2, r3
 	st r2, r6
 	st r2, r4

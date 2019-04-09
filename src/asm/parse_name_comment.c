@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_name_comment.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 11:58:45 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/08 17:48:13 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/09 11:54:50 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	write_name_comment_to_matrix(unsigned char i, char *matrix_element, int j)
 {
-	char	*temp;
+	unsigned char	*temp;
 
 	temp = ft_itoa_base_unsgn(i, 16, 1);
 	if (i < 16 && i != 34)
@@ -24,13 +24,12 @@ void	write_name_comment_to_matrix(unsigned char i, char *matrix_element, int j)
 		matrix_element[j] = temp[0];
 		matrix_element[j + 1] = temp[1];
 	}
-	ft_strdel(&temp);
+	free(temp);
 }
 
 int		going_throw_two_quotes(int limit, char *matrix_element)
 {
 	int		counter;
-	int		tmp;
 
 	skip_whitespaces();
 	if (g_asm->buf[g_asm->i] == '\n' || g_asm->buf[g_asm->i] == COMMENT_CHAR)
@@ -43,11 +42,7 @@ int		going_throw_two_quotes(int limit, char *matrix_element)
 	{
 		counter += 2;
 		if (g_asm->buf[g_asm->i] == '\n')
-		{
-			tmp = g_asm->str_counter;
-			skip_comment_and_spaces();
-			counter += g_asm->str_counter - tmp;
-		}
+			g_asm->str_counter++;
 		if (counter > limit)
 			return (-1);
 		write_name_comment_to_matrix(g_asm->buf[g_asm->i],
