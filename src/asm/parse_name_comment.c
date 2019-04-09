@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parse_name_comment.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 11:58:45 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/09 12:20:42 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/09 17:10:02 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-void	write_name_comment_to_matrix(unsigned char i, char *matrix_element, int j)
+void	write_name_comment_to_matrix(unsigned char i,
+			char *matrix_element, int j)
 {
 	unsigned char	*temp;
 
@@ -47,7 +48,6 @@ int		going_throw_two_quotes(int limit, char *matrix_element)
 			return (-1);
 		write_name_comment_to_matrix(g_asm->buf[g_asm->i],
 						matrix_element, counter - 2);
-		
 		g_asm->i++;
 	}
 	return (1);
@@ -75,22 +75,22 @@ void	find(int counter, int length, char *matrix_element)
 
 void	find_name_comment(void)
 {
+	int len;
+
 	if (ft_strnequ(".name", (char *)&g_asm->buf[g_asm->i], 5) != 0)
 	{
-		if (g_asm->flag_name == -1)
-			g_asm->flag_name = 1;
-		
-		else if (g_asm->flag_name == 1)
-			syntax_error(2);
-		find(5, PROG_NAME_LENGTH * 2, NAME);
+		(g_asm->flag_name == 1) ? syntax_error(2) : 0;
+		g_asm->flag_name = (g_asm->flag_name == -1) ? 1 : g_asm->flag_name;
+		len = PROG_NAME_LENGTH;
+		find(5, len * 2, NAME);
 	}
-	else if (ft_strnequ(".comment",  (char *)&g_asm->buf[g_asm->i], 8) != 0)
+	else if (ft_strnequ(".comment", (char *)&g_asm->buf[g_asm->i], 8) != 0)
 	{
-		if (g_asm->flag_comment == -1)
-			g_asm->flag_comment = 1;
-		else if (g_asm->flag_comment == 1)
-			syntax_error(1);
-		find(8, COMMENT_LENGTH * 2, COMMENT);
+		(g_asm->flag_comment == 1) ? syntax_error(1) : 0;
+		g_asm->flag_comment = (g_asm->flag_comment == -1) ?
+				1 : g_asm->flag_comment;
+		len = COMMENT_LENGTH;
+		find(8, len * 2, COMMENT);
 	}
 	else if (g_asm->buf[g_asm->i] == '\0')
 	{

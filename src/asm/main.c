@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 14:54:49 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/08 17:51:17 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/09 16:51:02 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	write_binary_name(char *str)
 {
 	int		len;
 	int		i;
-	
+
 	len = ft_strlen(str);
 	i = -1;
 	if (str[len - 1] != 's' || str[len - 2] != '.')
@@ -47,15 +47,13 @@ int		count_code_size(void)
 	counter = 0;
 	while (++i < INDEX)
 		counter += g_struct[i]->byte;
-	// printf("counter: %d\n", counter);
 	temp = ft_itoa_base(counter, 16, 1);
 	i = ft_strlen(temp);
 	j = 7;
-	while(--i >= 0)
+	while (--i >= 0)
 		SIZE[j--] = temp[i];
 	ft_strdel(&temp);
-	// printf("counter: %d, size:%s\n", counter, SIZE);
-	return(counter * 2);
+	return (counter * 2);
 }
 
 int		main(int argc, char **argv)
@@ -68,29 +66,17 @@ int		main(int argc, char **argv)
 		init();
 		write_binary_name(argv[argc - 1]);
 		parse_from_file(argc, argv);
-		// while (++i < INDEX)
-		// {
-		// 	printf("# of index: %d\n", i);
-		// 	printf("label: %s, name:%s, byte:%d\n", g_struct[i].label, g_struct[i].command, g_struct[i].byte);
-		// 	printf("arg1: %s, arg2: %s, arg3: %s\n\n", g_struct[i].arg[0], g_struct[i].arg[1], g_struct[i].arg[2]);
-		// }
 		g_asm->i = 0;
 		fflush(stdout);
 		count_code_size();
 		fflush(stdout);
 		init_matrix_element(&CODE, count_code_size());
 		realise_algorithm();
-		// printf("%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n%s\n",HEADER,NAME,ZERO1,COMMENT,ZERO2,CODE);
-		
 		if (argc == 3 && ft_strequ(argv[1], "-hex") == 1)
 			print_hexdump();
 		make_binary();
 		ft_printf("Writing output program to %s\n", g_asm->binary_name);
-
-		// printf("%llu\n", (int)'杯');
 		del_all_struct();
-		// int i = 5;
-		// write (1, &i, 4);
 	}
 	else
 		usage();
