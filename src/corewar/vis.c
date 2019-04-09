@@ -6,7 +6,7 @@
 /*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/30 19:00:56 by hharvey           #+#    #+#             */
-/*   Updated: 2019/04/08 18:03:27 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/09 16:11:51 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ void		mvaddclrstr(int y, int x, int col_nb, char *str)
 
 void		carg_info(t_arena *arena, int nb)
 {
-	t_list *clist;
-	t_carriage *cg;
-	int i;
-	int pos;
+	t_list		*clist;
+	t_carriage	*cg;
+	int			i;
+	int			pos;
 
 	clist = arena->carg_lst;
 	while (nb && clist)
@@ -68,14 +68,14 @@ void		carg_info(t_arena *arena, int nb)
 	if (clist)
 	{
 		cg = (t_carriage*)clist->content;
-		pos = plr_pos(arena->players_count) + 14; 	
+		pos = plr_pos(arena->players_count) + 14;
 		color_set(10, NULL);
 		mvprintw(pos, POS_TEXT, "                   ");
 		mvprintw(pos++, POS_TEXT, arena->players[cg->owner - 1].name);
 		i = -1;
 		while (++i < 16)
-			print_nb(cg->reg[i], pos + i, POS_TEXT,10);
-		print_nb(cg->carry, pos + i + 1, POS_TEXT,10);
-		print_nb(cg->carg_id, pos + i + 2, POS_TEXT,10);
+			print_nb(cg->reg[i], pos + i, POS_TEXT, 10);
+		print_nb(cg->carry, pos + i + 1, POS_TEXT, 10);
+		print_nb(cg->carg_id, pos + i + 2, POS_TEXT, 10);
 	}
 }

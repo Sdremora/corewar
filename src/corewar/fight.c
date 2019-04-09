@@ -6,7 +6,7 @@
 /*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 18:08:26 by sdremora          #+#    #+#             */
-/*   Updated: 2019/04/08 18:08:49 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/09 16:15:25 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void		fight(t_arena *arena)
 	{
 		if (arena->cur_cycle == arena->flags[F_D])
 			return (print_map(arena->map, 64));
+		if (arena->cur_cycle == arena->flags[F_DUMP])
+			return (print_map(arena->map, 32));
 		if (arena->cur_cycle == arena->flags[F_S] && arena->flags[F_S] > 0)
 		{
 			print_map(arena->map, 64);

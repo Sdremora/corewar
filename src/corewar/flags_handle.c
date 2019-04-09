@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flags_handle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdremora <sdremora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 18:08:39 by sdremora          #+#    #+#             */
-/*   Updated: 2019/04/07 18:08:42 by sdremora         ###   ########.fr       */
+/*   Updated: 2019/04/09 16:16:59 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ static int	get_num_flag(char *str)
 {
 	if (ft_strequ(str, "-a"))
 		return (F_A);
-	if (ft_strequ(str, "-dump") || ft_strequ(str, "-d"))
+	if (ft_strequ(str, "-dump"))
+		return (F_DUMP);
+	if (ft_strequ(str, "-d"))
 		return (F_D);
 	if (ft_strequ(str, "-s"))
 		return (F_S);
