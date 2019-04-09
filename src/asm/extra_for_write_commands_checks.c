@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extra_for_write_commands_checks.c                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 12:00:06 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/08 16:49:57 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/09 13:36:48 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		check_if_command_exist(char *temp)
 int		check_if_label_exist(char *temp)
 {
 	int		i;
+
 	i = -1;
 	while (++i < INDEX)
 	{
@@ -39,14 +40,14 @@ int		check_if_label_exist(char *temp)
 
 void	check_labels_validity(char **temp)
 {
-	int     i;
+	int	i;
 
-    i = -1;
+	i = -1;
 	if (!(check_if_label_exist(*temp)))
 	{
 		ft_strdel(temp);
 		lexical_error();
-	}	   
+	}
 	while (temp[0][++i] != '\0')
 	{
 		if (ft_strchr(LABEL_CHARS, temp[0][i]) == 0)
@@ -54,7 +55,7 @@ void	check_labels_validity(char **temp)
 			g_asm->i = g_asm->i - ft_strlen(*temp) + i;
 			ft_strdel(temp);
 			lexical_error();
-		}	
+		}
 	}
 }
 
@@ -76,7 +77,8 @@ void	check_invalid_args_end_of_file(char **temp)
 		if (temp[0][1] == ',')
 			counter++;
 		if (counter == 2)
-			while (temp[0][i] != ' ' && temp[0][i] != '\t' && temp[0][i] != '\0')
+			while (temp[0][i] != ' ' && temp[0][i] != '\t' &&
+					temp[0][i] != '\0')
 				i++;
 	}
 	if (temp[0][i] != COMMENT_CHAR && temp[0][i] != '\0')
@@ -84,7 +86,7 @@ void	check_invalid_args_end_of_file(char **temp)
 		ft_strdel(temp);
 		syntax_error(5);
 	}
-}	
+}
 
 void	check_invalid_number_of_args(char ***array, int i, int flag)
 {

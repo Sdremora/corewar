@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extra_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:20:54 by kkihn             #+#    #+#             */
-/*   Updated: 2019/04/03 16:51:17 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/09 13:44:00 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char			**split(char const *str, char c)
 		return (0);
 	while (i < word)
 	{
-		if((extra = ft_addworld(&array[i], (char *)str, count_chars, c)) == -1)
+		if ((extra = ft_addworld(&array[i], (char *)str, count_chars, c)) == -1)
 			close_with_error("Error by malloc");
 		count_chars = extra;
 		i++;

@@ -6,7 +6,7 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 12:40:56 by kkihn             #+#    #+#             */
-/*   Updated: 2019/04/08 17:59:20 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/09 13:34:22 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ int		find_position_in_str_for_instruction(char *instruction)
 	{
 		i++;
 		g_asm->i++;
-	}	
+	}
 	temp = ft_strnstr((char *)&BUFFER[counter], instruction, i);
 	counter = 0;
 	while (temp[counter] != '\n' && temp[counter] != '\0')
 		counter++;
-	return(i - counter + 1);
+	return (i - counter + 1);
 }
 
 int		find_label_index(char *label, int *flag)
@@ -60,8 +60,8 @@ int		find_label_index(char *label, int *flag)
 	int i;
 	int j;
 
-	i = 0;
-	while (BUFFER[i])
+	i = -1;
+	while (BUFFER[++i])
 	{
 		j = 0;
 		if (BUFFER[i] == label[j] || !label[j])
@@ -78,10 +78,8 @@ int		find_label_index(char *label, int *flag)
 				}
 				*flag = i;
 				return (j);
-			}	
+			}
 		}
-		i++;
 	}
 	return (0);
 }
-
