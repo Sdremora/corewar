@@ -6,11 +6,20 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:20:54 by kkihn             #+#    #+#             */
-/*   Updated: 2019/04/09 16:35:19 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/09 17:38:09 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+
+void	skip_whitespaces_com(void)
+{
+	while (g_asm->buf[g_asm->i] == ' ' || g_asm->buf[g_asm->i] == '\t')
+		g_asm->i++;
+	if (g_asm->buf[g_asm->i] == COMMENT_CHAR)
+		while (g_asm->buf[g_asm->i] != '\n' && g_asm->buf[g_asm->i] != '\0')
+			g_asm->i++;
+}
 
 void			check_last_char(char *str)
 {

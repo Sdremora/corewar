@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:08:27 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/09 16:13:48 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/09 17:15:36 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ typedef struct 		s_asm
 	char			*binary_name;
 	char			**matrix;
 	unsigned char	buf[BUFF];
-	//char			buf[BUFF];
 	int				str_counter;
 	int				flag_name;
 	int				flag_comment;

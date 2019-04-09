@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 14:35:56 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/09 16:08:32 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/09 16:51:10 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	check_command(char **temp)
 	else if (BUFFER[g_asm->i] != ' ' && BUFFER[g_asm->i] != '\t' &&
 													ft_strlen(*temp) > 0)
 		syntax_error(5);
+	ft_strdel(temp);
 }
 
 void	check_args(void)
@@ -106,7 +107,6 @@ void	write_labels_commands(void)
 			continue;
 		check_command(&temp);
 		skip_whitespaces();
-		ft_strdel(&temp);
 		check_args();
 		INDEX++;
 		skip_whitespaces_com();

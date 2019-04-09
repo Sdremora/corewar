@@ -6,12 +6,11 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 16:58:59 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/08 13:42:40 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/09 16:55:37 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
-
 
 void	print_noll(int nb)
 {
@@ -27,6 +26,7 @@ void	print_noll(int nb)
 void	syntax_error(int flag)
 {
 	int		i;
+
 	ft_putstr("Syntax error at token [TOKEN][");
 	print_noll(g_asm->str_counter);
 	ft_putnbr(g_asm->str_counter);
@@ -45,7 +45,6 @@ void	syntax_error(int flag)
 		ft_putstr("ENDLINE\n");
 	else if (flag == 6)
 		ft_putstr("END \"(null)\"\n");
-
 	del_all_struct();
 	exit(0);
 }
@@ -53,6 +52,7 @@ void	syntax_error(int flag)
 void	syntax_error_instruction(char *instruction, int flag)
 {
 	int		i;
+
 	ft_putstr("Syntax error at token [TOKEN][");
 	print_noll(g_asm->str_counter);
 	ft_putnbr(g_asm->str_counter);
