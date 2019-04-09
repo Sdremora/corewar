@@ -6,7 +6,7 @@
 /*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 18:14:41 by sdremora          #+#    #+#             */
-/*   Updated: 2019/04/08 18:08:15 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/09 16:16:20 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 # define REVERSE_MAGIC 4085508608
 
-# define FLAGS_COUNT 8
+# define FLAGS_COUNT 9
 # define E_NO_MEMORY -1
 # define E_NO_PLAYERS -2
 # define E_OVER_PLAYERS -3
@@ -64,6 +64,7 @@ typedef enum	e_flag
 	F_STEALTH,
 	F_VIS,
 	F_D,
+	F_DUMP,
 	F_S,
 	F_N,
 	F_V,
