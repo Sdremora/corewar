@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 17:16:12 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/09 14:19:58 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/09 15:41:36 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,11 @@ void    parse_from_file(int argc, char **argv)
 	int		fd;
 
 	fd = open(argv[argc - 1], O_RDONLY);
-	while ((ret = read(fd, g_asm->buf, BUFF)) > 0)
+	while ((ret = read(fd, g_asm->buf, BUFF + 1)) > 0)
 	{
 		g_asm->buf[ret] = '\0';
+		if (ret > BUFF)
+			close_with_error("File is too big");
 		g_asm->i = 0;
 		while(g_asm->buf[g_asm->i] != '\0')
 		{
@@ -93,7 +95,7 @@ void    parse_from_file(int argc, char **argv)
 		}
 	}
 	if (ret < 0)
-		close_with_error("Can't read source file\n");
+		close_with_error("Can't read source file");
 	// else if (ret == 0 && (g_asm->buf || g_asm->buf[i] != '\n'))
 	// 	error_by_parsing(); NO \n!
 	close(fd);

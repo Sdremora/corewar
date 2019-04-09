@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 14:35:56 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/09 14:05:15 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/09 16:08:32 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	check_args(void)
 	BUFFER[g_asm->i] != COMMENT_CHAR)
 		temp[++i] = BUFFER[g_asm->i++];
 	check_invalid_args_end_of_file(&temp);
-	array = split(temp, SEPARATOR_CHAR);
+	array = split(temp);
 	ft_strdel(&temp);
 	i = 0;
 	while (array[i] != NULL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asm.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 15:08:27 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/09 14:20:22 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/09 16:13:48 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define COMMENT	g_asm->matrix[4]
 # define ZERO2		g_asm->matrix[5] 
 # define CODE 		g_asm->matrix[6]
-# define BUFF		30000
+# define BUFF		50000
 # define BUFFER		g_asm->buf
 # define INDEX		g_asm->index
 /*struct g_asm is for different things:
@@ -112,7 +112,7 @@ void    			write_labels_commands(void);
 int     			count_chars(void);
 int					check_if_command_exist(char *temp);
 int					check_if_label_exist(char *temp);
-char				**split(char const *str, char c);
+char				**split(char const *str);
 void    			check_if_command_has_arg(char **array);
 int					check_direct_or_indirect(char *array, int element, int flag);
 int					check_register(char *array, int element);

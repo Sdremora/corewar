@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 09:47:29 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/09 14:41:18 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/09 15:43:58 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void	error_no_label(char *label, int index)
 	temp = ft_strjoin(":", label);
 	label = ft_strjoin(label, ",");
 	i = find_label_index(label, &flag);
-	printf("\n\ni:%d, labe;:%s\n\n\n", i, label);
 	ft_putchar(':');
 	if (BUFFER[flag + i - 2] == '%')
 		i--;

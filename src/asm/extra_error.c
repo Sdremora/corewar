@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extra_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 12:40:56 by kkihn             #+#    #+#             */
-/*   Updated: 2019/04/09 13:34:22 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/09 15:59:53 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int		find_label_index(char *label, int *flag)
 		{
 			while (label[j] == BUFFER[i + j] && BUFFER[i + j])
 				j++;
-			if (label[j] == '\0')
+			if (label[j] == '\0' || label[j] == '\n')
 			{
 				j = 0;
 				while (BUFFER[i] != '\n' && i != 0)

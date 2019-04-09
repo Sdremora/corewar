@@ -3,38 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   extra_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:20:54 by kkihn             #+#    #+#             */
-/*   Updated: 2019/04/09 13:44:00 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/09 16:35:19 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-static int		ft_addworld(char **dest, char *str, int count_chars, char c)
+void			check_last_char(char *str)
+{
+	int		i;
+
+	i = ft_strlen(str) - 1;
+	while (i >=0 && (str[i] == ' ' || str[i] == '\t'))
+		i--;
+	if (str[i] == ',')
+		syntax_error(5);
+}
+
+static int		ft_addworld(char **dest, char *str, int count_chars)
 {
 	int		i;
 	int		j;
 
 	j = 0;
 	i = count_chars;
-	while (str[i] == c && str[i] != '\0' && str[i] != '\n')
+	while (str[i] == SEPARATOR_CHAR && str[i] != '\0')
 	{
 		i++;
 		count_chars++;
 	}
-	while (str[i] != c && str[i] != '\0' && str[i] != '\n')
+	while (str[i] != SEPARATOR_CHAR && str[i] != '\0')
 		i++;
-	if (!(*dest = (char*)malloc(sizeof(char) * (i - count_chars + 1))))
+	if (!(*dest = ft_strnew(i - count_chars)))
 		return (-1);
+	while (str[count_chars] == ' ' || str[count_chars] == '\t')
+		count_chars++;
 	while (count_chars < i)
 	{
-		if (str[count_chars] != ' ' && str[count_chars] != '\t')
+		if (str[count_chars] != SEPARATOR_CHAR && str[count_chars] != '\0')
 			(*dest)[j++] = str[count_chars];
 		count_chars++;
 	}
-	(*dest)[j] = '\0';
+	j--;
+	while ((*dest)[j] == ' ' || (*dest)[j] == '\t')
+		j--;
+	(*dest)[++j] = '\0';
 	return (i);
 }
 
@@ -47,11 +63,11 @@ static int		count_words(char *str, char c)
 	i = 0;
 	counter = 0;
 	temp = 0;
-	while (str[i] != '\0' && str[i] != '\n')
+	while (str[i] != '\0')
 	{
 		if (str[i] != c)
 			temp = 1;
-		else if (str[i] == c && temp != 0 && str[i] != '\n')
+		else if (str[i] == c && temp != 0)
 		{
 			counter++;
 			temp = 0;
@@ -63,7 +79,7 @@ static int		count_words(char *str, char c)
 	return (counter);
 }
 
-char			**split(char const *str, char c)
+char			**split(char const *str)
 {
 	int		i;
 	int		word;
@@ -75,13 +91,14 @@ char			**split(char const *str, char c)
 	extra = 0;
 	if (!str)
 		return (NULL);
-	word = count_words((char *)str, c);
+	word = count_words((char *)str, SEPARATOR_CHAR);
+	check_last_char((char *)str);
 	count_chars = 0;
 	if (!(array = malloc(sizeof(char*) * (word + 1))))
 		return (0);
 	while (i < word)
 	{
-		if ((extra = ft_addworld(&array[i], (char *)str, count_chars, c)) == -1)
+		if ((extra = ft_addworld(&array[i], (char *)str, count_chars)) == -1)
 			close_with_error("Error by malloc");
 		count_chars = extra;
 		i++;
