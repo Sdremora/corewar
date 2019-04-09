@@ -6,7 +6,7 @@
 /*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 17:03:50 by hharvey           #+#    #+#             */
-/*   Updated: 2019/04/05 18:14:20 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/08 18:09:02 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void		speed_n_exit(int *speed, char temp)
 		print_nb(1000000 / *speed, 5, POS_NB, 10);
 }
 
-void		vis_pause(int *pause, int *speed)
+void		vis_pause(t_arena *arena, int *pause, int *speed, int *nb)
 {
 	char temp;
 
@@ -87,8 +87,14 @@ void		vis_pause(int *pause, int *speed)
 		mvaddclrstr(2, POS_TEXT, 10, "** RUNNING **");
 		*pause = 0;
 	}
+	else if (temp == 9)
+	{
+		arena->debug = 1;
+		*nb = (*nb + 1) % ft_lstlen(arena->carg_lst);
+		carg_info(arena, *nb);
+	}
 	speed_n_exit(speed, temp);
 	refresh();
 	if (*pause)
-		vis_pause(pause, speed);
+		vis_pause(arena, pause, speed, nb);
 }
