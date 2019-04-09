@@ -6,7 +6,7 @@
 /*   By: hharvey <hharvey@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 17:03:50 by hharvey           #+#    #+#             */
-/*   Updated: 2019/04/08 18:01:25 by hharvey          ###   ########.fr       */
+/*   Updated: 2019/04/08 18:09:02 by hharvey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void		vis_pause(t_arena *arena, int *pause, int *speed, int *nb)
 	}
 	else if (temp == 9)
 	{
+		arena->debug = 1;
 		*nb = (*nb + 1) % ft_lstlen(arena->carg_lst);
 		carg_info(arena, *nb);
 	}
