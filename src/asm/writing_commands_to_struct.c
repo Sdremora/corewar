@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 14:35:56 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/08 16:46:46 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/09 12:13:01 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int		check_label(char **temp)
 
 void	check_command(char **temp)
 {
-	if (BUFFER[g_asm->i] == ' ' || BUFFER[g_asm->i] == '\t')
+	if (BUFFER[g_asm->i] == ' ' || BUFFER[g_asm->i] == '\t' ||
+	BUFFER[g_asm->i] == DIRECT_CHAR || BUFFER[g_asm->i] == LABEL_CHAR)
 	{
 		if (!(check_if_command_exist(*temp)))
 			invalid_error_instruction(temp, 1);
@@ -99,7 +100,8 @@ void	write_labels_commands(void)
 		i = -1;
 		temp = ft_strnew(count_chars());
 		while (BUFFER[g_asm->i] != '\0' && BUFFER[g_asm->i] > 32 &&
-		BUFFER[g_asm->i] != LABEL_CHAR && BUFFER[g_asm->i] != '\n')
+		BUFFER[g_asm->i] != LABEL_CHAR && BUFFER[g_asm->i] != '\n' &&
+		BUFFER[g_asm->i] != DIRECT_CHAR)
 			temp[++i] = BUFFER[g_asm->i++];
 		if (check_label(&temp) == 1)
 			continue;

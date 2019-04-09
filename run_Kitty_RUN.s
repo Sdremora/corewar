@@ -11,7 +11,7 @@ Jte KHABBAR"
 gomugomu:
 	fork 	%:gear_second
 	live %252645135
-	fork %:gear_fourth
+	fork%:gear_fourth
 	ld %190056971, r9
 	ld %190057744, r10
 	ld %506, r11
@@ -19,7 +19,7 @@ gomugomu:
 	ld %505, r16
 	ld%252645135, r2
 	ld %511, r15
-	str2, r5
+	st r2, r5
 	st r2, r3
 	st r2, r6
 	st r2, r4
