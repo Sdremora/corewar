@@ -6,13 +6,13 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:20:54 by kkihn             #+#    #+#             */
-/*   Updated: 2019/04/09 17:38:09 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/09 17:45:51 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-void	skip_whitespaces_com(void)
+void			skip_whitespaces_com(void)
 {
 	while (g_asm->buf[g_asm->i] == ' ' || g_asm->buf[g_asm->i] == '\t')
 		g_asm->i++;
@@ -26,7 +26,7 @@ void			check_last_char(char *str)
 	int		i;
 
 	i = ft_strlen(str) - 1;
-	while (i >=0 && (str[i] == ' ' || str[i] == '\t'))
+	while (i >= 0 && (str[i] == ' ' || str[i] == '\t'))
 		i--;
 	if (str[i] == ',')
 		syntax_error(5);
@@ -38,12 +38,9 @@ static int		ft_addworld(char **dest, char *str, int count_chars)
 	int		j;
 
 	j = 0;
-	i = count_chars;
-	while (str[i] == SEPARATOR_CHAR && str[i] != '\0')
-	{
-		i++;
+	while (str[count_chars] == SEPARATOR_CHAR && str[count_chars] != '\0')
 		count_chars++;
-	}
+	i = count_chars;
 	while (str[i] != SEPARATOR_CHAR && str[i] != '\0')
 		i++;
 	if (!(*dest = ft_strnew(i - count_chars)))
