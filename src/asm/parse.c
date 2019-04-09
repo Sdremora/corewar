@@ -3,15 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 17:16:12 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/08 18:05:15 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/09 14:19:58 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 //Error by parsing schould be other, we need to think abou how to find right position of false element
+
+int		count_all_str(void)
+{
+	int		i;
+	int		counter;
+
+	i = g_asm->i;
+	counter = 1;
+	while (BUFFER[i] != '\0')
+	{
+		if (BUFFER[i] == '\n')
+			counter++;
+		i++;
+	}
+	return (counter);
+}
 
 void	skip_whitespaces(void)
 {
