@@ -6,13 +6,13 @@
 /*   By: kkihn <kkihn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:54:20 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/08 12:14:46 by kkihn            ###   ########.fr       */
+/*   Updated: 2019/04/09 12:44:42 by kkihn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int check_arg_type(int element, int type)
+int		check_arg_type(int element, int type)
 {
 	int i;
 
@@ -44,7 +44,7 @@ int		check_register(char *array, int element)
 	if (value > REG_NUMBER || value <= 0)
 		return (0);
 	if (element >= 0 && !(check_arg_type(element, 1)))
-		return( 0);
+		return (0);
 	return (1);
 }
 
@@ -54,15 +54,11 @@ int		check_direct_or_indirect(char *array, int element, int flag)
 
 	i = flag;
 	if (array[flag] == LABEL_CHAR)
-	{
 		while (array[++i] != '\0')
 		{
 			if (ft_strchr(LABEL_CHARS, array[i]) == 0)
 				return (0);
 		}
-		if (element >= 0 && !(check_arg_type(element, 2)))
-			return (0);
-	}
 	else if ((array[flag] >= '0' && array[flag] <= '9') || array[flag] == '-')
 	{
 		if (array[i] == '-')
@@ -73,26 +69,34 @@ int		check_direct_or_indirect(char *array, int element, int flag)
 				return (0);
 			i++;
 		}
+	}
+	if (flag == 1)
+	{
+		if (element >= 0 && !(check_arg_type(element, 2)))
+			return (0);
+	}
+	else if (flag == 0)
+	{
 		if (element >= 0 && !(check_arg_type(element, 3)))
 			return (0);
 	}
 	return (1);
 }
 
-void     check_if_command_has_arg(char **array)
+void	check_if_command_has_arg(char **array)
 {
-    int i;
+	int i;
 
-    i = -1;
-    while (++i < g_op_tab[g_struct[INDEX]->id_in_tab].var_count)
-    {
-        if (array[i][0] == 'r')
+	i = -1;
+	while (++i < g_op_tab[g_struct[INDEX]->id_in_tab].var_count)
+	{
+		if (array[i][0] == 'r')
 		{
 			if (!(check_register(array[i], i)))
 				syntax_error_instruction(array[i], 4);
 			g_struct[INDEX]->byte++;
 		}
-        else if (array[i][0] == DIRECT_CHAR)
+		else if (array[i][0] == DIRECT_CHAR)
 		{
 			if (!(check_direct_or_indirect(array[i], i, 1)))
 				syntax_error_instruction(array[i], 4);
@@ -101,7 +105,7 @@ void     check_if_command_has_arg(char **array)
 			g_struct[INDEX]->byte += 2;
 		}
 		else if ((array[i][0] >= '0' && array[i][0] <= '9') ||
-				array[i][0] == '-' || array[i][0] == LABEL_CHAR) 
+				array[i][0] == '-' || array[i][0] == LABEL_CHAR)
 		{
 			if (!(check_direct_or_indirect(array[i], i, 0)))
 				syntax_error_instruction(array[i], 4);
@@ -109,5 +113,5 @@ void     check_if_command_has_arg(char **array)
 		}
 		else
 			syntax_error_instruction(array[i], 4);
-    }
+	}
 }
