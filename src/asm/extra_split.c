@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:20:54 by kkihn             #+#    #+#             */
-/*   Updated: 2019/04/09 17:45:51 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/10 11:41:57 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,15 @@ static int		count_words(char *str, char c)
 {
 	int		i;
 	int		counter;
-	int		temp;
-
+	
 	i = 0;
-	counter = 0;
-	temp = 0;
+	counter = 1;
 	while (str[i] != '\0')
 	{
-		if (str[i] != c)
-			temp = 1;
-		else if (str[i] == c && temp != 0)
-		{
+		if (str[i] == c)
 			counter++;
-			temp = 0;
-		}
 		i++;
 	}
-	if (temp != 0)
-		counter++;
 	return (counter);
 }
 

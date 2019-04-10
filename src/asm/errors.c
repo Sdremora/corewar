@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 09:47:29 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/09 15:43:58 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/10 12:00:04 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,7 @@ void	error_no_label(char *label, int index)
 	print_noll(g_struct[index]->str_number);
 	ft_putnbr(g_struct[index]->str_number);
 	temp = ft_strjoin(":", label);
-	label = ft_strjoin(label, ",");
-	i = find_label_index(label, &flag);
+	i = find_label_index(temp, &flag);
 	ft_putchar(':');
 	if (BUFFER[flag + i - 2] == '%')
 		i--;

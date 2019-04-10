@@ -11,4 +11,5 @@ test*
 /asm
 /corewar
 !/other/inv_input/*.cor
+!/other/test_asm
 !/other/valid_champs/*.cor
