@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 12:40:56 by kkihn             #+#    #+#             */
-/*   Updated: 2019/04/10 11:57:05 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/10 13:39:21 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ int		find_label_index(char *label, int *flag)
 			if (label[j] == '\0' || label[j] == ' ')
 			{
 				j = 0;
-				if (BUFFER[i] == '\n' || BUFFER[i] == '\0')
-					i--;
 				while (BUFFER[i] != '\n' && i != 0)
 				{
 					i--;

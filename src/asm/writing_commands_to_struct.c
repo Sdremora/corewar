@@ -6,7 +6,7 @@
 /*   By: mnarbert <mnarbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/28 14:35:56 by mnarbert          #+#    #+#             */
-/*   Updated: 2019/04/10 11:36:57 by mnarbert         ###   ########.fr       */
+/*   Updated: 2019/04/10 13:35:31 by mnarbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,6 @@ void	write_labels_commands(void)
 		check_args();
 		INDEX++;
 		skip_whitespaces_com();
-		// i = -1;
-		// while (++i < INDEX)
-		// {
-		// 	printf("label: %s, command: %s, arg1:%s, agr2:%s, arg3:%s, arg4:%s\n\n\n", g_struct[i]->label, g_struct[i]->command, g_struct[i]->arg[0], g_struct[i]->arg[1], g_struct[i]->arg[2], g_struct[i]->arg[3]);
-		// }
 		(g_asm->buf[g_asm->i] == '\n') ? g_asm->str_counter++ : 0;
 		g_struct[INDEX]->str_number = g_asm->str_counter;
 		g_asm->i++;
